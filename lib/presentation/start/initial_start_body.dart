@@ -15,7 +15,7 @@ class InitialStartBody extends StatelessWidget {
       builder: (context, state) {
         if (state is InitialLoaded) {
           if (state.alreadyStarted == true) {
-            return HomeScreen();
+            return AuthenticationHomeScreen();
           } else {
             return StartBody();
           }

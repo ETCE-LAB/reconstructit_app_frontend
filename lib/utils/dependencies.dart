@@ -8,6 +8,7 @@ import 'package:reconstructitapp/infrastructure/repositories/user_repository.dar
 import 'package:reconstructitapp/infrastructure/sources/remote_datasource.dart';
 import 'package:reconstructitapp/presentation/start/bloc/initial_bloc.dart';
 import 'package:reconstructitapp/presentation/your_requests/bloc/your_items_bloc.dart';
+
 import '../domain/services/address_service.dart';
 import '../domain/services/chat_service.dart';
 import '../domain/services/community_print_request_service.dart';
@@ -24,7 +25,8 @@ import '../infrastructure/repositories/item_image_repository.dart';
 import '../infrastructure/repositories/item_repository.dart';
 import '../infrastructure/repositories/participant_repository.dart';
 import '../infrastructure/sources/account_local_datasource.dart';
-import '../presentation/account/bloc/user_bloc.dart';import '../presentation/bloc/authentication_bloc.dart';
+import '../presentation/account/bloc/user_bloc.dart';
+import '../presentation/authentication/bloc/authentication_bloc.dart';
 import '../presentation/create_or_edit_request/bloc/create_or_edit_request_bloc.dart';
 import '../presentation/home/bloc/home_bloc.dart';
 import 'clients/app_http_client.dart';

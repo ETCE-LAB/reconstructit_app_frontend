@@ -33,8 +33,6 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(title: Text("Herzlich Willkommen!"), centerTitle: true),
       body: PageView(
@@ -83,7 +81,7 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeScreen(),
+        builder: (context) => AuthenticationHomeScreen(),
       ),
     );
   }

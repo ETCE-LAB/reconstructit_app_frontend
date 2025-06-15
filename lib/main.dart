@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/presentation/bloc/authentication_bloc.dart';
 import 'package:reconstructitapp/presentation/camera/camera_screen.dart';
 import 'package:reconstructitapp/presentation/home/bloc/home_bloc.dart';
 import 'package:reconstructitapp/presentation/start/initial_start_screen.dart';
@@ -21,11 +20,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => ic<HomeBloc>()),
-        BlocProvider(create: (_) => ic<AuthenticationBloc>()),
-      ],
+    return BlocProvider(
+      create: (_) => ic<HomeBloc>(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
