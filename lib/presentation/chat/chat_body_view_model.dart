@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:reconstructitapp/domain/entity_models/community_print_request.dart';
-import 'package:reconstructitapp/domain/entity_models/enums/chat_status.dart';
 import 'package:reconstructitapp/domain/entity_models/item.dart';
 import 'package:reconstructitapp/domain/entity_models/participant.dart';
 
@@ -10,17 +7,25 @@ import '../../domain/entity_models/message.dart';
 import '../../domain/entity_models/user.dart';
 
 class ChatBodyViewModel {
-final Participant ownParticipant;
-final Participant otherParticipant;
+  final Participant ownParticipant;
+  final Participant otherParticipant;
   final User otherParticipantUser;
   final Chat chat;
   final Message lastMessage;
   final CommunityPrintRequest communityPrintRequest;
   final Item item;
 
-  ChatBodyViewModel( this.otherParticipantUser, this.chat,
-      this.lastMessage, this.communityPrintRequest, this.item, this.ownParticipant, this.otherParticipant);
+  ChatBodyViewModel(
+    this.otherParticipantUser,
+    this.chat,
+    this.lastMessage,
+    this.communityPrintRequest,
+    this.item,
+    this.ownParticipant,
+    this.otherParticipant,
+  );
 
+  /*
   Color getStatusColor(){
     switch(chat.chatStatus){
       case ChatStatus.done:
@@ -33,6 +38,8 @@ final Participant otherParticipant;
         return Color(0xFF810101);
     }}
 
+   */
+  /*
     String getStatus() {
       switch (chat.chatStatus) {
         case ChatStatus.done:
@@ -46,5 +53,5 @@ final Participant otherParticipant;
       }
     }
 
-
+ */
 }

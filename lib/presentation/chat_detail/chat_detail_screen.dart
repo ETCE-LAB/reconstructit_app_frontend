@@ -22,6 +22,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             onTap: () {
               showModalBottomSheet(
                 context: context,
+                showDragHandle: true,
                 isScrollControlled: true,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
@@ -67,11 +68,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               ],
             ),
           ),
-          title: Text(
+          title: Text("lol"
+            /*
             widget.chatBodyViewModel.getStatus(),
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: widget.chatBodyViewModel.getStatusColor(),
             ),
+
+             */
           ),
           subtitle: Text(
             "${widget.chatBodyViewModel.otherParticipantUser.firstName} ${widget.chatBodyViewModel.otherParticipantUser.lastName} - ${widget.chatBodyViewModel.item.title}",

@@ -7,14 +7,6 @@ import 'package:reconstructitapp/presentation/chat/chat_entry.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/local_components/image_container.dart';
 import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
 
-import '../../domain/entity_models/chat.dart';
-import '../../domain/entity_models/community_print_request.dart';
-import '../../domain/entity_models/enums/chat_status.dart';
-import '../../domain/entity_models/enums/participant_role.dart';
-import '../../domain/entity_models/item.dart';
-import '../../domain/entity_models/message.dart';
-import '../../domain/entity_models/participant.dart';
-import '../../domain/entity_models/user.dart';
 import '../camera/camera_screen.dart';
 import '../camera/image_view_screen.dart';
 import '../chat/chat_body_view_model.dart';
@@ -88,24 +80,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
 
   @override
   Widget build(BuildContext context) {
-    ChatBodyViewModel vm = ChatBodyViewModel(
-      User("1", "mathilda", "Schulz", "hannover", "url", null, null),
-      Chat("2", ChatStatus.done, "3", "4", null),
-      Message("4", "Hey, ja das mache ich", DateTime.now(), "6", "2"),
-      CommunityPrintRequest("3", 500, "7"),
-      Item(
-        "7",
-        RepairStatus.broken,
-        "Autoteil",
-        "Beschreinung",
-        "",
-        "meineid",
-        "3",
-      ),
-      Participant("ownParticipantId", ParticipantRole.helpProvider, "4", "2"),
-      Participant("otherParticipantId", ParticipantRole.helpReceiver, "1", "2"),
-    );
-    List<ChatBodyViewModel> vms = [vm, vm];
+    List<ChatBodyViewModel> vms = [];
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Stack(
@@ -262,7 +237,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Switch(
-                      value: hasRequest ,
+                      value: hasRequest,
                       onChanged: (bool? withRequest) {
                         setState(() {
                           hasRequest = withRequest!;

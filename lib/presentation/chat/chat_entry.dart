@@ -76,12 +76,15 @@ class ChatEntry extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      /*
                       Text(
                         chatBodyViewModel.getStatus(),
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: chatBodyViewModel.getStatusColor(),
                         ),
                       ),
+
+                       */
                       Text(
                         "${chatBodyViewModel.otherParticipantUser.firstName} ${chatBodyViewModel.otherParticipantUser.lastName} - ${chatBodyViewModel.item.title}",
                         style: Theme.of(context).textTheme.titleMedium,

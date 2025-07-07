@@ -43,6 +43,12 @@ abstract class IRemoteDatasource {
   @POST('/api/Addresses')
   Future<Address> createAddress(@Body() Address address);
 
+  @PUT('/api/Addresses/{id}')
+  Future<void> editAddress(@Path() String id, @Body() Address address);
+
+  @DELETE('/api/Addresses/{id}')
+  Future<void> deleteAddress(@Path() String id);
+
   // CHATS
   @GET('/api/Chats/{id}')
   Future<Chat> getChat(@Path() String id);

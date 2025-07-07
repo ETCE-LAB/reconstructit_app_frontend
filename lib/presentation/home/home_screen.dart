@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/presentation/account/account_screen.dart';
 import 'package:reconstructitapp/presentation/chat/chat_screen.dart';
 import 'package:reconstructitapp/presentation/community/community_screen.dart';
 import 'package:reconstructitapp/presentation/your_requests/your_requests_screen.dart';
 
 import '../authentication/authentication_screen.dart';
+import '../user/account_screen.dart';
 import 'bloc/home_bloc.dart';
 import 'bloc/home_event.dart';
 import 'bloc/home_state.dart';

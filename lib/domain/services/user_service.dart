@@ -8,6 +8,9 @@ abstract class UserService {
 
   Future<Result<String>> getUserId();
 
+
+  Future<Result<User>> getUser(String id);
+
   Future<Result<User>> createUser(
     String firstName,
     String lastName,

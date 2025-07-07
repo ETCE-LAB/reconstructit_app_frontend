@@ -6,6 +6,11 @@ import 'package:reconstructitapp/infrastructure/repositories/media_repository.da
 import 'package:reconstructitapp/infrastructure/repositories/message_repository.dart';
 import 'package:reconstructitapp/infrastructure/repositories/user_repository.dart';
 import 'package:reconstructitapp/infrastructure/sources/remote_datasource.dart';
+import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
+import 'package:reconstructitapp/presentation/create_or_edit_user/bloc/create_or_edit_user_bloc.dart';
+import 'package:reconstructitapp/presentation/logout/bloc/logout_bloc.dart';
+import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
+import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_chat_bloc.dart';
 import 'package:reconstructitapp/presentation/start/bloc/initial_bloc.dart';
 import 'package:reconstructitapp/presentation/your_requests/bloc/your_items_bloc.dart';
 
@@ -25,10 +30,10 @@ import '../infrastructure/repositories/item_image_repository.dart';
 import '../infrastructure/repositories/item_repository.dart';
 import '../infrastructure/repositories/participant_repository.dart';
 import '../infrastructure/sources/account_local_datasource.dart';
-import '../presentation/account/bloc/user_bloc.dart';
 import '../presentation/authentication/bloc/authentication_bloc.dart';
 import '../presentation/create_or_edit_request/bloc/create_or_edit_request_bloc.dart';
 import '../presentation/home/bloc/home_bloc.dart';
+import '../presentation/user/bloc/user_bloc.dart';
 import 'clients/app_http_client.dart';
 
 final ic = GetIt.instance;
@@ -39,7 +44,14 @@ Future<void> initDependencies() async {
 
   ic.registerFactory<AuthenticationBloc>(() => AuthenticationBloc());
   ic.registerFactory<HomeBloc>(() => HomeBloc());
-  ic.registerFactory<UserBloc>(() => UserBloc(ic()));
+  ic.registerFactory<LogoutBloc>(() => LogoutBloc());
+  ic.registerFactory<UserBloc>(() => UserBloc(ic(), ic()));
+
+  ic.registerFactory<CreateChatBloc>(() => CreateChatBloc(ic(), ic(), ic(), ));
+  ic.registerFactory<RequestDetailBloc>(() => RequestDetailBloc(ic(), ic(), ic(), ic()));
+  ic.registerFactory<CommunityBloc>(() => CommunityBloc(ic(), ic(), ic(), ic()));
+
+  ic.registerFactory<CreateOrEditUserBloc>(() => CreateOrEditUserBloc(ic(), ic(), ic()));
   ic.registerFactory<YourItemsBloc>(
     () => YourItemsBloc(ic(), ic(), ic(), ic(), ic()),
   );

@@ -1,41 +1,33 @@
 import 'package:flutter/cupertino.dart';
-import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reconstructitapp/presentation/community/bloc/commun%C3%ADty_state.dart';
+import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
 import 'package:reconstructitapp/presentation/community/local_components/community_request_entry.dart';
-
-import '../../domain/entity_models/community_print_request.dart';
-import '../../domain/entity_models/enums/repair_status.dart';
-import '../../domain/entity_models/item.dart';
-import '../../domain/entity_models/user.dart';
 
 class CommunityBody extends StatelessWidget {
   const CommunityBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    CommunityBodyViewModel vm = CommunityBodyViewModel(
-      User("1", "mathilda", "Schulz", "hannover", "url", null, null),
-      CommunityPrintRequest("3", 500, "7"),
-      Item(
-        "7",
-        RepairStatus.broken,
-        "Autoteil",
-        "Mein geliebtes Autoteil ist letzte Woche kaputt gegange, kann mir jemand helfen?",
-        "",
-        "meineid",
-        "3",
-      ),
-    );
-    CommunityBodyViewModel vm2 = CommunityBodyViewModel(
-      User("1", "Maximilian", "Flügel", "Wernigerrode", "url", null, null),
-      CommunityPrintRequest("4", 10, "8"),
-      Item("8", RepairStatus.broken, "Lampe", "Hilfi", "", "meineid", "4"),
-    );
-
-    List<CommunityBodyViewModel> list = [vm, vm2];
-    return ListView.separated(
-      itemBuilder: (context, index) => CommunityRequestEntry(viewModel: list[index],),
-      separatorBuilder: (context, index) => SizedBox(height: 10),
-      itemCount: list.length,
+    return BlocBuilder<CommunityBloc, CommunityState>(
+      builder: (context, state) {
+        if (state is CommunityLoaded) {
+          return ListView.separated(
+            itemBuilder:
+                (context, index) => CommunityRequestEntry(
+                  viewModel: state.communityBodyViewModels[index],
+                ),
+            separatorBuilder: (context, index) => SizedBox(height: 10),
+            itemCount: state.communityBodyViewModels.length,
+          );
+        }
+        else if(state is CommunityLoading || state is CommunityInitial){
+          return CircularProgressIndicator();
+        } else{
+          return Container();
+        }
+      },
     );
   }
 }

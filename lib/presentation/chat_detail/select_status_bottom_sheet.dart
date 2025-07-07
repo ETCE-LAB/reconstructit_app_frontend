@@ -35,23 +35,13 @@ class SelectStatusBottomSheetState extends State<SelectStatusBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 40,
-            height: 4,
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.outline,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
 
           ListView.separated(
             physics: NeverScrollableScrollPhysics(),
@@ -85,7 +75,7 @@ class SelectStatusBottomSheetState extends State<SelectStatusBottomSheet> {
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemCount: 4,
           ),
-
+          SizedBox(height: 12),
           AppButton(child: Text("Änderungen speichern"), onPressed: () {}),
           SizedBox(height: 12),
         ],

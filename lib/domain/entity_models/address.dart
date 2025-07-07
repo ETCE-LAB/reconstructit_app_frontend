@@ -8,7 +8,7 @@ part 'address.g.dart';
 class Address extends Entity{
   final String streetAndHouseNumber;
   final String city;
-  final String? zipCode;
+  final String zipCode;
 
 
   Address(super.id, this.streetAndHouseNumber, this.city, this.zipCode);

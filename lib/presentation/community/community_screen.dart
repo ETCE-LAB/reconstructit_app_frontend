@@ -1,6 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
 import 'package:reconstructitapp/presentation/community/community_body.dart';
+
+import '../../utils/dependencies.dart';
+import 'bloc/community_event.dart';
 
 class CommunityScreen extends StatefulWidget {
   const CommunityScreen({super.key});
@@ -12,6 +16,12 @@ class CommunityScreen extends StatefulWidget {
 class _CommunityScreenState extends State<CommunityScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Communityanfragen"), centerTitle: true,), body: CommunityBody());
+    return BlocProvider(
+      create: (_) => ic<CommunityBloc>()..add(CommunityRefresh()),
+      child: Scaffold(
+        appBar: AppBar(title: Text("Communityanfragen"), centerTitle: true),
+        body: CommunityBody(),
+      ),
+    );
   }
 }

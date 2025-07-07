@@ -16,8 +16,6 @@ const baseRedirectUri = "com.example.reconstructitapp";
 /// Redirect uri after successful authentication
 const authRedirectUri = "$baseRedirectUri://auth-callback";
 
-/// Redirect uri after ending the user's session successfully
-const postLogoutRedirectUri = "$baseRedirectUri://logout-callback";
 
 /// Bloc to manage the user's authentication status
 class AuthenticationBloc

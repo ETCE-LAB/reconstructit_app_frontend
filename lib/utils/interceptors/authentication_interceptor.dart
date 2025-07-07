@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -14,7 +15,10 @@ class AuthenticationInterceptor extends Interceptor {
       RequestInterceptorHandler handler,
       ) async {
     // Get access token from local credentials
+    print(options.path);
     var accessToken = await _getAndRefreshAccessToken();
+
+    log(accessToken.toString());
 
     // Start authentication process when access token is not available
     if (accessToken == null) {

@@ -10,7 +10,7 @@ Address _$AddressFromJson(Map<String, dynamic> json) => Address(
   json['id'] as String?,
   json['streetAndHouseNumber'] as String,
   json['city'] as String,
-  json['zipCode'] as String?,
+  json['zipCode'] as String,
 );
 
 Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
