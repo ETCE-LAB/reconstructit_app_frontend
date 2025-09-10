@@ -47,4 +47,13 @@ class AddressRepository implements AddressService {
       return Result.fail(e as Exception);
     }
   }
+
+  @override
+  Future<Result<Address>> getAddressByUserId(String userId) async{
+    try {
+      return Result.success(await remoteDatasource.getAddressForUser(userId));
+    } catch (e) {
+    return Result.fail(e as Exception);
+    }
+  }
 }

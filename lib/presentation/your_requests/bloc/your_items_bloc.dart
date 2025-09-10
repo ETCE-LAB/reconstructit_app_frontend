@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/domain/services/chat_service.dart';
 import 'package:reconstructitapp/domain/services/community_print_request_service.dart';
 import 'package:reconstructitapp/domain/services/item_image_service.dart';
 import 'package:reconstructitapp/domain/services/item_service.dart';
@@ -14,13 +13,11 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
   final ItemService itemService;
   final ItemImageService itemImageService;
   final CommunityPrintRequestService communityPrintRequestService;
-  final ChatService chatService;
 
   YourItemsBloc(
     this.itemService,
     this.itemImageService,
     this.communityPrintRequestService,
-    this.chatService,
     this.userService,
   ) : super(YourItemsInitial()) {
     on<Refresh>(_onRefresh);
@@ -46,7 +43,7 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
     // list of view models
     final viewModels =
         itemsResult.value!
-            .map((item) => YourRequestsBodyViewModel(null, null, item, null))
+            .map((item) => YourRequestsBodyViewModel(null, item, null, null))
             .toList();
     emit(YourItemsLoaded(viewModels));
 
@@ -64,9 +61,9 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
 
       var updatedViewModel = YourRequestsBodyViewModel(
         null,
-        null,
         item,
         itemImagesResult.value!,
+        null
       );
       viewModels[i] = updatedViewModel;
       emit(YourItemsLoaded(viewModels));
@@ -79,10 +76,10 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
           return;
         }
         updatedViewModel = YourRequestsBodyViewModel(
-          null,
           communityRequestResult.value!,
           item,
           itemImagesResult.value!,
+          null
         );
         viewModels[i] = updatedViewModel;
         emit(YourItemsLoaded(viewModels));

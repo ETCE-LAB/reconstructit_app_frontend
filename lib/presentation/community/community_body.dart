@@ -23,7 +23,7 @@ class CommunityBody extends StatelessWidget {
           );
         }
         else if(state is CommunityLoading || state is CommunityInitial){
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         } else{
           return Container();
         }

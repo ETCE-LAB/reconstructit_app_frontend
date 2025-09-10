@@ -20,15 +20,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (userResult.isSuccessful) {
       if (userResult.value != null) {
         print(userResult.value?.toJson());
-        if (userResult.value!.addressId != null) {
-          var addressResult = await addressService.getAddress(
-            userResult.value!.addressId!,
-          );
-          if (addressResult.isSuccessful) {
-            emit(UserLoaded(userResult.value!, addressResult.value!));
-          } else {
-            emit(UserFailed(addressResult.failure!));
-          }
+
+        var addressResult = await addressService.getAddressByUserId(
+          userResult.value!.id!,
+        );
+        if (addressResult.isSuccessful) {
+          emit(UserLoaded(userResult.value!, addressResult.value!));
         } else {
           emit(UserLoaded(userResult.value!, null));
         }

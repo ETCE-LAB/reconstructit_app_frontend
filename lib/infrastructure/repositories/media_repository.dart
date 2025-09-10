@@ -16,4 +16,14 @@ class MediaRepository extends MediaService {
       return Result.fail(e as Exception);
     }
   }
+
+  @override
+  Future<Result<String>> postModel(File model) async {
+    try {
+      var result = await remoteDatasource.postStl(model);
+      return Result.success(result.fileUri);
+    } catch (e) {
+      return Result.fail(e as Exception);
+    }
+  }
 }

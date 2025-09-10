@@ -5,6 +5,7 @@ import '../entity_models/address.dart';
 
 abstract class AddressService {
   Future<Result<Address>> getAddress(String id);
+  Future<Result<Address>> getAddressByUserId(String userId);
 
   Future<Result<Address>> createAddress(Address address);
 

@@ -37,7 +37,7 @@ class UserRepository implements UserService {
   }
 
   @override
-  Future<Result<String>> getUserId() async {
+  Future<Result<String>> getUserAccountId() async {
     try {
       // Get User id from local credentials
       String platformUserId = await accountLocalDatasource.getUserAccountId();
@@ -60,7 +60,6 @@ class UserRepository implements UserService {
         lastName,
         region,
         profilePictureFileUrl,
-        null,
         userAccountId
       );
       print(newUser.toJson());

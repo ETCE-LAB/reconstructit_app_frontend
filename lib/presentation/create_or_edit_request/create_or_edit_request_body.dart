@@ -1,15 +1,18 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:reconstructitapp/components/AppButton.dart';
 import 'package:reconstructitapp/components/AppSecondaryButton.dart';
 import 'package:reconstructitapp/components/AppTextField.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/repair_status.dart';
-import 'package:reconstructitapp/presentation/chat/chat_entry.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/local_components/image_container.dart';
 import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../domain/entity_models/enums/print_material.dart';
 import '../camera/camera_screen.dart';
 import '../camera/image_view_screen.dart';
-import '../chat/chat_body_view_model.dart';
 
 class CreateOrEditRequestBody extends StatefulWidget {
   final YourRequestsBodyViewModel? requestsBodyViewModel;
@@ -17,7 +20,8 @@ class CreateOrEditRequestBody extends StatefulWidget {
     List<String> images,
     String title,
     String description,
-    double? priceMax,
+    PrintMaterial? printMaterial,
+    String modelFilePath,
   )?
   onSubmitCreate;
   final void Function(
@@ -26,7 +30,7 @@ class CreateOrEditRequestBody extends StatefulWidget {
     String description,
     bool repaired,
     List<String> images,
-    double? priceMax,
+    PrintMaterial? printMaterial,
     bool withRequest,
   )?
   onSubmitEdit;
@@ -52,13 +56,20 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
 
   late TextEditingController titleController;
   late TextEditingController descriptionController;
-  late TextEditingController priceController;
+  File? modelFile;
+  PrintMaterial? selectedPrintMaterial;
   List<String> images = [];
+  late TextEditingController materialController;
 
   @override
   void initState() {
     print(widget.requestsBodyViewModel?.communityPrintRequest.toString());
     super.initState();
+    print(widget.requestsBodyViewModel?.communityPrintRequest?.printMaterial);
+    selectedPrintMaterial =
+        widget.requestsBodyViewModel?.communityPrintRequest?.printMaterial;
+
+    // materialController = TextEditingController(text:selectedPrintMaterial.toString() );
     images =
         widget.requestsBodyViewModel != null &&
                 widget.requestsBodyViewModel!.images != null
@@ -71,16 +82,13 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
     description = widget.requestsBodyViewModel?.item.description;
     hasRequest = widget.requestsBodyViewModel?.communityPrintRequest != null;
     price = widget.requestsBodyViewModel?.communityPrintRequest?.priceMax;
-    priceController = TextEditingController(
-      text: price != null ? price.toString() : "",
-    );
+
     descriptionController = TextEditingController(text: description);
     titleController = TextEditingController(text: title);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<ChatBodyViewModel> vms = [];
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Stack(
@@ -181,20 +189,29 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                       ),
                     ],
                   ),
-                if (widget.requestsBodyViewModel != null)
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceContainer,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "CAD verwalten",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+
+                AppTextField(hint: "Titel", controller: titleController),
+                AppTextField(
+                  hint: "Beschreibung",
+                  controller: descriptionController,
+                  minLines: 3,
+                  maxLines: 10,
+                ),
+
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surfaceContainer,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "3D Drucker Modell verwalten",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      if (widget.requestsBodyViewModel != null)
                         Text(
                           "letzte Änderung: ",
                           style: Theme.of(
@@ -204,6 +221,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                                 Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
                         ),
+                      if (widget.requestsBodyViewModel != null)
                         AppSecondaryButton(
                           child: Row(
                             children: [
@@ -212,25 +230,49 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                               Text("Herunterladen"),
                             ],
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (widget
+                                    .requestsBodyViewModel
+                                    ?.constructionFile
+                                    ?.fileUrl !=
+                                null) {
+                              await launchUrl(
+                                Uri.parse(
+                                  widget
+                                      .requestsBodyViewModel!
+                                      .constructionFile!
+                                      .fileUrl,
+                                ),
+                              );
+                            }
+                          },
                         ),
-                        AppSecondaryButton(
-                          child: Row(
-                            children: [
-                              Icon(Icons.sync),
-                              SizedBox(width: 10),
-                              Text("Erneut Generieren"),
-                            ],
-                          ),
-                          onPressed: () {},
+                      AppSecondaryButton(
+                        child: Row(
+                          children: [
+                            Icon(Icons.arrow_circle_up),
+                            SizedBox(width: 10),
+                            Text(
+                              widget.requestsBodyViewModel != null
+                                  ? "Andere Datei hochladen"
+                                  : "Modell hochladen",
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                        onPressed: () async {
+                          final result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['stl'],
+                          );
+
+                          if (result != null &&
+                              result.files.single.path != null) {
+                            modelFile = File(result.files.single.path!);
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                AppTextField(hint: "Titel", controller: titleController),
-                AppTextField(
-                  hint: "Beschreibung",
-                  controller: descriptionController,
                 ),
                 Row(
                   spacing: 10.0,
@@ -260,39 +302,93 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                             "Frag die Community, ob sie dir beim Erstellen deines Gegenstandes aus der Konstruktionsdatei hilft",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                          AppTextField(
-                            hint: "Preis max",
-                            controller: priceController,
+
+                          DropdownMenu<PrintMaterial>(
+                            initialSelection: selectedPrintMaterial,
+                            onSelected: (PrintMaterial? printMaterial) {
+                              setState(() {
+                                selectedPrintMaterial = printMaterial;
+                              });
+                            },
+                            menuStyle: MenuStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                                Theme.of(context).colorScheme.surfaceContainer,
+                              ),
+                              shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              elevation: WidgetStatePropertyAll(4),
+                              shadowColor: WidgetStatePropertyAll(
+                                Colors.black45,
+                              ),
+                            ),
+                            inputDecorationTheme: InputDecorationTheme(
+                              focusColor: Theme.of(context).colorScheme.primary,
+                              filled: true,
+                              fillColor:
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.surfaceContainer,
+                              contentPadding: EdgeInsets.all(16),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.5,
+                                  color: Colors.grey ?? Colors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.5,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            hintText: "Wähle dein Material",
+                            width: double.infinity,
+                            dropdownMenuEntries: [
+                              DropdownMenuEntry(
+                                style:
+                                    Theme.of(context).filledButtonTheme.style,
+                                value: PrintMaterial.cpe,
+                                label: 'CPE',
+                              ),
+                              DropdownMenuEntry(
+                                style:
+                                    Theme.of(context).filledButtonTheme.style,
+                                value: PrintMaterial.pla,
+                                label: 'PLA',
+                              ),
+                            ],
                           ),
+                          SizedBox(height: 10),
+                          if (price != null)
+                            Text(
+                              "Laut unseren Berechnungen musst du $price€ dafür zahlen, dass jemand dir das Ersatzteil druckt.",
+                            ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                if (hasRequest == true)
-                  Column(
-                    spacing: 10.0,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Deine Chats zu dieser Anfrage: ",
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder:
-                            (context, index) =>
-                                ChatEntry(chatBodyViewModel: vms[index]),
-                        separatorBuilder:
-                            (context, index) => SizedBox(height: 10),
-                        itemCount: vms.length,
-                      ),
-                    ],
-                  ),
+                SizedBox(height: 100),
               ],
             ),
           ),
@@ -311,9 +407,8 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                             images,
                             titleController.text,
                             descriptionController.text,
-                            hasRequest == true
-                                ? double.parse(priceController.text)
-                                : null,
+                            hasRequest == true ? selectedPrintMaterial : null,
+                            modelFile!.path,
                           );
                         },
                       )
@@ -327,9 +422,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                             repaired,
                             images,
 
-                            hasRequest == true
-                                ? double.parse(priceController.text)
-                                : null,
+                            hasRequest == true ? selectedPrintMaterial : null,
                             hasRequest,
                           );
                         },

@@ -14,8 +14,6 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
   final ItemImageService itemImageService;
   final CommunityPrintRequestService communityPrintRequestService;
 
-  //final ChatService chatService;
-
   CommunityBloc(
     this.itemService,
     this.itemImageService,

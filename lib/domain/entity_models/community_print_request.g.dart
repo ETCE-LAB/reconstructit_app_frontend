@@ -10,8 +10,9 @@ CommunityPrintRequest _$CommunityPrintRequestFromJson(
   Map<String, dynamic> json,
 ) => CommunityPrintRequest(
   json['id'] as String?,
-  (json['priceMax'] as num).toDouble(),
+  (json['priceMax'] as num?)?.toDouble(),
   json['itemId'] as String,
+  $enumDecode(_$PrintMaterialEnumMap, json['printMaterial']),
 );
 
 Map<String, dynamic> _$CommunityPrintRequestToJson(
@@ -20,4 +21,7 @@ Map<String, dynamic> _$CommunityPrintRequestToJson(
   'id': instance.id,
   'priceMax': instance.priceMax,
   'itemId': instance.itemId,
+  'printMaterial': _$PrintMaterialEnumMap[instance.printMaterial]!,
 };
+
+const _$PrintMaterialEnumMap = {PrintMaterial.pla: 0, PrintMaterial.cpe: 1};

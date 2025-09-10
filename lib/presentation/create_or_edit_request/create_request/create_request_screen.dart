@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/create_or_edit_request_body.dart';
 
+import '../../../domain/entity_models/enums/print_material.dart';
 import '../../../utils/dependencies.dart';
 import '../bloc/create_or_edit_request_bloc.dart';
 import '../bloc/create_or_edit_request_event.dart';
@@ -43,10 +46,12 @@ class CreateRequestBody extends StatelessWidget {
           List<String> images,
           String title,
           String description,
-          double? priceMax,
+
+            PrintMaterial? printMaterial,
+            String modelFilePath
         ) {
           context.read<CreateOrEditRequestBloc>().add(
-            CreateRequest(images, title, description, priceMax),
+            CreateRequest(images, title, description, printMaterial, modelFilePath),
           );
         },
       ),

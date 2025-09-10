@@ -8,11 +8,11 @@ part 'participant.g.dart';
 @JsonSerializable()
 class Participant extends Entity {
 
-  final ParticipantRole participantRole;
+  final ParticipantRole role;
   final String? userId;
-  final String chatId;
+  final String printContractId;
 
-  Participant(super.id, this.participantRole, this.userId, this.chatId);
+  Participant(super.id, this.role, this.userId, this.printContractId);
 
 
   factory Participant.fromJson(Map<String, dynamic> json) =>

@@ -7,7 +7,7 @@ class RequestDetailLoading extends RequestDetailState {}
 class RequestDetailLoaded extends RequestDetailState {
   final bool alreadyHasChat;
 
-  RequestDetailLoaded(this.alreadyHasChat);
+  RequestDetailLoaded({required this.alreadyHasChat});
 }
 
 class RequestDetailFailed extends RequestDetailState {

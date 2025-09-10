@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
+
+import '../../../domain/entity_models/enums/print_material.dart';
 
 class CreateOrEditRequestEvent {}
 
@@ -6,9 +10,10 @@ class CreateRequest extends CreateOrEditRequestEvent {
   final List<String> images;
   final String title;
   final String description;
-  final double? priceMax;
+  final PrintMaterial? printMaterial;
+  final String modelFilePath;
 
-  CreateRequest(this.images, this.title, this.description, this.priceMax);
+  CreateRequest(this.images, this.title, this.description, this.printMaterial, this.modelFilePath);
 }
 
 class EditRequest extends CreateOrEditRequestEvent {
@@ -17,7 +22,7 @@ class EditRequest extends CreateOrEditRequestEvent {
   final String description;
   final bool repaired;
   final List<String> images;
-  final double? priceMax;
+  final PrintMaterial? printMaterial;
   final bool withRequest;
 
   EditRequest(
@@ -25,7 +30,7 @@ class EditRequest extends CreateOrEditRequestEvent {
     this.description,
     this.repaired,
     this.images,
-    this.priceMax,
+    this.printMaterial,
     this.withRequest,
     this.yourRequestsBodyViewModel,
   );

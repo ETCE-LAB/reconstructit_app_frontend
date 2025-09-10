@@ -15,8 +15,9 @@ class AuthenticationInterceptor extends Interceptor {
       RequestInterceptorHandler handler,
       ) async {
     // Get access token from local credentials
-    print(options.path);
+    log(options.path);
     var accessToken = await _getAndRefreshAccessToken();
+
 
     log(accessToken.toString());
 

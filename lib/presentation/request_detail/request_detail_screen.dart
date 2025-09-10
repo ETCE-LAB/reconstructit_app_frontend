@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
 import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
-import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_chat_bloc.dart';
+import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_print_contract_bloc.dart';
 import 'package:reconstructitapp/presentation/request_detail/request_detail_body.dart';
 
 import '../../utils/dependencies.dart';
@@ -31,7 +31,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                     ),
                   ),
         ),
-        BlocProvider(create: (_) => ic<CreateChatBloc>()),
+
       ],
       child: Scaffold(
         appBar: AppBar(title: Text(widget.communityBodyViewModel.item.title)),

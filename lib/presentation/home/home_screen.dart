@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/presentation/chat/chat_screen.dart';
+import 'package:reconstructitapp/presentation/all_print_contracts/all_print_contracts_screen.dart';
 import 'package:reconstructitapp/presentation/community/community_screen.dart';
 import 'package:reconstructitapp/presentation/your_requests/your_requests_screen.dart';
 
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     //color: context.lightPrimary
                   ),
 
-                  label: "Profil",
+                  label: "Vorgänge",
                 ),
                 NavigationDestination(
                   selectedIcon: Icon(
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const [
                     YourRequestsScreen(),
                     CommunityScreen(),
-                    ChatScreen(),
+                    AllPrintContractsScreen(),
                     AccountScreen(),
                   ][state.selectedPage],
             ),

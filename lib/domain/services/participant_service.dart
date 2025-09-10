@@ -6,7 +6,7 @@ import '../entity_models/participant.dart';
 abstract class ParticipantService {
   Future<Result<List<Participant>>> getParticipantsForUser(String userId);
 
-  Future<Result<List<Participant>>> getParticipantsForChat(String chatId);
+  Future<Result<List<Participant>>> getParticipantsForContract(String contractId);
 
   Future<Result<Participant>> getParticipant(String id);
 

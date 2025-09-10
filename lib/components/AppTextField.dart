@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
+  final int? minLines;
+  final int? maxLines;
+  final Color? backgroundColor;
   final Widget? trailing;
   final String hint;
   final TextEditingController? controller;
@@ -10,6 +13,9 @@ class AppTextField extends StatelessWidget {
     this.controller,
     required this.hint,
     this.trailing,
+    this.backgroundColor,
+     this.minLines,
+     this.maxLines=1,
   });
 
   @override
@@ -17,22 +23,28 @@ class AppTextField extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context).colorScheme.surfaceContainer,
+        color:
+            backgroundColor ?? Theme.of(context).colorScheme.surfaceContainer,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
             child: TextField(
+              minLines: minLines,
+              maxLines: maxLines,
               controller: controller,
               decoration: InputDecoration(
                 hintText: hint,
-                fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                fillColor:
+                    backgroundColor ??
+                    Theme.of(context).colorScheme.surfaceContainer,
                 contentPadding: EdgeInsets.all(16),
                 focusedErrorBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.circular(10),
                 ),
+
                 errorBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.circular(10),

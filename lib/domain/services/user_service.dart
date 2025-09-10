@@ -6,7 +6,7 @@ import '../entity_models/user.dart';
 abstract class UserService {
   Future<Result<User?>> getCurrentUser();
 
-  Future<Result<String>> getUserId();
+  Future<Result<String>> getUserAccountId();
 
 
   Future<Result<User>> getUser(String id);

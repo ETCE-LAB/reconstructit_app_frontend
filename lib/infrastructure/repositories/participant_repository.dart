@@ -19,10 +19,10 @@ class ParticipantRepository implements ParticipantService {
   }
 
   @override
-  Future<Result<List<Participant>>> getParticipantsForChat(String chatId) async {
+  Future<Result<List<Participant>>> getParticipantsForContract(String contractId) async {
     try {
       return Result.success(
-          await remoteDatasource.getParticipantsByChat(chatId));
+          await remoteDatasource.getParticipantsByContract(contractId));
     } catch (e) {
       return Result.fail(e as Exception);
     }

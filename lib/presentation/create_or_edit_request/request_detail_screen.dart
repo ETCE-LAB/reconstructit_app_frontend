@@ -5,6 +5,7 @@ import 'package:reconstructitapp/presentation/create_or_edit_request/bloc/create
 import 'package:reconstructitapp/presentation/create_or_edit_request/bloc/create_or_edit_request_state.dart';
 import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
 
+import '../../domain/entity_models/enums/print_material.dart';
 import '../../utils/dependencies.dart';
 import '../../utils/presenter.dart';
 import 'create_or_edit_request_body.dart';
@@ -61,7 +62,7 @@ class YourRequestDetailBody extends StatelessWidget {
           String description,
           bool repaired,
           List<String> images,
-          double? priceMax,
+          PrintMaterial? printMaterial,
           bool withRequest,
         ) {
           context.read<CreateOrEditRequestBloc>().add(
@@ -70,7 +71,7 @@ class YourRequestDetailBody extends StatelessWidget {
               description,
               repaired,
               images,
-              priceMax,
+              printMaterial,
               withRequest,
               yourRequestsBodyViewModel,
             ),

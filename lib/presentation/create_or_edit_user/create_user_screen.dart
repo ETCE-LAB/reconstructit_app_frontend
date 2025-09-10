@@ -40,6 +40,7 @@ class CreateUserBody extends StatelessWidget {
           String? streetHouseNumber,
           String? zipCode,
           String? city,
+            String? country
         ) {
           print("create User jetzte");
           context.read<CreateOrEditUserBloc>().add(
@@ -51,6 +52,7 @@ class CreateUserBody extends StatelessWidget {
               streetHouseNumber,
               zipCode,
               city,
+              country
             ),
           );
         },

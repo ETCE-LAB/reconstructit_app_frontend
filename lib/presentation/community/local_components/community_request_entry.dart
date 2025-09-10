@@ -103,6 +103,8 @@ class CommunityRequestEntry extends StatelessWidget {
                                       context,
                                     ).colorScheme.onPrimaryContainer,
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               viewModel.item.description,
@@ -115,6 +117,7 @@ class CommunityRequestEntry extends StatelessWidget {
                                     ).colorScheme.onPrimaryContainer,
                               ),
                               maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
@@ -144,7 +147,7 @@ class CommunityRequestEntry extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  "${viewModel.communityPrintRequest.priceMax}€",
+                                  "${viewModel.communityPrintRequest.priceMax?.toStringAsFixed(2)}€",
                                   style: Theme.of(
                                     context,
                                   ).textTheme.titleLarge?.copyWith(

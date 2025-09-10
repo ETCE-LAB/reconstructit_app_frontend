@@ -53,6 +53,7 @@ class EditUserBody extends StatelessWidget {
           String? streetHouseNumber,
           String? zipCode,
           String? city,
+            String? country
         ) {
           context.read<CreateOrEditUserBloc>().add(
             EditUser(
@@ -64,7 +65,7 @@ class EditUserBody extends StatelessWidget {
               region,
               streetHouseNumber,
               zipCode,
-              city,
+              city,country
             ),
           );
         },

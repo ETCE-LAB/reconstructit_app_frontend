@@ -12,6 +12,7 @@ class CreateUser extends CreateOrEditUserEvent {
   final String? streetHouseNumber;
   final String? zipCode;
   final String? city;
+  final String? country;
 
   CreateUser(
     this.profilePicture,
@@ -20,7 +21,7 @@ class CreateUser extends CreateOrEditUserEvent {
     this.region,
     this.streetHouseNumber,
     this.zipCode,
-    this.city,
+    this.city, this.country,
   );
 }
 
@@ -34,6 +35,7 @@ class EditUser extends CreateOrEditUserEvent {
   final String? streetHouseNumber;
   final String? zipCode;
   final String? city;
+  final String? country;
 
   EditUser(
     this.oldUser,
@@ -44,6 +46,6 @@ class EditUser extends CreateOrEditUserEvent {
     this.region,
     this.streetHouseNumber,
     this.zipCode,
-    this.city,
+    this.city, this.country,
   );
 }

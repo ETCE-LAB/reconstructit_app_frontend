@@ -9,9 +9,10 @@ class Address extends Entity{
   final String streetAndHouseNumber;
   final String city;
   final String zipCode;
+  final String country;
+final String userId;
 
-
-  Address(super.id, this.streetAndHouseNumber, this.city, this.zipCode);
+  Address(super.id, this.streetAndHouseNumber, this.city, this.zipCode, this.country, this.userId);
 
   factory Address.fromJson(Map<String, dynamic> json) =>
       _$AddressFromJson(json);

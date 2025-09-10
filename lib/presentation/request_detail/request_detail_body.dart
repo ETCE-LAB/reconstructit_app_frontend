@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/components/AppButton.dart';
 import 'package:reconstructitapp/components/AppIconButton.dart';
+import 'package:reconstructitapp/presentation/choose_payment_method/choose_payment_bottom_sheet.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
 import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
 import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_state.dart';
-import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_chat_bloc.dart';
-import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_chat_event.dart';
 
 import '../../components/AppShimmerRectangular.dart';
 import '../../components/AppShimmerRound.dart';
@@ -35,134 +34,163 @@ class RequestDetailBody extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Column(
+                  spacing: 15,
                   children: [
-                    Row(
-                      spacing: 15.0,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).colorScheme.surfaceContainer,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            spacing: 10,
-                            children: [
-                              ClipOval(
-                                child:
-                                    communityBodyViewModel.user != null
-                                        ? communityBodyViewModel
-                                                    .user
-                                                    ?.userProfilePictureUrl !=
-                                                null
-                                            ? Image.network(
-                                              communityBodyViewModel
-                                                  .user!
-                                                  .userProfilePictureUrl!,
-                                              width: 32,
-                                              height: 32,
-                                              fit: BoxFit.cover,
-                                            )
-                                            : Image.asset(
-                                              "assets/round_avatar_placeholder.jpg",
-                                              width: 32,
-                                              height: 32,
-                                              fit: BoxFit.cover,
-                                            )
-                                        : AppShimmerRound(size: 32),
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        spacing: 15.0,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).colorScheme.surfaceContainer,
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              Column(
+                              child: Column(
+                                spacing: 10,
                                 children: [
-                                  communityBodyViewModel.user != null
-                                      ? Text(
-                                        "${communityBodyViewModel.user!.firstName} ${communityBodyViewModel.user!.lastName}",
-                                        style:
-                                            Theme.of(
+                                  ClipOval(
+                                    child:
+                                        communityBodyViewModel.user != null
+                                            ? communityBodyViewModel
+                                                        .user
+                                                        ?.userProfilePictureUrl !=
+                                                    null
+                                                ? Image.network(
+                                                  communityBodyViewModel
+                                                      .user!
+                                                      .userProfilePictureUrl!,
+                                                  width: 32,
+                                                  height: 32,
+                                                  fit: BoxFit.cover,
+                                                )
+                                                : Image.asset(
+                                                  "assets/round_avatar_placeholder.jpg",
+                                                  width: 32,
+                                                  height: 32,
+                                                  fit: BoxFit.cover,
+                                                )
+                                            : AppShimmerRound(size: 32),
+                                  ),
+                                  Column(
+                                    children: [
+                                      communityBodyViewModel.user != null
+                                          ? Text(
+                                            "${communityBodyViewModel.user!.firstName} ${communityBodyViewModel.user!.lastName}",
+                                            style:
+                                                Theme.of(
+                                                  context,
+                                                ).textTheme.titleSmall,
+                                          )
+                                          : AppShimmerRectangular(
+                                            width: 100,
+                                            height: 20,
+                                          ),
+                                      communityBodyViewModel.user != null
+                                          ? Text(
+                                            communityBodyViewModel.user!.region,
+                                            style: Theme.of(
                                               context,
-                                            ).textTheme.titleSmall,
-                                      )
-                                      : AppShimmerRectangular(
-                                        width: 100,
-                                        height: 20,
-                                      ),
-                                  communityBodyViewModel.user != null
-                                      ? Text(
-                                        communityBodyViewModel.user!.region,
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.bodySmall?.copyWith(
-                                          color:
-                                              Theme.of(
-                                                context,
-                                              ).colorScheme.onSurfaceVariant,
-                                        ),
-                                      )
-                                      : AppShimmerRectangular(
-                                        width: 100,
-                                        height: 16,
-                                      ),
+                                            ).textTheme.bodySmall?.copyWith(
+                                              color:
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                            ),
+                                          )
+                                          : AppShimmerRectangular(
+                                            width: 100,
+                                            height: 16,
+                                          ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).colorScheme.surfaceContainer,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            "Mit dieser\nAnfrage kannst\ndu max. ${communityBodyViewModel.communityPrintRequest.priceMax}\nverdienen",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).colorScheme.surfaceContainer,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: [
-                              Text(
-                                "CAD\nherunterladen",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodySmall,
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).colorScheme.surfaceContainer,
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              AppIconButton(
-                                icon: Icon(Icons.arrow_circle_down),
+                              child: Center(
+                                child: Text(
+                                  "Mit dieser\nAnfrage kannst\ndu max. ${communityBodyViewModel.communityPrintRequest.priceMax?.toStringAsFixed(2)}€\nverdienen",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Container(
+                              // width: (width - 60) / 3,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).colorScheme.surfaceContainer,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "CAD\nherunterladen",
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                  AppIconButton(
+                                    icon: Icon(Icons.arrow_circle_down),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+
                     Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surfaceContainer,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: Row(
                         children: [
-                          Text(
-                            communityBodyViewModel.item.title,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Text(
-                            communityBodyViewModel.item.description,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium!.copyWith(
-                              color:
-                                  Theme.of(
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  communityBodyViewModel.item.title,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Text(
+                                  communityBodyViewModel.item.description,
+                                  style: Theme.of(
                                     context,
-                                  ).colorScheme.onSurfaceVariant,
+                                  ).textTheme.bodyMedium!.copyWith(
+                                    color:
+                                        Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -174,47 +202,86 @@ class RequestDetailBody extends StatelessWidget {
             ],
           ),
         ),
-        BlocBuilder<RequestDetailBloc, RequestDetailState>(
-          buildWhen: (prev, curr) => curr is RequestDetailLoaded,
-          builder: (context, state) {
-            if (state is RequestDetailLoaded) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  state.alreadyHasChat
-                      ? AppButton(
-                        child: Row(
+        if (communityBodyViewModel.user != null)
+          BlocBuilder<RequestDetailBloc, RequestDetailState>(
+            buildWhen: (prev, curr) => curr is RequestDetailLoaded,
+            builder: (context, state) {
+              if (state is RequestDetailLoaded) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    state.alreadyHasChat
+                        ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.maps_ugc_outlined),
-                            Text("Zum Chat"),
+                            AppButton(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 15,
+                                children: [
+                                  Icon(Icons.maps_ugc_outlined),
+                                  Text("Zum Vorgang"),
+                                ],
+                              ),
+                            ),
                           ],
-                        ),
-                      )
-                      : AppButton(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 15,
+                        )
+                        : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.maps_ugc_outlined),
-                            Text("Chat erstellen"),
-                          ],
-                        ),
-                        onPressed: () {
-                          context.read<CreateChatBloc>().add(
-                            CreateChat(
+                            AppButton(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 15,
+                                children: [
+                                  Icon(Icons.maps_ugc_outlined),
+                                  Text(
+                                    "Für ${communityBodyViewModel.communityPrintRequest.priceMax?.toStringAsFixed(2)}€ Druck anbieten",
+                                  ),
+                                ],
+                              ),
+
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  showDragHandle: true,
+                                  context: context,
+                                  isScrollControlled: true,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(40),
+                                    ),
+                                  ),
+                                  builder:
+                                      (_) => ChoosePaymentBottomSheet(
+                                        otherUser: communityBodyViewModel.user!,
+                                        communityPrintRequestId:
+                                            communityBodyViewModel
+                                                .communityPrintRequest
+                                                .id!,
+                                      ),
+                                );
+                                /*
+                          context.read<CreatePrintContractBloc>().add(
+                            CreatePrintContract(
                               communityBodyViewModel.communityPrintRequest.id!,
                               communityBodyViewModel.user!.id!,
                             ),
                           );
-                        },
-                      ),
-                ],
-              );
-            }
-            return Container();
-          },
-        ),
+
+                           */
+                              },
+                            ),
+                          ],
+                        ),
+                  ],
+                );
+              }
+              return Container();
+            },
+          ),
       ],
     );
   }

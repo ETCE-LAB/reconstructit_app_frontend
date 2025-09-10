@@ -6,12 +6,15 @@ import 'package:reconstructitapp/domain/entity_models/media.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../domain/entity_models/address.dart';
-import '../../domain/entity_models/chat.dart';
 import '../../domain/entity_models/construction_file.dart';
 import '../../domain/entity_models/item.dart';
 import '../../domain/entity_models/item_image.dart';
-import '../../domain/entity_models/message.dart';
 import '../../domain/entity_models/participant.dart';
+import '../../domain/entity_models/payment.dart';
+import '../../domain/entity_models/payment_attribute.dart';
+import '../../domain/entity_models/payment_method.dart';
+import '../../domain/entity_models/payment_value.dart';
+import '../../domain/entity_models/print_contract.dart';
 import '../../domain/entity_models/user.dart';
 
 part 'remote_datasource.g.dart';
@@ -40,6 +43,9 @@ abstract class IRemoteDatasource {
   @GET('/api/Addresses/{id}')
   Future<Address> getAddress(@Path() String id);
 
+  @GET('/api/Users/{id}/Address')
+  Future<Address> getAddressForUser(@Path() String id);
+
   @POST('/api/Addresses')
   Future<Address> createAddress(@Body() Address address);
 
@@ -48,19 +54,6 @@ abstract class IRemoteDatasource {
 
   @DELETE('/api/Addresses/{id}')
   Future<void> deleteAddress(@Path() String id);
-
-  // CHATS
-  @GET('/api/Chats/{id}')
-  Future<Chat> getChat(@Path() String id);
-
-  @POST('/api/Chats')
-  Future<Chat> createChat(@Body() Chat chat);
-
-  @PUT('/api/Chats/{id}')
-  Future<void> updateChat(@Path() String id, @Body() Chat chat);
-
-  @GET('/api/CommunityPrintRequests/{id}/Chats')
-  Future<List<Chat>> getChatsForCommunityPrintRequest(@Path() String id);
 
   // COMMUNITY PRINT REQUESTS
   @GET('/api/CommunityPrintRequests')
@@ -121,22 +114,12 @@ abstract class IRemoteDatasource {
   @DELETE('/api/ItemImages/{id}')
   Future<void> deleteItemImage(@Path() String id);
 
-  // MESSAGES
-  @GET('/api/Chats/{chatId}/Messages')
-  Future<List<Message>> getMessagesByChatId(@Path() String chatId);
-
-  @GET('/api/Messages/{id}')
-  Future<Message> getMessage(@Path() String id);
-
-  @POST('/api/Messages')
-  Future<Message> createMessage(@Body() Message message);
-
   // PARTICIPANTS
   @GET('/api/Users/{userId}/Participants')
   Future<List<Participant>> getParticipantsByUser(@Path() String userId);
 
-  @GET('/api/Chats/{chatId}/Participants')
-  Future<List<Participant>> getParticipantsByChat(@Path() String chatId);
+  @GET('/api/PrintContract/{contractId}/Participants')
+  Future<List<Participant>> getParticipantsByContract(@Path() String contractId);
 
   @GET('/api/Participants/{id}')
   Future<Participant> getParticipant(@Path() String id);
@@ -144,8 +127,57 @@ abstract class IRemoteDatasource {
   @POST('/api/Participants')
   Future<Participant> createParticipant(@Body() Participant participant);
 
+  // PAYMENT ATTRIBUTES
+  @GET('/api/PaymentMethodDefinition/{id}/PaymentAttributes')
+  Future<List<PaymentAttribute>> getPaymentAttributesForDefinition(@Path() String id);
+
+  @GET('/api/PaymentAttributes/{id}')
+  Future<PaymentAttribute> getPaymentAttribute(@Path() String id);
+
+  // PAYMENT METHODS
+  @GET('/api/PaymentMethods')
+  Future<List<PaymentMethod>> getAllPaymentMethods();
+
+  @GET('/api/PaymentMethods/{id}')
+  Future<PaymentMethod> getPaymentMethod(@Path() String id);
+
+  // PAYMENTS
+  @POST('/api/Payments')
+  Future<Payment> createPayment(@Body() Payment payment);
+
+  @PUT('/api/Payments/{id}')
+  Future<void> updatePayment(@Path() String id, @Body() Payment payment);
+
+  @GET('/api/Payments/{id}')
+  Future<Payment> getPayment(@Path() String id);
+
+  // PAYMENT VALUES
+  @POST('/api/PaymentValues')
+  Future<PaymentValue> createPaymentValue(@Body() PaymentValue paymentValue);
+
+  @GET('/api/Payment/{id}/PaymentValues')
+  Future<List<PaymentValue>> getPaymentValuesForPayment(@Path() String id);
+
+  // PRINT CONTRACTS
+  @POST('/api/PrintContracts')
+  Future<PrintContract> createPrintContract(@Body() PrintContract contract);
+
+  @PUT('/api/PrintContracts/{id}')
+  Future<void> updatePrintContract(@Path() String id, @Body() PrintContract contract);
+
+  @GET('/api/CommunityPrintRequest/{id}/PrintContracts')
+  Future<List<PrintContract>> getContractsForRequest(@Path() String id);
+
+  @GET('/api/PrintContracts/{id}')
+  Future<PrintContract> getContract(@Path() String id);
+
   // MEDIA
   @POST('/api/Media')
   @MultiPart()
   Future<Media> postImage(@Part(contentType: 'image/jpg') File media);
+
+
+  @POST('/api/Media')
+  @MultiPart()
+  Future<Media> postStl(@Part(contentType: 'application/sla') File media);
 }

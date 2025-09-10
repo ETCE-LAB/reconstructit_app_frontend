@@ -23,7 +23,7 @@ class _AccountScreenState extends State<AccountScreen> {
       child: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UserLoading || state is UserInitial) {
-            return CircularProgressIndicator();
+            return Center(child:  CircularProgressIndicator());
           } else if (state is UserLoaded) {
             return EditUserScreen(user: state.user, address: state.address);
           } else if (state is UserNotExisting) {

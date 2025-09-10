@@ -8,17 +8,17 @@ part of 'participant.dart';
 
 Participant _$ParticipantFromJson(Map<String, dynamic> json) => Participant(
   json['id'] as String?,
-  $enumDecode(_$ParticipantRoleEnumMap, json['participantRole']),
+  $enumDecode(_$ParticipantRoleEnumMap, json['role']),
   json['userId'] as String?,
-  json['chatId'] as String,
+  json['printContractId'] as String,
 );
 
 Map<String, dynamic> _$ParticipantToJson(Participant instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'participantRole': _$ParticipantRoleEnumMap[instance.participantRole]!,
+      'role': _$ParticipantRoleEnumMap[instance.role]!,
       'userId': instance.userId,
-      'chatId': instance.chatId,
+      'printContractId': instance.printContractId,
     };
 
 const _$ParticipantRoleEnumMap = {

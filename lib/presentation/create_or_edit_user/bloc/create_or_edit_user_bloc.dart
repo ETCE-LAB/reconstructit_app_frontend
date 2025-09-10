@@ -17,7 +17,7 @@ class CreateOrEditUserBloc
   final MediaService mediaService;
 
   CreateOrEditUserBloc(this.addressService, this.userService, this.mediaService)
-      : super(CreateOrEditUserInitial()) {
+    : super(CreateOrEditUserInitial()) {
     on<CreateUser>(_onCreate);
     on<EditUser>(_onEdit);
   }
@@ -55,7 +55,14 @@ class CreateOrEditUserBloc
         event.city != null &&
         event.zipCode != null) {
       var addressResult = await addressService.createAddress(
-        Address(null, event.streetHouseNumber!, event.city!, event.zipCode!),
+        Address(
+          null,
+          event.streetHouseNumber!,
+          event.city!,
+          event.zipCode!,
+          event.country!,
+          userResult.value!.id!,
+        ),
       );
       if (!addressResult.isSuccessful) {
         emit(CreateOrEditUserFailed(addressResult.failure!));
@@ -66,6 +73,7 @@ class CreateOrEditUserBloc
   }
 
   void _onEdit(EditUser event, emit) async {
+    print("in vloc");
     emit(CreateOrEditUserLoading());
     // create image
     String? finalImageUrl;
@@ -91,11 +99,22 @@ class CreateOrEditUserBloc
     if (event.oldAddress == null &&
         event.streetHouseNumber != null &&
         event.city != null &&
-        event.zipCode != null) {
+        event.zipCode != null &&
+        event.country != null) {
+      print("CREATE");
       var addressResult = await addressService.createAddress(
-        Address(null, event.streetHouseNumber!, event.city!, event.zipCode!),
+        Address(
+          null,
+          event.streetHouseNumber!,
+          event.city!,
+          event.zipCode!,
+          event.country!,
+          event.oldUser.id!,
+        ),
       );
       if (!addressResult.isSuccessful) {
+        print("CREATE FAILED");
+        print(addressResult.failure!);
         emit(CreateOrEditUserFailed(addressResult.failure!));
         return;
       }
@@ -109,10 +128,20 @@ class CreateOrEditUserBloc
         event.streetHouseNumber != event.oldAddress!.streetAndHouseNumber &&
         event.zipCode != event.oldAddress!.zipCode &&
         event.city != event.oldAddress!.city) {
+      print("EDIT");
       var addressResult = await addressService.editAddress(
-        Address(null, event.streetHouseNumber!, event.city!, event.zipCode!),
+        Address(
+          null,
+          event.streetHouseNumber!,
+          event.city!,
+          event.zipCode!,
+          event.country!,
+          event.oldUser.id!,
+        ),
       );
       if (!addressResult.isSuccessful) {
+        print("EDIT FAILED");
+        print(addressResult.failure!);
         emit(CreateOrEditUserFailed(addressResult.failure!));
         return;
       }
@@ -133,18 +162,18 @@ class CreateOrEditUserBloc
     }
 
     // edit user
-    if
-    (event.firstName != event.oldUser.firstName ||
+    if (event.firstName != event.oldUser.firstName ||
         event.lastName != event.oldUser.lastName ||
         event.region != event.oldUser.region) {
-      var userResult = await userService.editUser(User(
+      var userResult = await userService.editUser(
+        User(
           event.oldUser.id,
           event.firstName,
           event.lastName,
           event.region,
           finalImageUrl,
-          event.oldUser.addressId,
-          event.oldUser.userAccountId)
+          event.oldUser.userAccountId,
+        ),
       );
       if (!userResult.isSuccessful) {
         emit(CreateOrEditUserFailed(userResult.failure!));

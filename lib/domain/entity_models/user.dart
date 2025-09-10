@@ -10,13 +10,12 @@ class User extends Entity{
   final String lastName;
   final String region;
   final String? userProfilePictureUrl;
-  final String? addressId;
 
   final String? userAccountId;
 
 
   User(super.id, this.firstName, this.lastName, this.region,
-      this.userProfilePictureUrl, this.addressId, this.userAccountId);
+      this.userProfilePictureUrl,  this.userAccountId);
 
   factory User.fromJson(Map<String, dynamic> json) =>
       _$UserFromJson(json);
