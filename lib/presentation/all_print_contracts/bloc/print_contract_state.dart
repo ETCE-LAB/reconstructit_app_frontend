@@ -3,8 +3,8 @@ import 'package:reconstructitapp/presentation/print_contract/print_contract_view
 abstract class AllPrintContractsState {}
 
 class AllPrintContractsInitial extends AllPrintContractsState {}
-class AllPrintContractsLoading extends AllPrintContractsState {}
 
+class AllPrintContractsLoading extends AllPrintContractsState {}
 
 class AllPrintContractsLoaded extends AllPrintContractsState {
   final List<PrintContractViewModel> printContractViewModels;
