@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+/// Shimmer to indicate a loading state but round e.g. for profile pictures
 class AppShimmerRound extends StatelessWidget {
   final double size;
 

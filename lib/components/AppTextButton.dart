@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Button used for secondary or tertiary actions without background color
 class AppTextButton extends StatelessWidget {
   final void Function()? onPressed;
   final Widget child;

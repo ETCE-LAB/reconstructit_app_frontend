@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:reconstructitapp/domain/entity_models/entity.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/print_contract_status.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/shipping_status.dart';
+
 part 'print_contract.g.dart';
 
 @JsonSerializable()

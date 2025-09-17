@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// TextField used for any kind of text inputs in the app
 class AppTextField extends StatelessWidget {
   final int? minLines;
   final int? maxLines;

@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'media.g.dart';
 
+/// Not in the domain but needed to reconstruct the fileUri form the media endpoint
 @JsonSerializable()
 class Media {
   final String fileUri;

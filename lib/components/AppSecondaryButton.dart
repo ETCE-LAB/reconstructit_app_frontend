@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'AppButton.dart';
 
+/// This Button is Used for secondary actions e.g. cancel an action
 class AppSecondaryButton extends StatelessWidget {
   final void Function()? onPressed;
   final Widget child;

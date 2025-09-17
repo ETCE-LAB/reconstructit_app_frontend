@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+/// Shimmer to indicate a loading state
 class AppShimmerRectangular extends StatelessWidget {
   final double width;
   final double height;

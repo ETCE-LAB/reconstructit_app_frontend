@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This Button is used as the main Button for primary actions
 class AppButton extends StatelessWidget {
   final void Function()? onPressed;
   final Widget child;

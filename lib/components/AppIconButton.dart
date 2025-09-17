@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This Button is used as the main button for primary actions when only using an icon
 class AppIconButton extends StatelessWidget {
   final Widget icon;
   final void Function()? onPressed;
