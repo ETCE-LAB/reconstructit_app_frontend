@@ -6,7 +6,7 @@ import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
 
 import 'community_event.dart';
-import 'communíty_state.dart';
+import 'community_state.dart';
 
 class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
   final UserService userService;
@@ -83,7 +83,6 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
       );
       emit(CommunityLoaded(viewModels));
       // get the user
-      print(itemsResult.value!.userId);
       var requestUserResult = await userService.getUser(
         itemsResult.value!.userId,
       );

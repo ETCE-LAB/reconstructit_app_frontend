@@ -26,17 +26,15 @@ class PrintContractBody extends StatelessWidget {
     return BlocListener<EditPrintContractBloc, EditPrintContractState>(
       listener: (context, state) {
         if (state is EditPrintContractSucceeded) {
-          if(state.cancelled){
+          if (state.cancelled) {
             Navigator.pop(context);
-          }else{
-            print("SUCCEEDED AND REFRESH");
+          } else {
             context.read<PrintContractBloc>().add(
               PrintContractRefresh(
                 printContractId: printContractViewModel.printContract!.id!,
               ),
             );
           }
-
         }
       },
       child: Scaffold(
@@ -46,7 +44,6 @@ class PrintContractBody extends StatelessWidget {
           child: OpenAllStepper(
             steps:
                 [
-
                       Step1(
                         printContractViewModel: printContractViewModel,
                       ).build(context),
@@ -63,7 +60,6 @@ class PrintContractBody extends StatelessWidget {
                         printContractViewModel: printContractViewModel,
                       ).build(context),
 
-
                       Step5(
                         printContractViewModel: printContractViewModel,
                       ).build(context),
@@ -77,7 +73,6 @@ class PrintContractBody extends StatelessWidget {
                       Step8(
                         printContractViewModel: printContractViewModel,
                       ).build(context),
-
                     ]
                     // remove nulls
                     .whereType<OpenStep>()

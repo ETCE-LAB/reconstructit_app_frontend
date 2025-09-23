@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reconstructitapp/components/AppShimmerRectangular.dart';
-import 'package:reconstructitapp/components/AppShimmerRound.dart';
+import 'package:reconstructitapp/components/app_shimmer_rectangular.dart';
+import 'package:reconstructitapp/components/app_shimmer_round.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
 import 'package:reconstructitapp/presentation/request_detail/request_detail_screen.dart';
 

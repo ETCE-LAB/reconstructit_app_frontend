@@ -48,7 +48,6 @@ class CreatePrintContractBloc
       ),
     );
     if (!printContractResult.isSuccessful) {
-      print("fail 0");
       emit(CreatePrintContractFailed(printContractResult.failure!));
       return;
     }
@@ -62,19 +61,15 @@ class CreatePrintContractBloc
       ),
     );
     if (!otherParticipant.isSuccessful) {
-      print("fail 1");
       emit(CreatePrintContractFailed(otherParticipant.failure!));
       return;
     }
     // get own user
     var userResult = await userService.getCurrentUser();
     if (!userResult.isSuccessful || userResult.value == null) {
-      print("fail 2");
       emit(CreatePrintContractFailed(userResult.failure!));
       return;
     }
-    print(userResult.value!);
-    print(printContractResult.value!.id!);
     var ownParticipant = await participantService.createParticipant(
       Participant(
         null,
@@ -84,7 +79,6 @@ class CreatePrintContractBloc
       ),
     );
     if (!ownParticipant.isSuccessful) {
-      print("fail 3");
       emit(CreatePrintContractFailed(ownParticipant.failure!));
       return;
     }
@@ -98,7 +92,6 @@ class CreatePrintContractBloc
       ),
     );
     if (!paymentResult.isSuccessful) {
-      print("fail 4");
       emit(CreatePrintContractFailed(paymentResult.failure!));
       return;
     }
@@ -113,12 +106,10 @@ class CreatePrintContractBloc
         ),
       );
       if (!paymentValueResult.isSuccessful) {
-        print("fail 5");
         emit(CreatePrintContractFailed(paymentValueResult.failure!));
         return;
       }
     }
-    print("success");
     emit(
       CreatePrintContractSucceeded(
         printContractId: printContractResult.value!.id!,

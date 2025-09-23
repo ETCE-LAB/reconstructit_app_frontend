@@ -52,6 +52,7 @@ dependencies:
   shimmer: ^3.0.0
   file_picker: ^10.3.2
   url_launcher: ^6.3.2
+  open_file: ^3.5.10
 
 dev_dependencies:
   flutter_test:
@@ -86,8 +87,6 @@ flutter:
     - assets/start_2.png
     - assets/start_3.png
     - assets/start_4.png
-    - assets/example.png
-    - assets/example_person.png
     - assets/landscape.png
     - assets/round_avatar_placeholder.jpg
 

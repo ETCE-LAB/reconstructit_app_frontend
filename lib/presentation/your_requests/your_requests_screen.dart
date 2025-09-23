@@ -19,22 +19,31 @@ class _YourRequestsScreenState extends State<YourRequestsScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ic<YourItemsBloc>()..add(Refresh()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Deine Reperaturobjekte"),
-          centerTitle: true,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreateRequestScreen()),
-            );
-          },
-          child: const Icon(Icons.add),
-        ),
-        body: YourRequestsBody(),
+      child: YourRequestsScaffold(),
+    );
+  }
+}
+
+class YourRequestsScaffold extends StatelessWidget {
+  const YourRequestsScaffold({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Deine Reperaturobjekte"), centerTitle: true),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateRequestScreen()),
+          );
+          if(context.mounted){
+            context.read<YourItemsBloc>().add(Refresh());
+          }
+        },
+        child: const Icon(Icons.add),
       ),
+      body: YourRequestsBody(),
     );
   }
 }

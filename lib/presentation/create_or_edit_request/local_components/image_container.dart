@@ -14,7 +14,6 @@ class ImageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(imagePath);
     return Stack(
       children: [
         Padding(

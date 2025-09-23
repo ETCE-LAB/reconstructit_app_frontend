@@ -16,11 +16,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onRefresh(event, emit) async {
     emit(UserLoading());
     var userResult = await userService.getCurrentUser();
-    print(userResult);
     if (userResult.isSuccessful) {
       if (userResult.value != null) {
-        print(userResult.value?.toJson());
-
         var addressResult = await addressService.getAddressByUserId(
           userResult.value!.id!,
         );

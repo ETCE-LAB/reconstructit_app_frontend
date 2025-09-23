@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reconstructitapp/components/AppShimmerRectangular.dart';
+import 'package:reconstructitapp/components/app_shimmer_rectangular.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/participant_role.dart';
 import 'package:reconstructitapp/presentation/print_contract/local_components/custom_stepper.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_view_model.dart';

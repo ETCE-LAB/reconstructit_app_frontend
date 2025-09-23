@@ -119,7 +119,9 @@ abstract class IRemoteDatasource {
   Future<List<Participant>> getParticipantsByUser(@Path() String userId);
 
   @GET('/api/PrintContract/{contractId}/Participants')
-  Future<List<Participant>> getParticipantsByContract(@Path() String contractId);
+  Future<List<Participant>> getParticipantsByContract(
+    @Path() String contractId,
+  );
 
   @GET('/api/Participants/{id}')
   Future<Participant> getParticipant(@Path() String id);
@@ -129,7 +131,9 @@ abstract class IRemoteDatasource {
 
   // PAYMENT ATTRIBUTES
   @GET('/api/PaymentMethodDefinition/{id}/PaymentAttributes')
-  Future<List<PaymentAttribute>> getPaymentAttributesForDefinition(@Path() String id);
+  Future<List<PaymentAttribute>> getPaymentAttributesForDefinition(
+    @Path() String id,
+  );
 
   @GET('/api/PaymentAttributes/{id}')
   Future<PaymentAttribute> getPaymentAttribute(@Path() String id);
@@ -163,7 +167,10 @@ abstract class IRemoteDatasource {
   Future<PrintContract> createPrintContract(@Body() PrintContract contract);
 
   @PUT('/api/PrintContracts/{id}')
-  Future<void> updatePrintContract(@Path() String id, @Body() PrintContract contract);
+  Future<void> updatePrintContract(
+    @Path() String id,
+    @Body() PrintContract contract,
+  );
 
   @GET('/api/CommunityPrintRequest/{id}/PrintContracts')
   Future<List<PrintContract>> getContractsForRequest(@Path() String id);
@@ -175,7 +182,6 @@ abstract class IRemoteDatasource {
   @POST('/api/Media')
   @MultiPart()
   Future<Media> postImage(@Part(contentType: 'image/jpg') File media);
-
 
   @POST('/api/Media')
   @MultiPart()

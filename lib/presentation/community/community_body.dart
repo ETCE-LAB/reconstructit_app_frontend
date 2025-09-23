@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/presentation/community/bloc/commun%C3%ADty_state.dart';
 import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
 import 'package:reconstructitapp/presentation/community/local_components/community_request_entry.dart';
+
+import 'bloc/community_state.dart';
 
 class CommunityBody extends StatelessWidget {
   const CommunityBody({super.key});
@@ -21,10 +21,9 @@ class CommunityBody extends StatelessWidget {
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemCount: state.communityBodyViewModels.length,
           );
-        }
-        else if(state is CommunityLoading || state is CommunityInitial){
+        } else if (state is CommunityLoading || state is CommunityInitial) {
           return Center(child: CircularProgressIndicator());
-        } else{
+        } else {
           return Container();
         }
       },

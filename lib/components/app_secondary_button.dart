@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'AppButton.dart';
+import 'app_button.dart';
 
 /// This Button is Used for secondary actions e.g. cancel an action
 class AppSecondaryButton extends StatelessWidget {

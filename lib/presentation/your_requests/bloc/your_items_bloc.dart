@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/domain/services/community_print_request_service.dart';
+import 'package:reconstructitapp/domain/services/construction_file_service.dart';
 import 'package:reconstructitapp/domain/services/item_image_service.dart';
 import 'package:reconstructitapp/domain/services/item_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
@@ -13,18 +14,19 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
   final ItemService itemService;
   final ItemImageService itemImageService;
   final CommunityPrintRequestService communityPrintRequestService;
+  final ConstructionFileService constructionFileService;
 
   YourItemsBloc(
     this.itemService,
     this.itemImageService,
     this.communityPrintRequestService,
     this.userService,
+    this.constructionFileService,
   ) : super(YourItemsInitial()) {
     on<Refresh>(_onRefresh);
   }
 
   void _onRefresh(event, emit) async {
-    print("====== refresh");
     emit(YourItemsLoading());
     var userResult = await userService.getCurrentUser();
     if (!userResult.isSuccessful) {
@@ -36,7 +38,6 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
       userResult.value!.id!,
     );
     if (!itemsResult.isSuccessful) {
-      print(itemsResult.failure);
       emit(YourItemsFailed(itemsResult.failure!));
       return;
     }
@@ -54,7 +55,6 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
         item.id!,
       );
       if (!itemImagesResult.isSuccessful) {
-        print("Error in images");
         emit(YourItemsFailed(itemImagesResult.failure!));
         return;
       }
@@ -63,7 +63,7 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
         null,
         item,
         itemImagesResult.value!,
-        null
+        null,
       );
       viewModels[i] = updatedViewModel;
       emit(YourItemsLoaded(viewModels));
@@ -79,7 +79,24 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
           communityRequestResult.value!,
           item,
           itemImagesResult.value!,
-          null
+          null,
+        );
+        viewModels[i] = updatedViewModel;
+        emit(YourItemsLoaded(viewModels));
+      }
+      // get construction file
+      if (item.constructionFileId != null) {
+        var constructionFileResult = await constructionFileService
+            .getConstructionFile(item.constructionFileId!);
+        if (!constructionFileResult.isSuccessful) {
+          emit(YourItemsFailed(constructionFileResult.failure!));
+          return;
+        }
+        updatedViewModel = YourRequestsBodyViewModel(
+          viewModels[i].communityPrintRequest,
+          item,
+          itemImagesResult.value!,
+          constructionFileResult.value!,
         );
         viewModels[i] = updatedViewModel;
         emit(YourItemsLoaded(viewModels));

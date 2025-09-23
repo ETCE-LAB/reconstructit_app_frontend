@@ -40,7 +40,6 @@ class PaymentMethodsBloc
         ),
       );
     }
-    print(viewModels);
 
     emit(PaymentMethodsLoaded(paymentMethodViewModels: viewModels));
   }

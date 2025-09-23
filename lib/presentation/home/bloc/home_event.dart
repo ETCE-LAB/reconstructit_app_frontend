@@ -5,6 +5,6 @@ class HomePageChanged extends HomeEvent {
 
   HomePageChanged(this.tab);
 }
-class HomeChatNotificationOpened extends HomeEvent{
 
+class CheckIfProfileExists extends HomeEvent{
 }

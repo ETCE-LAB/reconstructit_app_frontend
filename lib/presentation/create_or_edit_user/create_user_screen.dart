@@ -28,8 +28,8 @@ class CreateUserBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Erstelle dein Profil"), centerTitle: true,),
+    return  Scaffold(
+      appBar: AppBar(title: Text("Erstelle dein Profil"), centerTitle: true),
       body: CreateOrEditUser(
         buttonText: 'Profil erstellen',
         onCreate: (
@@ -40,9 +40,8 @@ class CreateUserBody extends StatelessWidget {
           String? streetHouseNumber,
           String? zipCode,
           String? city,
-            String? country
+          String? country,
         ) {
-          print("create User jetzte");
           context.read<CreateOrEditUserBloc>().add(
             CreateUser(
               profilePicture,
@@ -52,7 +51,7 @@ class CreateUserBody extends StatelessWidget {
               streetHouseNumber,
               zipCode,
               city,
-              country
+              country,
             ),
           );
         },

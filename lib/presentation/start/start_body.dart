@@ -41,7 +41,7 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
           StartBodyWidget(
             index: 0,
             imagePath: "assets/start_1.png",
-            description: "Erhalte Konstruktionsdateien für fehlende Bauteile",
+            description: "Verwalte Modelldateien für fehlende Bauteile",
             onPressed: _startApp,
             updateIndex: _updateCurrentPageIndex,
           ),
@@ -49,7 +49,7 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
             index: 1,
             imagePath: "assets/start_2.png",
             description:
-                "Keinen 3D Drucker? Frage die Community dein Ersatzteil zu drucken!",
+                "Keinen 3D Drucker? Bitte die Community, dein Ersatzteil zu drucken!",
             onPressed: _startApp,
             updateIndex: _updateCurrentPageIndex,
           ),
@@ -57,7 +57,7 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
             index: 2,
             imagePath: "assets/start_3.png",
             description:
-                "Du hast einen 3D Drucker? Helfe anderen ihre Gegenstände zu reparieren indem du Druckanfragen animmst!",
+                "Du hast einen 3D Drucker? Hilf anderen, ihre Gegenstände zu reparieren, indem du Druckanfragen annimmst!",
             onPressed: _startApp,
             updateIndex: _updateCurrentPageIndex,
           ),
@@ -65,7 +65,7 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
             index: 3,
             imagePath: "assets/start_4.png",
             description:
-                "Chattet miteinander und einigt euch auf einen Preis und Versandart!",
+                "Ein definierter Prozess hilft euch, Versand, Zahlung und Druckstatus im Überblick zu ehalten.",
             onPressed: _startApp,
             updateIndex: _updateCurrentPageIndex,
           ),

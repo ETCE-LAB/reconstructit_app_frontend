@@ -1,11 +1,13 @@
-import 'package:reconstructitapp/domain/entity_models/payment_value.dart';
-
 class CreatePrintContractEvent {}
 
-class CreatePrintPaymentViewModel{
+class CreatePrintPaymentViewModel {
   final String paymentValue;
   final String paymentAttributeId;
-  const CreatePrintPaymentViewModel({required this.paymentValue, required this.paymentAttributeId});
+
+  const CreatePrintPaymentViewModel({
+    required this.paymentValue,
+    required this.paymentAttributeId,
+  });
 }
 
 class CreatePrintContract extends CreatePrintContractEvent {

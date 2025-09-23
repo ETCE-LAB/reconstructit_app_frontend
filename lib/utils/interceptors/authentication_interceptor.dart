@@ -5,19 +5,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:path_provider/path_provider.dart';
+
 import '../../presentation/authentication/authentication_screen.dart';
 import '../app_settings.dart';
 
 class AuthenticationInterceptor extends Interceptor {
   @override
   void onRequest(
-      RequestOptions options,
-      RequestInterceptorHandler handler,
-      ) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     // Get access token from local credentials
     log(options.path);
     var accessToken = await _getAndRefreshAccessToken();
-
 
     log(accessToken.toString());
 
@@ -28,7 +28,6 @@ class AuthenticationInterceptor extends Interceptor {
         AppSettings.navigatorState.currentContext!,
         MaterialPageRoute(builder: (_) => const AuthenticationScreen()),
       );
-      print("access token came bacj");
 
       // Retry loading the access token
       accessToken = await _getAndRefreshAccessToken();

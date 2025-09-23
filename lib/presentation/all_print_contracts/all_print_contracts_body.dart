@@ -5,8 +5,6 @@ import 'package:reconstructitapp/presentation/all_print_contracts/bloc/print_con
 import 'package:reconstructitapp/presentation/all_print_contracts/local_components/print_contract_entry.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_screen.dart';
 
-import '../../components/AppTextField.dart';
-
 class AllPrintContractsBody extends StatelessWidget {
   const AllPrintContractsBody({super.key});
 
@@ -18,53 +16,56 @@ class AllPrintContractsBody extends StatelessWidget {
             state is AllPrintContractsInitial) {
           return Center(child: CircularProgressIndicator());
         } else if (state is AllPrintContractsLoaded) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-              //  AppTextField(hint: "Suche nach Namen oder Titel..."),
-                // SizedBox(height: 20),
-                ListView.separated(
-                  itemCount: state.printContractViewModels.length,
-                  shrinkWrap: true,
+          return state.printContractViewModels.isEmpty
+              ? Padding(
+                padding: EdgeInsets.all(15),
+                child: Text("Ganz schön leer hier..."),
+              )
+              : Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListView.separated(
+                      itemCount: state.printContractViewModels.length,
+                      shrinkWrap: true,
 
-                  itemBuilder:
-                      (context, index) => GestureDetector(
-                        onTap: () {
-                          if (state
-                                  .printContractViewModels[index]
-                                  .printContract
-                                  ?.id !=
-                              null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) => PrintContractScreen(
-                                      printContractId:
-                                          state
-                                              .printContractViewModels[index]
-                                              .printContract!
-                                              .id!,
-                                    ),
-                              ),
-                            );
-                          }
-                        },
-                        child: PrintContractEntry(
-                          printContractViewModel:
-                              state.printContractViewModels[index],
-                        ),
-                      ),
-                  separatorBuilder:
-                      (BuildContext context, int index) => SizedBox(height: 15),
+                      itemBuilder:
+                          (context, index) => GestureDetector(
+                            onTap: () {
+                              if (state
+                                      .printContractViewModels[index]
+                                      .printContract
+                                      ?.id !=
+                                  null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => PrintContractScreen(
+                                          printContractId:
+                                              state
+                                                  .printContractViewModels[index]
+                                                  .printContract!
+                                                  .id!,
+                                        ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: PrintContractEntry(
+                              printContractViewModel:
+                                  state.printContractViewModels[index],
+                            ),
+                          ),
+                      separatorBuilder:
+                          (BuildContext context, int index) =>
+                              SizedBox(height: 15),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
+              );
         } else {
-          print(state);
           return Container();
         }
       },

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/components/AppShimmerRectangular.dart';
+import 'package:reconstructitapp/components/app_shimmer_rectangular.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/participant_role.dart';
 import 'package:reconstructitapp/presentation/print_contract/local_components/custom_stepper.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_view_model.dart';
 
-import '../../../../components/AppButton.dart';
+import '../../../../components/app_button.dart';
 import '../../../../domain/entity_models/enums/payment_status.dart';
 import '../../bloc/interaction/edit_print_contract_bloc.dart';
 import '../../bloc/interaction/edit_print_contract_event.dart';

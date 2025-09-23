@@ -62,12 +62,10 @@ class UserRepository implements UserService {
         profilePictureFileUrl,
         userAccountId
       );
-      print(newUser.toJson());
       return Result.success(
         await remoteDatasource.createUserProfile(newUser),
       );
     } catch (e) {
-      print(e);
       return Result.fail(e as Exception);
     }
   }

@@ -2,16 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const Color _primary = Color(0xFF675496);
-const Color _secondary = Color(0xFFB09641);
-const Color _tertiary = Color(0xFFB09641);
-//const Color _lightPrimary = Color(0xFFFDF1DB);
-const Color _lightPrimary = Color(0xFFF7F4EC);
-//const Color _ultraLightPrimary = Color(0xFFFDFAF5);
-const Color _ultraLightPrimary = Color(0xFFFBFFF3);
-const Color _lightDarkPrimary = Color(0xFF292929);
-const Color _ultraLightDarkPrimary = Color(0xFF292929);
-const Color _darkBackground = Color(0xFF171717);
-const Color _darkDefaultTextColor = Color(0xFFE8DFDA);
 ThemeData lightTheme = ThemeData(
   filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(
@@ -25,7 +15,7 @@ ThemeData lightTheme = ThemeData(
     fillColor: WidgetStateProperty.resolveWith<Color?>((
       Set<WidgetState> states,
     ) {
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return _primary;
       }
       return Colors.transparent;
@@ -55,7 +45,7 @@ ThemeData lightTheme = ThemeData(
   ),
 
   appBarTheme: const AppBarTheme(
-    backgroundColor: const Color(0xFFFEF7FF),
+    backgroundColor: Color(0xFFFEF7FF),
     titleTextStyle: TextStyle(
       fontSize: 22,
       fontWeight: FontWeight.normal,
@@ -161,7 +151,7 @@ ThemeData lightTheme = ThemeData(
       if (states.contains(WidgetState.selected)) {
         return _primary;
       }
-      //return Colors.grey;
+      return null;
     }),
     overlayColor: WidgetStateProperty.resolveWith<Color?>((
       Set<WidgetState> states,
@@ -169,15 +159,15 @@ ThemeData lightTheme = ThemeData(
       if (states.contains(WidgetState.selected)) {
         return Colors.white;
       }
-      //return Colors.grey;
+      return null;
     }),
     thumbColor: WidgetStateProperty.resolveWith<Color?>((
       Set<WidgetState> states,
     ) {
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return Colors.white;
       }
-      //return Colors.grey;
+      return null;
     }),
   ),
   fontFamily: GoogleFonts.roboto().fontFamily,
@@ -229,126 +219,12 @@ ThemeData lightTheme = ThemeData(
     surface: const Color(0xFFFEF7FF),
     onSurface: const Color(0xFF1D1B20),
     onSurfaceVariant: const Color(0xFF49454E),
-    surfaceContainer: Colors.blue,
-
-    //  surfaceContainer: const Color(0xFFFFFFFF),
+    surfaceContainer: const Color(0xFFFFFFFF),
     inverseSurface: const Color(0xFF322F35),
     onInverseSurface: const Color(0xFFF5EFF7),
 
     inversePrimary: const Color(0xFFD0BCFE),
     outline: const Color(0xFF7A757F),
     outlineVariant: const Color(0xFFCAC4CF),
-  ),
-);
-
-ThemeData darkTheme = ThemeData(
-  radioTheme: RadioThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color?>((
-      Set<MaterialState> states,
-    ) {
-      return _primary;
-    }),
-  ),
-  scaffoldBackgroundColor: const Color(0xFFFEF7FF),
-  checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color?>((
-      Set<MaterialState> states,
-    ) {
-      if (states.contains(MaterialState.selected)) {
-        return _primary;
-      }
-      return Colors.transparent;
-    }),
-  ),
-  cardTheme: const CardTheme(surfaceTintColor: Colors.transparent),
-  inputDecorationTheme: const InputDecorationTheme(
-    fillColor: Color(0xFFF3F3F3),
-    labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-  ),
-  textButtonTheme: TextButtonThemeData(
-    style: TextButton.styleFrom(foregroundColor: _primary),
-  ),
-  listTileTheme: const ListTileThemeData(
-    textColor: Colors.black,
-    contentPadding: EdgeInsets.zero,
-    titleTextStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-    subtitleTextStyle: TextStyle(fontSize: 10),
-  ),
-
-  appBarTheme: const AppBarTheme(
-    elevation: 0,
-    // this color with opacity 8% will be the ultraLightPrimary
-    surfaceTintColor: Colors.white,
-
-    actionsIconTheme: IconThemeData(size: 24, color: _darkDefaultTextColor),
-    iconTheme: IconThemeData(size: 24, color: _darkDefaultTextColor),
-    backgroundColor: _darkBackground,
-    titleTextStyle: TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.bold,
-      color: _darkDefaultTextColor,
-    ),
-  ),
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: _secondary,
-  ),
-  fontFamily: GoogleFonts.roboto().fontFamily,
-  textTheme: const TextTheme(
-    titleMedium: TextStyle(fontSize: 13),
-    titleSmall: TextStyle(fontSize: 12),
-    // top of the page
-    headlineLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-    // e.g. in List tiles etc
-    headlineMedium: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-    headlineSmall: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-    displayMedium: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-    bodySmall: TextStyle(fontSize: 11),
-    titleLarge: TextStyle(fontSize: 14),
-
-    //Button
-    labelLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-  ),
-  switchTheme: SwitchThemeData(
-    trackColor: MaterialStateProperty.resolveWith<Color?>((
-      Set<MaterialState> states,
-    ) {
-      if (states.contains(MaterialState.selected)) {
-        return const Color(0xFFC7B9AD);
-      }
-      //return Colors.grey;
-    }),
-    overlayColor: MaterialStateProperty.resolveWith<Color?>((
-      Set<MaterialState> states,
-    ) {
-      if (states.contains(MaterialState.selected)) {
-        return _primary.withOpacity(0.5);
-      }
-      //return Colors.grey;
-    }),
-    thumbColor: MaterialStateProperty.resolveWith<Color?>((
-      Set<MaterialState> states,
-    ) {
-      if (states.contains(MaterialState.selected)) {
-        return _primary;
-      }
-      //return Colors.grey;
-    }),
-  ),
-
-  //iconTheme: const IconThemeData(size: 20),
-  disabledColor: Colors.grey,
-  dividerColor: _ultraLightDarkPrimary,
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: _primary,
-    primary: _primary,
-    onPrimary: const Color(0xFFFFFFFF),
-    secondary: _secondary,
-    tertiary: _tertiary,
-    primaryContainer: _lightDarkPrimary,
-    onPrimaryContainer: _ultraLightDarkPrimary,
-    onInverseSurface: const Color(0xFF373535),
-    inversePrimary: Colors.white,
   ),
 );

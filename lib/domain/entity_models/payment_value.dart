@@ -1,8 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:reconstructitapp/domain/entity_models/entity.dart';
-import 'package:reconstructitapp/domain/entity_models/enums/payment_status.dart';
-
-import 'enums/participant_role.dart';
 
 part 'payment_value.g.dart';
 

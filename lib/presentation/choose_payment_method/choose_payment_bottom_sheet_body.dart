@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/components/AppButton.dart';
-import 'package:reconstructitapp/components/AppTextField.dart';
+import 'package:reconstructitapp/components/app_button.dart';
+import 'package:reconstructitapp/components/app_text_field.dart';
 import 'package:reconstructitapp/presentation/choose_payment_method/payment_method_view_model.dart';
 import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_print_contract_bloc.dart';
 import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_print_contract_event.dart';

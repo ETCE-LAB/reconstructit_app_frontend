@@ -31,7 +31,7 @@ Generate important files.
 ## Dependencies
 
 In Flutter we differ between dev dependencies and dependencies. Both are managed in the ``
-pubspec.yaml`` in the project root.
+pubspec.yaml`` in the project root. 
 
 While it is possible to create custom plugins, most integrations are handled through publicly
 available packages.
@@ -73,10 +73,10 @@ dio:
 => used as http client
 
 retrofit:
-=> used to generate complete datasources
+=> used to generate boilerplate api request implementations
 
 jwt_decode:
-=> used to decode a token an get specific attributes
+=> used to decode a JSON Web Token an get specific attributes
 
 oauth2:
 => authentication plugin
@@ -295,7 +295,7 @@ class ExampleRepository implements ExampleService {
 }
 ```
 
-In addition to the ``IRemoteDatasource``, a repository may also integrate a local data source. After
+In addition to the ``IRemoteDatasource``, a repository may also integrate a local data source e.g. to integrate caching. After
 importing the ``ExampleService``, most IDEs will suggest implementing its abstract methods.
 
 For example, the getExample method can be implemented as follows:
@@ -316,7 +316,7 @@ also be extended with additional logic, such as security checks or specialized e
 
 ### Presentation Layer
 
-The Presentation layer differs from the other two layers in its structure. Instead of being
+The Presentation Layer differs from the other two layers in its structure. Instead of being
 organized by entities, it is organized by feature folders, each representing a screen or a major
 widget.
 
@@ -326,7 +326,7 @@ Each feature folder typically contains:
 - one or two top-level widget files
 - optionally a local_components folder with smaller widgets used by the top-level files
 
-As already Mentioned the chosen state management solution is Bloc. You can find the documentation at
+As already mentioned the chosen state management framework is Bloc. You can find the documentation at
 the [pub.dev link](https://pub.dev/packages/flutter_bloc).
 Below is a summary of how Bloc is structured and used in this application.
 

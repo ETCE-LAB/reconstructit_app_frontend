@@ -52,7 +52,6 @@ class AuthenticationBloc
 
   void _onFetchCredentials(FetchCredentials event, emit) async {
     emit(FetchingCredentials());
-    print("try to fetch credentials");
     // Create client based on the redirect parameters
     final client = await event.currentGrant.handleAuthorizationResponse(
       event.responseUrl.queryParameters,

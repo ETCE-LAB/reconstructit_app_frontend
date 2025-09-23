@@ -24,7 +24,6 @@ class CreateOrEditUserBloc
 
   void _onCreate(CreateUser event, emit) async {
     emit(CreateOrEditUserLoading());
-    print("create im bloc");
     // create image
     String? finalImageUrl;
     if (event.profilePicture != null) {
@@ -37,7 +36,6 @@ class CreateOrEditUserBloc
       }
       finalImageUrl = mediaResult.value!;
     }
-    print(finalImageUrl);
 
     // create user
     var userResult = await userService.createUser(
@@ -69,11 +67,10 @@ class CreateOrEditUserBloc
         return;
       }
     }
-    emit(CreateOrEditUserSucceeded("Profil erfolgreich erstellt"));
+    emit(CreateOrEditUserSucceeded("Profil erfolgreich erstellt", true));
   }
 
   void _onEdit(EditUser event, emit) async {
-    print("in vloc");
     emit(CreateOrEditUserLoading());
     // create image
     String? finalImageUrl;
@@ -101,7 +98,6 @@ class CreateOrEditUserBloc
         event.city != null &&
         event.zipCode != null &&
         event.country != null) {
-      print("CREATE");
       var addressResult = await addressService.createAddress(
         Address(
           null,
@@ -113,8 +109,6 @@ class CreateOrEditUserBloc
         ),
       );
       if (!addressResult.isSuccessful) {
-        print("CREATE FAILED");
-        print(addressResult.failure!);
         emit(CreateOrEditUserFailed(addressResult.failure!));
         return;
       }
@@ -124,14 +118,10 @@ class CreateOrEditUserBloc
     if (event.oldAddress != null &&
         event.streetHouseNumber != null &&
         event.city != null &&
-        event.zipCode != null &&
-        event.streetHouseNumber != event.oldAddress!.streetAndHouseNumber &&
-        event.zipCode != event.oldAddress!.zipCode &&
-        event.city != event.oldAddress!.city) {
-      print("EDIT");
+        event.zipCode != null) {
       var addressResult = await addressService.editAddress(
         Address(
-          null,
+          addressId,
           event.streetHouseNumber!,
           event.city!,
           event.zipCode!,
@@ -140,8 +130,6 @@ class CreateOrEditUserBloc
         ),
       );
       if (!addressResult.isSuccessful) {
-        print("EDIT FAILED");
-        print(addressResult.failure!);
         emit(CreateOrEditUserFailed(addressResult.failure!));
         return;
       }
@@ -164,7 +152,8 @@ class CreateOrEditUserBloc
     // edit user
     if (event.firstName != event.oldUser.firstName ||
         event.lastName != event.oldUser.lastName ||
-        event.region != event.oldUser.region) {
+        event.region != event.oldUser.region ||
+        event.oldUser.userProfilePictureUrl != finalImageUrl) {
       var userResult = await userService.editUser(
         User(
           event.oldUser.id,
@@ -181,6 +170,6 @@ class CreateOrEditUserBloc
       }
     }
 
-    emit(CreateOrEditUserSucceeded("Profil erfolgreich bearbeitet"));
+    emit(CreateOrEditUserSucceeded("Profil erfolgreich bearbeitet", false));
   }
 }

@@ -39,45 +39,41 @@ class YourRequestDetailBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateOrEditRequestBloc, CreateOrEditRequestState>(
-        listener: (context, state) {
-      if (state is CreateOrEditRequestSucceeded) {
-        print("succeeded");
-
-        Presenter().presentSuccess(
-          context,
-          "Erfolg",
-        );
-        Navigator.pop(context);
-      } else if (state is CreateOrEditRequestFailed) {
-        Presenter().presentFailure(context);
-      }
-    },
-    child:Scaffold(
-      appBar: AppBar(title: Text(requestsBodyViewModel.item.title)),
-      body: CreateOrEditRequestBody(
-        requestsBodyViewModel: requestsBodyViewModel,
-        onSubmitEdit: (
-          YourRequestsBodyViewModel yourRequestsBodyViewModel,
-          String title,
-          String description,
-          bool repaired,
-          List<String> images,
-          PrintMaterial? printMaterial,
-          bool withRequest,
-        ) {
-          context.read<CreateOrEditRequestBloc>().add(
-            EditRequest(
-              title,
-              description,
-              repaired,
-              images,
-              printMaterial,
-              withRequest,
-              yourRequestsBodyViewModel,
-            ),
-          );
-        },
+      listener: (context, state) {
+        if (state is CreateOrEditRequestSucceeded) {
+          Presenter().presentSuccess(context, "Erfolg");
+          Navigator.pop(context);
+        } else if (state is CreateOrEditRequestFailed) {
+          Presenter().presentFailure(context);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(requestsBodyViewModel.item.title)),
+        body: CreateOrEditRequestBody(
+          requestsBodyViewModel: requestsBodyViewModel,
+          onSubmitEdit: (
+            YourRequestsBodyViewModel yourRequestsBodyViewModel,
+            String title,
+            String description,
+            bool repaired,
+            List<String> images,
+            PrintMaterial? printMaterial,
+            bool withRequest,
+          ) {
+            context.read<CreateOrEditRequestBloc>().add(
+              EditRequest(
+                title,
+                description,
+                repaired,
+                images,
+                printMaterial,
+                withRequest,
+                yourRequestsBodyViewModel,
+              ),
+            );
+          },
+        ),
       ),
-    ));
+    );
   }
 }

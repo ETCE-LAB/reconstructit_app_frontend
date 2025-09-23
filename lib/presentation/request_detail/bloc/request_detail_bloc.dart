@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/domain/services/community_print_request_service.dart';
-import 'package:reconstructitapp/domain/services/item_image_service.dart';
-import 'package:reconstructitapp/domain/services/item_service.dart';
 import 'package:reconstructitapp/domain/services/participant_service.dart';
 import 'package:reconstructitapp/domain/services/print_contract_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
@@ -10,7 +8,6 @@ import 'request_detail_event.dart';
 import 'request_detail_state.dart';
 
 class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
-
   final CommunityPrintRequestService communityPrintRequestService;
   final PrintContractService printContractService;
   final ParticipantService participantService;
@@ -44,19 +41,22 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
     }
     // get own user id
     var userResult = await userService.getUserAccountId();
-    if(!userResult.isSuccessful){
+    if (!userResult.isSuccessful) {
       emit(RequestDetailFailed(userResult.failure!));
       return;
     }
     // get participants for contract
     for (int i = 0; i < contractResult.value!.length; i++) {
-      var participantResult = await participantService.getParticipantsForContract(contractResult.value![i].id!);
-      if(!participantResult.isSuccessful){
+      var participantResult = await participantService
+          .getParticipantsForContract(contractResult.value![i].id!);
+      if (!participantResult.isSuccessful) {
         emit(RequestDetailFailed(participantResult.failure!));
         return;
       }
-      var userIsParticipant =  participantResult.value!.any((participant)=> participant.userId == userResult.value!);
-      if(!userIsParticipant){
+      var userIsParticipant = participantResult.value!.any(
+        (participant) => participant.userId == userResult.value!,
+      );
+      if (!userIsParticipant) {
         emit(RequestDetailLoaded(alreadyHasChat: true));
         return;
       }

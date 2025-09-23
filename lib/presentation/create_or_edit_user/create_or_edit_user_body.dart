@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reconstructitapp/components/AppButton.dart';
-import 'package:reconstructitapp/components/AppSecondaryButton.dart';
+import 'package:reconstructitapp/components/app_button.dart';
+import 'package:reconstructitapp/components/app_secondary_button.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_user/bloc/create_or_edit_user_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_user/bloc/create_or_edit_user_state.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_user/local_components/change_profile_picture_bottom_sheet.dart';
@@ -13,8 +13,9 @@ import 'package:reconstructitapp/utils/presenter.dart';
 
 import '../../../domain/entity_models/address.dart';
 import '../../../domain/entity_models/user.dart';
-import '../../components/AppTextButton.dart';
-import '../../components/AppTextField.dart';
+import '../../components/app_text_button.dart';
+import '../../components/app_text_field.dart';
+import '../home/home_screen.dart';
 import '../logout/logout_screen.dart';
 
 class CreateOrEditUser extends StatefulWidget {
@@ -101,6 +102,18 @@ class _CreateOrEditUserState extends State<CreateOrEditUser> {
     cityController = TextEditingController(text: city);
 
     countryController = TextEditingController(text: country);
+
+    for (var controller in [
+      firstNameController,
+      lastNameController,
+      regionController,
+      streetAndHouseNumberController,
+      zipCodeController,
+      cityController,
+      countryController,
+    ]) {
+      controller.addListener(() => setState(() {}));
+    }
   }
 
   Future<void> _pickImage() async {
@@ -114,11 +127,16 @@ class _CreateOrEditUserState extends State<CreateOrEditUser> {
   Widget build(BuildContext context) {
     return BlocListener<CreateOrEditUserBloc, CreateOrEditUserState>(
       listener: (context, state) {
-        if (state is CreateOrEditUserLoading) {
-          print("loding im listener");
-        } else if (state is CreateOrEditUserSucceeded) {
-          print(state.message);
+        if (state is CreateOrEditUserSucceeded) {
           Presenter().presentSuccess(context, state.message);
+          if (state.created) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AuthenticationHomeScreen(),
+              ),
+            );
+          }
         } else if (state is CreateOrEditUserFailed) {
           Presenter().presentFailure(context);
         }
@@ -271,7 +289,9 @@ class _CreateOrEditUserState extends State<CreateOrEditUser> {
                 ),
                 AppButton(
                   onPressed:
-                      widget.onEdit == null
+                      !_isFormValid
+                          ? null
+                          : widget.onEdit == null
                           ? () {
                             widget.onCreate!(
                               userProfilePictureUrl,
@@ -298,7 +318,6 @@ class _CreateOrEditUserState extends State<CreateOrEditUser> {
                               countryController.text,
                             );
                           },
-                  // onPressed: widget.onSubmit,
                   child: Text(widget.buttonText),
                 ),
               ],
@@ -307,5 +326,15 @@ class _CreateOrEditUserState extends State<CreateOrEditUser> {
         ),
       ),
     );
+  }
+
+  bool get _isFormValid {
+    return firstNameController.text.trim().isNotEmpty &&
+        lastNameController.text.trim().isNotEmpty &&
+        regionController.text.trim().isNotEmpty &&
+        streetAndHouseNumberController.text.trim().isNotEmpty &&
+        zipCodeController.text.trim().isNotEmpty &&
+        cityController.text.trim().isNotEmpty &&
+        countryController.text.trim().isNotEmpty;
   }
 }

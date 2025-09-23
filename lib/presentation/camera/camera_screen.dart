@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../components/AppIconButton.dart';
+import '../../components/app_icon_button.dart';
 import 'abstract_camera_body.dart';
 
 /// cameras available of the device, initialized in main
@@ -55,9 +55,13 @@ class _CameraScreenState extends State<CameraScreen> {
         future: _cameraValue,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return AspectRatio(
-              aspectRatio: 1 / _cameraController!.value.aspectRatio,
-              child: _cameraController!.buildPreview(),
+            return FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                width: _cameraController.value.previewSize!.height,
+                height: _cameraController.value.previewSize!.width,
+                child: CameraPreview(_cameraController),
+              ),
             );
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -67,7 +71,6 @@ class _CameraScreenState extends State<CameraScreen> {
 
       photoTaken: false,
       children: [
-
         AppIconButton(
           onPressed: () {
             takePhoto(context);
@@ -106,8 +109,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
   void takePhoto(BuildContext context) async {
     XFile file = await _cameraController.takePicture();
-    if (!mounted) return;
-    _onImageSelected(context, file.path);
+    if (context.mounted) {
+      _onImageSelected(context, file.path);
+    }
   }
 
   Future<void> _pickImage() async {
@@ -116,9 +120,6 @@ class _CameraScreenState extends State<CameraScreen> {
     setState(() {
       if (pickedFile != null) {
         _onImageSelected(context, pickedFile.path);
-        //_image = File(pickedFile.path);  // Set the picked image to the state variable
-      } else {
-        print('No image selected.');
       }
     });
   }

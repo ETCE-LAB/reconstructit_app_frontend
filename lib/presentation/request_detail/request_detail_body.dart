@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/components/AppButton.dart';
-import 'package:reconstructitapp/components/AppIconButton.dart';
+import 'package:reconstructitapp/components/app_button.dart';
+import 'package:reconstructitapp/components/app_icon_button.dart';
 import 'package:reconstructitapp/presentation/choose_payment_method/choose_payment_bottom_sheet.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
 import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
 import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_state.dart';
 
-import '../../components/AppShimmerRectangular.dart';
-import '../../components/AppShimmerRound.dart';
+import '../../components/app_shimmer_rectangular.dart';
+import '../../components/app_shimmer_round.dart';
 
 class RequestDetailBody extends StatelessWidget {
   final CommunityBodyViewModel communityBodyViewModel;

@@ -53,7 +53,7 @@ Future<void> initDependencies() async {
   ic.registerFactory<InitialBloc>(() => InitialBloc());
 
   ic.registerFactory<AuthenticationBloc>(() => AuthenticationBloc());
-  ic.registerFactory<HomeBloc>(() => HomeBloc());
+  ic.registerFactory<HomeBloc>(() => HomeBloc(ic()));
   ic.registerFactory<LogoutBloc>(() => LogoutBloc());
   ic.registerFactory<UserBloc>(() => UserBloc(ic(), ic()));
 
@@ -72,7 +72,7 @@ Future<void> initDependencies() async {
     () => CreateOrEditUserBloc(ic(), ic(), ic()),
   );
   ic.registerFactory<YourItemsBloc>(
-    () => YourItemsBloc(ic(), ic(), ic(), ic()),
+    () => YourItemsBloc(ic(), ic(), ic(), ic(), ic()),
   );
   ic.registerFactory<PrintContractBloc>(
     () =>

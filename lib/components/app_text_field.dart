@@ -57,7 +57,7 @@ class AppTextField extends StatelessWidget {
                 disabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 2.5,
-                    color: Colors.grey ?? Colors.transparent,
+                    color: Colors.grey ,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),

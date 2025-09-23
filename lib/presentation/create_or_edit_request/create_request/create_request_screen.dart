@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/create_or_edit_request_body.dart';
@@ -36,8 +34,6 @@ class CreateRequestBody extends StatelessWidget {
       listener: (context, state) {
         if (state is CreateOrEditRequestSucceeded) {
           Navigator.pop(context);
-        } else if (state is CreateOrEditRequestFailed) {
-          print("failed");
         }
       },
       child: CreateOrEditRequestBody(
@@ -47,11 +43,17 @@ class CreateRequestBody extends StatelessWidget {
           String title,
           String description,
 
-            PrintMaterial? printMaterial,
-            String modelFilePath
+          PrintMaterial? printMaterial,
+          String modelFilePath,
         ) {
           context.read<CreateOrEditRequestBloc>().add(
-            CreateRequest(images, title, description, printMaterial, modelFilePath),
+            CreateRequest(
+              images,
+              title,
+              description,
+              printMaterial,
+              modelFilePath,
+            ),
           );
         },
       ),

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/domain/entity_models/community_print_request.dart';
 import 'package:reconstructitapp/domain/entity_models/construction_file.dart';
-import 'package:reconstructitapp/domain/entity_models/enums/print_material.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/repair_status.dart';
 import 'package:reconstructitapp/domain/entity_models/item.dart';
 import 'package:reconstructitapp/domain/entity_models/item_image.dart';
@@ -26,12 +25,14 @@ class CreateOrEditRequestBloc
   final MediaService mediaService;
   final ConstructionFileService constructionFileService;
 
-  CreateOrEditRequestBloc(this.itemService,
-      this.itemImageService,
-      this.communityPrintRequestService,
-      this.userService,
-      this.mediaService, this.constructionFileService,)
-      : super(CreateOrEditRequestInitial()) {
+  CreateOrEditRequestBloc(
+    this.itemService,
+    this.itemImageService,
+    this.communityPrintRequestService,
+    this.userService,
+    this.mediaService,
+    this.constructionFileService,
+  ) : super(CreateOrEditRequestInitial()) {
     on<CreateRequest>(_onCreate);
     on<EditRequest>(_onEdit);
   }
@@ -73,165 +74,160 @@ class CreateOrEditRequestBloc
         ItemImage(null, mediaResult.value!, itemResult.value!.id!),
       );
       if (!itemImageResult.isSuccessful) {
-        print("not succesful");
-        print(itemImageResult.failure);
-
         emit(CreateOrEditRequestFailed(itemImageResult.failure!));
         return;
       }
     }
-      // upload model file
-      var modelFileUploadResult = await mediaService.postModel(
-          File(event.modelFilePath));
-      if (!modelFileUploadResult.isSuccessful) {
-        print("upload failed");
-        print(modelFileUploadResult.failure!);
-        emit(CreateOrEditRequestFailed(modelFileUploadResult.failure!));
-        return;
-      }
-      // create construction file
-      var constructionFile = await constructionFileService
-          .createConstructionFile(ConstructionFile(
-          null, itemResult.value!.id!, DateTime.now(),
-          modelFileUploadResult.value!));
-      if (!constructionFile.isSuccessful) {
-        print("failed creatiing a const file");
-        emit(CreateOrEditRequestFailed(constructionFile.failure!));
-        return;
-      }
-
-      // create request if needed
-      if (event.printMaterial != null) {
-        var requestResult = await communityPrintRequestService
-            .createCommunityPrintRequest(
-          CommunityPrintRequest(
-            null,
-            null,
-            itemResult.value!.id!,
-            event.printMaterial!,
-          ),
-        );
-        if (!requestResult.isSuccessful) {
-          emit(CreateOrEditRequestFailed(requestResult.failure!));
-          return;
-        }
-      }
-      emit(CreateOrEditRequestSucceeded());
+    // upload model file
+    var modelFileUploadResult = await mediaService.postModel(
+      File(event.modelFilePath),
+    );
+    if (!modelFileUploadResult.isSuccessful) {
+      emit(CreateOrEditRequestFailed(modelFileUploadResult.failure!));
+      return;
+    }
+    // create construction file
+    var constructionFile = await constructionFileService.createConstructionFile(
+      ConstructionFile(
+        null,
+        itemResult.value!.id!,
+        DateTime.now(),
+        modelFileUploadResult.value!,
+      ),
+    );
+    if (!constructionFile.isSuccessful) {
+      emit(CreateOrEditRequestFailed(constructionFile.failure!));
+      return;
     }
 
-    void _onEdit(EditRequest event, emit) async {
-      emit(CreateOrEditRequestLoading());
-      // changes in item
-      var editItemResult = await itemService.updateItem(
-        Item(
+    // create request if needed
+    if (event.printMaterial != null) {
+      var requestResult = await communityPrintRequestService
+          .createCommunityPrintRequest(
+            CommunityPrintRequest(
+              null,
+              null,
+              itemResult.value!.id!,
+              event.printMaterial!,
+            ),
+          );
+      if (!requestResult.isSuccessful) {
+        emit(CreateOrEditRequestFailed(requestResult.failure!));
+        return;
+      }
+    }
+    emit(CreateOrEditRequestSucceeded());
+  }
+
+  void _onEdit(EditRequest event, emit) async {
+    emit(CreateOrEditRequestLoading());
+    // changes in item
+    var editItemResult = await itemService.updateItem(
+      Item(
+        event.yourRequestsBodyViewModel.item.id!,
+        event.repaired ? RepairStatus.fixed : RepairStatus.broken,
+        event.title,
+        event.description,
+        event.yourRequestsBodyViewModel.item.constructionFileId,
+        event.yourRequestsBodyViewModel.item.userId,
+        event.yourRequestsBodyViewModel.item.communityPrintRequestId,
+      ),
+    );
+    if (!editItemResult.isSuccessful) {
+      emit(CreateOrEditRequestFailed(editItemResult.failure!));
+      return;
+    }
+    // changes in community print request
+    // 1. delete request
+    if (event.yourRequestsBodyViewModel.communityPrintRequest != null &&
+        event.withRequest == false) {
+      var deleteRequestResult = await communityPrintRequestService
+          .deleteCommunityPrintRequest(
+            event.yourRequestsBodyViewModel.communityPrintRequest!.id!,
+          );
+      if (!deleteRequestResult.isSuccessful) {
+        emit(CreateOrEditRequestFailed(deleteRequestResult.failure!));
+        return;
+      }
+    }
+    // 2. edit request
+    if (event.yourRequestsBodyViewModel.communityPrintRequest != null &&
+        event.withRequest == true &&
+        event.printMaterial !=
+            event
+                .yourRequestsBodyViewModel
+                .communityPrintRequest!
+                .printMaterial) {
+      var editRequestResult = await communityPrintRequestService
+          .updateCommunityPrintRequest(
+            CommunityPrintRequest(
+              event.yourRequestsBodyViewModel.communityPrintRequest!.id!,
+              null,
+              event.yourRequestsBodyViewModel.communityPrintRequest!.itemId,
+              event.printMaterial!,
+            ),
+          );
+      if (!editRequestResult.isSuccessful) {
+        emit(CreateOrEditRequestFailed(editRequestResult.failure!));
+        return;
+      }
+    }
+    // 3. create request
+    if (event.yourRequestsBodyViewModel.communityPrintRequest == null &&
+        event.withRequest == true &&
+        event.printMaterial != null) {
+      var createRequestResult = await communityPrintRequestService
+          .createCommunityPrintRequest(
+            CommunityPrintRequest(
+              null,
+              null,
+              event.yourRequestsBodyViewModel.item.id!,
+              event.printMaterial!,
+            ),
+          );
+      if (!createRequestResult.isSuccessful) {
+        emit(CreateOrEditRequestFailed(createRequestResult.failure!));
+        return;
+      }
+    }
+    // changes in item images
+    // 1. delete images
+    final imagesToDelete =
+        event.yourRequestsBodyViewModel.images!
+            .where((itemImage) => !event.images.contains(itemImage.imageUrl))
+            .toList();
+    for (var image in imagesToDelete) {
+      var deleteImageResult = await itemImageService.deleteItemImage(image.id!);
+      if (!deleteImageResult.isSuccessful) {
+        emit(CreateOrEditRequestFailed(deleteImageResult.failure!));
+        return;
+      }
+    }
+    // 2. create images
+    final existingUrls =
+        event.yourRequestsBodyViewModel.images!.map((e) => e.imageUrl).toSet();
+    final imagesToCreate =
+        event.images.where((url) => !existingUrls.contains(url)).toList();
+
+    for (var imageFile in imagesToCreate) {
+      var mediaResult = await mediaService.postImage(File(imageFile));
+      if (!mediaResult.isSuccessful) {
+        emit(CreateOrEditRequestFailed(mediaResult.failure!));
+        return;
+      }
+      // create item image
+      var itemImageResult = await itemImageService.createItemImage(
+        ItemImage(
+          null,
+          mediaResult.value!,
           event.yourRequestsBodyViewModel.item.id!,
-          event.repaired ? RepairStatus.fixed : RepairStatus.broken,
-          event.title,
-          event.description,
-          event.yourRequestsBodyViewModel.item.constructionFileId,
-          event.yourRequestsBodyViewModel.item.userId,
-          event.yourRequestsBodyViewModel.item.communityPrintRequestId,
         ),
       );
-      if (!editItemResult.isSuccessful) {
-        emit(CreateOrEditRequestFailed(editItemResult.failure!));
+      if (!itemImageResult.isSuccessful) {
+        emit(CreateOrEditRequestFailed(itemImageResult.failure!));
         return;
       }
-      // changes in community print request
-      // 1. delete request
-      if (event.yourRequestsBodyViewModel.communityPrintRequest != null &&
-          event.withRequest == false) {
-        var deleteRequestResult = await communityPrintRequestService
-            .deleteCommunityPrintRequest(
-          event.yourRequestsBodyViewModel.communityPrintRequest!.id!,
-        );
-        if (!deleteRequestResult.isSuccessful) {
-          emit(CreateOrEditRequestFailed(deleteRequestResult.failure!));
-          return;
-        }
-      }
-      // 2. edit request
-      if (event.yourRequestsBodyViewModel.communityPrintRequest != null &&
-          event.withRequest == true &&
-          event.printMaterial !=
-              event
-                  .yourRequestsBodyViewModel
-                  .communityPrintRequest!
-                  .printMaterial) {
-        var editRequestResult = await communityPrintRequestService
-            .updateCommunityPrintRequest(
-          CommunityPrintRequest(
-            event.yourRequestsBodyViewModel.communityPrintRequest!.id!,
-            null,
-            event.yourRequestsBodyViewModel.communityPrintRequest!.itemId,
-            event.printMaterial!,
-          ),
-        );
-        if (!editRequestResult.isSuccessful) {
-          emit(CreateOrEditRequestFailed(editRequestResult.failure!));
-          return;
-        }
-      }
-      // 3. create request
-      if (event.yourRequestsBodyViewModel.communityPrintRequest == null &&
-          event.withRequest == true &&
-          event.printMaterial != null) {
-        print("in create request");
-        var createRequestResult = await communityPrintRequestService
-            .createCommunityPrintRequest(
-          CommunityPrintRequest(
-            null,
-            null,
-            event.yourRequestsBodyViewModel.item.id!,
-            event.printMaterial!,
-          ),
-        );
-        if (!createRequestResult.isSuccessful) {
-          print("error in create");
-          print(createRequestResult.failure!);
-          emit(CreateOrEditRequestFailed(createRequestResult.failure!));
-          return;
-        }
-      }
-      // changes in item images
-      // 1. delete images
-      final imagesToDelete =
-      event.yourRequestsBodyViewModel.images!
-          .where((itemImage) => !event.images.contains(itemImage.imageUrl))
-          .toList();
-      for (var image in imagesToDelete) {
-        var deleteImageResult = await itemImageService.deleteItemImage(
-            image.id!);
-        if (!deleteImageResult.isSuccessful) {
-          emit(CreateOrEditRequestFailed(deleteImageResult.failure!));
-          return;
-        }
-      }
-      // 2. create images
-      final existingUrls =
-      event.yourRequestsBodyViewModel.images!.map((e) => e.imageUrl).toSet();
-      final imagesToCreate =
-      event.images.where((url) => !existingUrls.contains(url)).toList();
-
-      for (var imageFile in imagesToCreate) {
-        var mediaResult = await mediaService.postImage(File(imageFile));
-        if (!mediaResult.isSuccessful) {
-          emit(CreateOrEditRequestFailed(mediaResult.failure!));
-          return;
-        }
-        // create item image
-        var itemImageResult = await itemImageService.createItemImage(
-          ItemImage(
-            null,
-            mediaResult.value!,
-            event.yourRequestsBodyViewModel.item.id!,
-          ),
-        );
-        if (!itemImageResult.isSuccessful) {
-          emit(CreateOrEditRequestFailed(itemImageResult.failure!));
-          return;
-        }
-      }
-      emit(CreateOrEditRequestSucceeded());
     }
+    emit(CreateOrEditRequestSucceeded());
   }
+}

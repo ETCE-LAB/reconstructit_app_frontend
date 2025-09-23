@@ -1,5 +1,4 @@
 
-import 'package:dio/dio.dart';
 
 class Result<Type> {
   final bool isSuccessful;

@@ -26,7 +26,6 @@ class Presenter {
   /// [context] - Current BuildContext
   /// [successMessage] - Message displayed from the snackbar
   void presentSuccess(BuildContext context, String successMessage) {
-    print("presemt success now");
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: CustomSnackBar.success(
           successMessage: successMessage),

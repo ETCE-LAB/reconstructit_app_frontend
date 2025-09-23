@@ -229,7 +229,6 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
       );
       return;
     }
-    print("ALIVE");
     // get address
     // if print contract has address: get it
     if (printContract.value!.revealedAddressId != null) {
@@ -237,7 +236,6 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
         printContract.value!.revealedAddressId!,
       );
       if (!address.isSuccessful) {
-        print("ADDRESS NOT SUCCESSFUL");
         emit(PrintContractFailed(address.failure!));
         return;
       }

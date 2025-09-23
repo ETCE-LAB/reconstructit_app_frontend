@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reconstructitapp/components/AppSecondaryButton.dart';
+import 'package:reconstructitapp/components/app_secondary_button.dart';
 
 class ChangeProfilePictureBottomSheet extends StatefulWidget {
   final void Function() onDelete;

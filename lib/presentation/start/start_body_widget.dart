@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reconstructitapp/components/AppButton.dart';
+import 'package:reconstructitapp/components/app_button.dart';
 
 class StartBodyWidget extends StatelessWidget {
   final void Function(int index) updateIndex;
@@ -19,12 +19,15 @@ class StartBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // image
-          Expanded(child: Image.asset(imagePath, width: width, fit: BoxFit.contain,)),
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Image.asset(imagePath, fit: BoxFit.fitWidth),
+          ),
 
           // Dot indicator
           Padding(
@@ -35,6 +38,7 @@ class StartBodyWidget extends StatelessWidget {
                 Text(
                   description,
                   style: Theme.of(context).textTheme.titleSmall,
+                  textAlign: TextAlign.center,
                 ),
                 Row(
                   spacing: 4,

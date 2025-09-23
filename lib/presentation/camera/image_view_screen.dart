@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:reconstructitapp/components/AppIconButton.dart';
+import 'package:reconstructitapp/components/app_icon_button.dart';
 
 import 'abstract_camera_body.dart';
 

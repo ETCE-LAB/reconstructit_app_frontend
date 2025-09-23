@@ -37,7 +37,6 @@ class AllPrintContractsBloc
     // get own user
     var userResult = await userService.getCurrentUser();
     if (!userResult.isSuccessful) {
-      print("1");
       emit(AllPrintContractsFailed(userResult.failure!));
       return;
     }
@@ -46,13 +45,10 @@ class AllPrintContractsBloc
       userResult.value!.id!,
     );
     if (!participantsResult.isSuccessful) {
-      print(participantsResult.failure!);
-      print("2");
       emit(AllPrintContractsFailed(participantsResult.failure!));
       return;
     }
     List<PrintContractViewModel> vms = [];
-    print("Alive");
     for (int i = 0; i < participantsResult.value!.length; i++) {
       // get participants for print contract
       var participantsForPrintContractResult = await participantService

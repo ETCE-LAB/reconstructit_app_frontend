@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reconstructitapp/components/app_shimmer_round.dart';
 
 import '../../domain/entity_models/enums/repair_status.dart';
 import '../create_or_edit_request/request_detail_screen.dart';
@@ -52,12 +53,7 @@ class YourRequestsBody extends StatelessWidget {
                                   height: 50,
                                   fit: BoxFit.cover,
                                 )
-                                : Image.asset(
-                                  "assets/example.png",
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                ),
+                                : AppShimmerRound(size: 50),
                       ),
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +106,7 @@ class YourRequestsBody extends StatelessWidget {
             );
           }
         }
-        return Container(child: Text("failed"));
+        return Text("failed");
       },
     );
   }

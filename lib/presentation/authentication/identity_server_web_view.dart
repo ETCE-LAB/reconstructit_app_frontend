@@ -26,15 +26,11 @@ class IdentityServerWebView extends StatelessWidget {
                 onHttpError: (HttpResponseError error) {},
                 onWebResourceError: (WebResourceError error) {},
                 onNavigationRequest: (NavigationRequest request) {
-                  print("web view redirect");
-                  print(request.url);
-                  print(state.redirectUrl.toString());
                   if (request.url.startsWith(
                     state.redirectUrl.toString(),
                   )) {
                     // Parse response url
                     var responseUrl = Uri.parse(request.url);
-                    print("in web view redirecrt");
                     // Trigger credentials fetch
                     context.read<AuthenticationBloc>().add(
                       FetchCredentials(state.currentGrant, responseUrl),

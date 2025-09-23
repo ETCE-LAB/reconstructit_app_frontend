@@ -1,10 +1,11 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:reconstructitapp/components/AppButton.dart';
-import 'package:reconstructitapp/components/AppSecondaryButton.dart';
-import 'package:reconstructitapp/components/AppTextField.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
+import 'package:reconstructitapp/components/app_button.dart';
+import 'package:reconstructitapp/components/app_secondary_button.dart';
+import 'package:reconstructitapp/components/app_text_field.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/repair_status.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/local_components/image_container.dart';
 import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
@@ -13,6 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../domain/entity_models/enums/print_material.dart';
 import '../camera/camera_screen.dart';
 import '../camera/image_view_screen.dart';
+import 'bloc/create_or_edit_request_bloc.dart';
+import 'bloc/create_or_edit_request_state.dart';
 
 class CreateOrEditRequestBody extends StatefulWidget {
   final YourRequestsBodyViewModel? requestsBodyViewModel;
@@ -53,19 +56,19 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
   late String? description;
   late bool hasRequest;
   late double? price;
+  DateTime? createdAt;
 
   late TextEditingController titleController;
   late TextEditingController descriptionController;
-  File? modelFile;
+  String? filePath;
+
   PrintMaterial? selectedPrintMaterial;
   List<String> images = [];
   late TextEditingController materialController;
 
   @override
   void initState() {
-    print(widget.requestsBodyViewModel?.communityPrintRequest.toString());
     super.initState();
-    print(widget.requestsBodyViewModel?.communityPrintRequest?.printMaterial);
     selectedPrintMaterial =
         widget.requestsBodyViewModel?.communityPrintRequest?.printMaterial;
 
@@ -83,8 +86,14 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
     hasRequest = widget.requestsBodyViewModel?.communityPrintRequest != null;
     price = widget.requestsBodyViewModel?.communityPrintRequest?.priceMax;
 
+    filePath = widget.requestsBodyViewModel?.constructionFile?.fileUrl;
+
     descriptionController = TextEditingController(text: description);
     titleController = TextEditingController(text: title);
+    createdAt = widget.requestsBodyViewModel?.constructionFile?.createdAt;
+
+    titleController.addListener(() => setState(() {}));
+    descriptionController.addListener(() => setState(() {}));
   }
 
   @override
@@ -211,9 +220,9 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                         "3D Drucker Modell verwalten",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      if (widget.requestsBodyViewModel != null)
+                      if (createdAt != null)
                         Text(
-                          "letzte Änderung: ",
+                          "letzte Änderung: ${DateFormat('dd.MM.yyyy HH:mm').format(createdAt!)}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodySmall?.copyWith(
@@ -221,8 +230,19 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                                 Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
                         ),
-                      if (widget.requestsBodyViewModel != null)
+                      if (filePath != null)
                         AppSecondaryButton(
+                          onPressed: () async {
+                            if (filePath!.startsWith("http") ||
+                                filePath!.startsWith("https")) {
+                              await launchUrl(
+                                Uri.parse(filePath!),
+                                mode: LaunchMode.externalApplication,
+                              );
+                            } else {
+                              await OpenFile.open(filePath);
+                            }
+                          },
                           child: Row(
                             children: [
                               Icon(Icons.arrow_circle_down),
@@ -230,22 +250,6 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                               Text("Herunterladen"),
                             ],
                           ),
-                          onPressed: () async {
-                            if (widget
-                                    .requestsBodyViewModel
-                                    ?.constructionFile
-                                    ?.fileUrl !=
-                                null) {
-                              await launchUrl(
-                                Uri.parse(
-                                  widget
-                                      .requestsBodyViewModel!
-                                      .constructionFile!
-                                      .fileUrl,
-                                ),
-                              );
-                            }
-                          },
                         ),
                       AppSecondaryButton(
                         child: Row(
@@ -253,7 +257,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                             Icon(Icons.arrow_circle_up),
                             SizedBox(width: 10),
                             Text(
-                              widget.requestsBodyViewModel != null
+                              filePath != null
                                   ? "Andere Datei hochladen"
                                   : "Modell hochladen",
                             ),
@@ -267,7 +271,10 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
 
                           if (result != null &&
                               result.files.single.path != null) {
-                            modelFile = File(result.files.single.path!);
+                            setState(() {
+                              filePath = result.files.single.path!;
+                              createdAt = DateTime.now();
+                            });
                           }
                         },
                       ),
@@ -288,10 +295,10 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                       thumbIcon: WidgetStateProperty.resolveWith<Icon?>((
                         Set<WidgetState> states,
                       ) {
-                        if (states.contains(MaterialState.selected)) {
+                        if (states.contains(WidgetState.selected)) {
                           return Icon(Icons.check);
                         }
-                        //return Colors.grey;
+                        return null;
                       }),
                     ),
 
@@ -299,7 +306,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                       child: Column(
                         children: [
                           Text(
-                            "Frag die Community, ob sie dir beim Erstellen deines Gegenstandes aus der Konstruktionsdatei hilft",
+                            "Frag die Community, ob sie dir beim Erstellen deines Gegenstandes aus der Modelldatei hilft",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
 
@@ -349,7 +356,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                               disabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 2.5,
-                                  color: Colors.grey ?? Colors.transparent,
+                                  color: Colors.grey,
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -381,7 +388,7 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
                           SizedBox(height: 10),
                           if (price != null)
                             Text(
-                              "Laut unseren Berechnungen musst du $price€ dafür zahlen, dass jemand dir das Ersatzteil druckt.",
+                              "Laut unseren Berechnungen musst du ${price!.toStringAsFixed(2)}€ dafür zahlen, dass jemand dir das Ersatzteil druckt.",
                             ),
                         ],
                       ),
@@ -399,41 +406,101 @@ class _CreateOrEditRequestBodyState extends State<CreateOrEditRequestBody> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  widget.onSubmitCreate != null
-                      ? AppButton(
-                        child: Text("Inserieren und CAD generieren"),
-                        onPressed: () {
-                          widget.onSubmitCreate!(
-                            images,
-                            titleController.text,
-                            descriptionController.text,
-                            hasRequest == true ? selectedPrintMaterial : null,
-                            modelFile!.path,
-                          );
-                        },
-                      )
-                      : AppButton(
-                        child: Text("Änderungen speichern"),
-                        onPressed: () {
-                          widget.onSubmitEdit!(
-                            widget.requestsBodyViewModel!,
-                            titleController.text,
-                            descriptionController.text,
-                            repaired,
-                            images,
+                  BlocBuilder<
+                    CreateOrEditRequestBloc,
+                    CreateOrEditRequestState
+                  >(
+                    builder: (context, state) {
+                      final isLoading = state is CreateOrEditRequestLoading;
 
-                            hasRequest == true ? selectedPrintMaterial : null,
-                            hasRequest,
-                          );
-                        },
-                      ),
+                      return AppButton(
+                        onPressed:
+                            !_isFormValid || isLoading
+                                ? null
+                                : widget.onSubmitCreate != null
+                                ? () {
+                                  widget.onSubmitCreate!(
+                                    images,
+                                    titleController.text,
+                                    descriptionController.text,
+                                    hasRequest == true
+                                        ? selectedPrintMaterial
+                                        : null,
+                                    filePath!,
+                                  );
+                                }
+                                : () {
+                                  widget.onSubmitEdit!(
+                                    widget.requestsBodyViewModel!,
+                                    titleController.text,
+                                    descriptionController.text,
+                                    repaired,
+                                    images,
+                                    hasRequest == true
+                                        ? selectedPrintMaterial
+                                        : null,
+                                    hasRequest,
+                                  );
+                                },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (isLoading) ...[
+                              SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                widget.onSubmitCreate != null
+                                    ? "Erstellen..."
+                                    : "Speichern...",
+                              ),
+                            ] else ...[
+                              Text(
+                                widget.onSubmitCreate != null
+                                    ? "Erstellen"
+                                    : "Änderungen speichern",
+                              ),
+                            ],
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
-              Container(height: 15),
             ],
           ),
         ],
       ),
     );
+  }
+
+  bool get _isFormValid {
+    // min one image
+    final hasImage = images.isNotEmpty;
+
+    // title and description is set
+    final hasTitle = titleController.text.trim().isNotEmpty;
+    final hasDescription = descriptionController.text.trim().isNotEmpty;
+
+    // material must be set if has request is true
+    final hasMaterialIfRequested = !hasRequest || selectedPrintMaterial != null;
+
+    // Model File should exists
+    final hasModelFile = filePath != null;
+
+    return hasImage &&
+        hasTitle &&
+        hasDescription &&
+        hasMaterialIfRequested &&
+        hasModelFile;
   }
 }
