@@ -64,7 +64,7 @@ Future<void> initDependencies() async {
     () => RequestDetailBloc(ic(), ic(), ic(), ic()),
   );
   ic.registerFactory<CommunityBloc>(
-    () => CommunityBloc(ic(), ic(), ic(), ic()),
+    () => CommunityBloc(ic(), ic(), ic(), ic(), ic(), ic()),
   );
   ic.registerFactory<PaymentMethodsBloc>(() => PaymentMethodsBloc(ic(), ic()));
 

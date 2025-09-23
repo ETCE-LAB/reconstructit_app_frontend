@@ -1,7 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reconstructitapp/domain/entity_models/enums/print_contract_status.dart';
 import 'package:reconstructitapp/domain/services/community_print_request_service.dart';
+import 'package:reconstructitapp/domain/services/construction_file_service.dart';
 import 'package:reconstructitapp/domain/services/item_image_service.dart';
 import 'package:reconstructitapp/domain/services/item_service.dart';
+import 'package:reconstructitapp/domain/services/print_contract_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
 
@@ -13,13 +16,16 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
   final ItemService itemService;
   final ItemImageService itemImageService;
   final CommunityPrintRequestService communityPrintRequestService;
+  final ConstructionFileService constructionFileService;
+  final PrintContractService printContractService;
 
   CommunityBloc(
     this.itemService,
     this.itemImageService,
     this.communityPrintRequestService,
-    //this.chatService,
     this.userService,
+    this.constructionFileService,
+    this.printContractService,
   ) : super(CommunityInitial()) {
     on<CommunityRefresh>(_onRefresh);
   }
@@ -52,8 +58,21 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         return;
       }
 
-      // if not the item from the current user, break
-      if (itemsResult.value!.userId == userResult.value!.id ) {
+      var printContracts = await printContractService.getContractsForRequest(
+        requestResult.value![i].id!,
+      );
+      // if there is already an accepted contract, skip this
+      if (printContracts.value!.any(
+        (contract) =>
+            contract.contractStatus == PrintContractStatus.done ||
+            contract.contractStatus == PrintContractStatus.printed ||
+            contract.contractStatus == PrintContractStatus.accepted,
+      )) {
+        breakOutCount++;
+        continue;
+      }
+      // if the item from the current user, break
+      if (itemsResult.value!.userId == userResult.value!.id) {
         breakOutCount++;
         continue;
       }
@@ -63,6 +82,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
           null,
           requestResult.value![i],
           itemsResult.value!,
+          null,
           null,
         ),
       );
@@ -80,6 +100,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         requestResult.value![i],
         itemsResult.value!,
         imageResult.value!,
+        null,
       );
       emit(CommunityLoaded(viewModels));
       // get the user
@@ -95,6 +116,24 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         requestResult.value![i],
         itemsResult.value!,
         imageResult.value!,
+        null,
+      );
+
+      emit(CommunityLoaded(viewModels));
+      // get the construction file
+      var fileResult = await constructionFileService.getConstructionFile(
+        itemsResult.value!.constructionFileId!,
+      );
+      if (!fileResult.isSuccessful) {
+        emit(CommunityFailed(fileResult.failure!));
+        return;
+      }
+      viewModels[i - breakOutCount] = CommunityBodyViewModel(
+        requestUserResult.value!,
+        requestResult.value![i],
+        itemsResult.value!,
+        imageResult.value!,
+        fileResult.value!,
       );
 
       emit(CommunityLoaded(viewModels));

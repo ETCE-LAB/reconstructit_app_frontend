@@ -6,6 +6,7 @@ import 'package:reconstructitapp/presentation/choose_payment_method/choose_payme
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
 import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
 import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/app_shimmer_rectangular.dart';
 import '../../components/app_shimmer_round.dart';
@@ -153,9 +154,21 @@ class RequestDetailBody extends StatelessWidget {
                                     style:
                                         Theme.of(context).textTheme.bodySmall,
                                   ),
-                                  AppIconButton(
-                                    icon: Icon(Icons.arrow_circle_down),
-                                  ),
+                                  if (communityBodyViewModel.constructionFile !=
+                                      null)
+                                    AppIconButton(
+                                      icon: Icon(Icons.arrow_circle_down),
+                                      onPressed: () async {
+                                        await launchUrl(
+                                          Uri.parse(
+                                            communityBodyViewModel
+                                                .constructionFile!
+                                                .fileUrl,
+                                          ),
+                                          mode: LaunchMode.externalApplication,
+                                        );
+                                      },
+                                    ),
                                 ],
                               ),
                             ),

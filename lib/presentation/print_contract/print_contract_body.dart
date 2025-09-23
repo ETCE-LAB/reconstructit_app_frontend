@@ -70,6 +70,7 @@ class PrintContractBody extends StatelessWidget {
                             printContractViewModel.communityPrintRequest!,
                             printContractViewModel.item!,
                             printContractViewModel.itemImages,
+                            printContractViewModel.constructionFile
                           ),
                         ),
                   ),
