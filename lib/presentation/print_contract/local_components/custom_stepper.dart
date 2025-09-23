@@ -19,6 +19,7 @@ class OpenAllStepper extends StatelessWidget {
   Widget build(BuildContext context) {
     final double circleWidth = 34;
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: steps.length,
       itemBuilder: (context, index) {
         final step = steps[index];

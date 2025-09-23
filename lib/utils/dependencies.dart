@@ -5,7 +5,7 @@ import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'package:reconstructitapp/infrastructure/repositories/media_repository.dart';
 import 'package:reconstructitapp/infrastructure/repositories/user_repository.dart';
 import 'package:reconstructitapp/infrastructure/sources/remote_datasource.dart';
-import 'package:reconstructitapp/presentation/all_print_contracts/bloc/print_contract_bloc.dart';
+import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print_contracts_bloc.dart';
 import 'package:reconstructitapp/presentation/choose_payment_method/bloc/payment_methods_bloc.dart';
 import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_user/bloc/create_or_edit_user_bloc.dart';
@@ -75,13 +75,24 @@ Future<void> initDependencies() async {
     () => YourItemsBloc(ic(), ic(), ic(), ic(), ic()),
   );
   ic.registerFactory<PrintContractBloc>(
-    () =>
-        PrintContractBloc(ic(), ic(), ic(), ic(), ic(), ic(), ic(), ic(), ic()),
+    () => PrintContractBloc(
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+      ic(),
+    ),
   );
 
   ic.registerFactory<EditPrintContractBloc>(
-        () =>
-            EditPrintContractBloc(ic(), ic()),
+    () => EditPrintContractBloc(ic(), ic()),
   );
   ic.registerFactory<AllPrintContractsBloc>(
     () => AllPrintContractsBloc(ic(), ic(), ic(), ic(), ic(), ic()),

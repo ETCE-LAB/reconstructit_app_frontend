@@ -1,8 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reconstructitapp/domain/entity_models/construction_file.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/participant_role.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/print_contract_status.dart';
 import 'package:reconstructitapp/domain/services/address_service.dart';
 import 'package:reconstructitapp/domain/services/community_print_request_service.dart';
+import 'package:reconstructitapp/domain/services/construction_file_service.dart';
+import 'package:reconstructitapp/domain/services/item_image_service.dart';
+import 'package:reconstructitapp/domain/services/item_service.dart';
 import 'package:reconstructitapp/domain/services/participant_service.dart';
 import 'package:reconstructitapp/domain/services/payment_attribute_service.dart';
 import 'package:reconstructitapp/domain/services/payment_method_service.dart';
@@ -25,18 +29,26 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
   final PaymentValueService paymentValueService;
   final PaymentAttributeService paymentAttributeService;
   final AddressService addressService;
+  final ItemService itemService;
+  final ItemImageService itemImageService;
+  final ConstructionFileService constructionFileService;
 
   //final ChatService chatService;
 
-  PrintContractBloc(this.userService,
-      this.participantService,
-      this.communityPrintRequestService,
-      this.printContractService,
-      this.paymentService,
-      this.paymentMethodService,
-      this.paymentValueService,
-      this.paymentAttributeService,
-      this.addressService,) : super(PrintContractInitial()) {
+  PrintContractBloc(
+    this.userService,
+    this.participantService,
+    this.communityPrintRequestService,
+    this.printContractService,
+    this.paymentService,
+    this.paymentMethodService,
+    this.paymentValueService,
+    this.paymentAttributeService,
+    this.addressService,
+    this.itemService,
+    this.itemImageService,
+    this.constructionFileService,
+  ) : super(PrintContractInitial()) {
     on<PrintContractRefresh>(_onRefresh);
   }
 
@@ -70,12 +82,13 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
     }
     // get own user
     var ownUser = await userService.getCurrentUser();
-    if (!ownUser.isSuccessful) {
+
+    if (!ownUser.isSuccessful || ownUser.value == null) {
       emit(PrintContractFailed(ownUser.failure!));
       return;
     }
     var ownParticipant = participants.value!.firstWhere(
-          (participant) => participant.userId == ownUser.value!.id,
+      (participant) => participant.userId == ownUser.value!.id,
     );
     emit(
       PrintContractLoaded(
@@ -83,12 +96,13 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
           isLoading: true,
           printContract: printContract.value!,
           ownRole: ownParticipant.role,
+          ownUser: ownUser.value!,
         ),
       ),
     );
     // get other user
     var otherParticipant = participants.value!.firstWhere(
-          (participant) => participant.userId != ownUser.value!.id!,
+      (participant) => participant.userId != ownUser.value!.id!,
     );
     var otherUser = await userService.getUser(otherParticipant.userId!);
     if (!otherUser.isSuccessful) {
@@ -102,6 +116,7 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
           printContract: printContract.value!,
           ownRole: ownParticipant.role,
           otherUser: otherUser.value!,
+          ownUser: ownUser.value!,
         ),
       ),
     );
@@ -121,6 +136,7 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
           ownRole: ownParticipant.role,
           otherUser: otherUser.value!,
           communityPrintRequest: communityPrintRequest.value!,
+          ownUser: ownUser.value!,
         ),
       ),
     );
@@ -141,6 +157,7 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
           otherUser: otherUser.value!,
           communityPrintRequest: communityPrintRequest.value!,
           payment: payment.value!,
+          ownUser: ownUser.value!,
         ),
       ),
     );
@@ -162,6 +179,7 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
           communityPrintRequest: communityPrintRequest.value!,
           payment: payment.value!,
           paymentMethod: paymentMethod.value!,
+          ownUser: ownUser.value!,
         ),
       ),
     );
@@ -184,6 +202,7 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
           payment: payment.value!,
           paymentMethod: paymentMethod.value!,
           paymentAttributes: paymentAttributes.value!,
+          ownUser: ownUser.value!,
         ),
       ),
     );
@@ -207,9 +226,91 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
           paymentMethod: paymentMethod.value!,
           paymentAttributes: paymentAttributes.value!,
           paymentValues: paymentValues.value!,
+          ownUser: ownUser.value!,
         ),
       ),
     );
+    // get item image
+    var imageResult = await itemImageService.getItemImagesForItem(
+      communityPrintRequest.value!.itemId,
+    );
+    if (!imageResult.isSuccessful) {
+      emit(PrintContractFailed(imageResult.failure!));
+      return;
+    }
+    emit(
+      PrintContractLoaded(
+        PrintContractViewModel(
+          isLoading: true,
+          printContract: printContract.value!,
+          ownRole: ownParticipant.role,
+          otherUser: otherUser.value!,
+          communityPrintRequest: communityPrintRequest.value!,
+          payment: payment.value!,
+          paymentMethod: paymentMethod.value!,
+          paymentAttributes: paymentAttributes.value!,
+          paymentValues: paymentValues.value!,
+          ownUser: ownUser.value!,
+          itemImages: imageResult.value!,
+        ),
+      ),
+    );
+    // get item
+    var item = await itemService.getItem(communityPrintRequest.value!.itemId);
+    if (!item.isSuccessful) {
+      emit(PrintContractFailed(item.failure!));
+      return;
+    }
+
+    emit(
+      PrintContractLoaded(
+        PrintContractViewModel(
+          isLoading: true,
+          printContract: printContract.value!,
+          ownRole: ownParticipant.role,
+          otherUser: otherUser.value!,
+          communityPrintRequest: communityPrintRequest.value!,
+          payment: payment.value!,
+          paymentMethod: paymentMethod.value!,
+          paymentAttributes: paymentAttributes.value!,
+          paymentValues: paymentValues.value!,
+          ownUser: ownUser.value!,
+          item: item.value!,
+          itemImages: imageResult.value!,
+        ),
+      ),
+    );
+    // get construction file
+    ConstructionFile? constructionFile;
+    if (item.value!.constructionFileId != null) {
+      var constructionFileResult = await constructionFileService
+          .getConstructionFile(item.value!.constructionFileId!);
+      if (!constructionFileResult.isSuccessful) {
+        emit(PrintContractFailed(constructionFileResult.failure!));
+        return;
+      }
+      constructionFile = constructionFileResult.value!;
+      emit(
+        PrintContractLoaded(
+          PrintContractViewModel(
+            isLoading: true,
+            printContract: printContract.value!,
+            ownRole: ownParticipant.role,
+            otherUser: otherUser.value!,
+            communityPrintRequest: communityPrintRequest.value!,
+            payment: payment.value!,
+            paymentMethod: paymentMethod.value!,
+            paymentAttributes: paymentAttributes.value!,
+            paymentValues: paymentValues.value!,
+            ownUser: ownUser.value!,
+            item: item.value!,
+            itemImages: imageResult.value!,
+            constructionFile: constructionFile,
+          ),
+        ),
+      );
+    }
+
     // no need in address when contractStatus == pending
     if (printContract.value!.contractStatus == PrintContractStatus.pending) {
       emit(
@@ -224,6 +325,10 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
             paymentMethod: paymentMethod.value!,
             paymentAttributes: paymentAttributes.value!,
             paymentValues: paymentValues.value!,
+            ownUser: ownUser.value!,
+            item: item.value!,
+            itemImages: imageResult.value!,
+            constructionFile: constructionFile,
           ),
         ),
       );
@@ -252,14 +357,17 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
             paymentAttributes: paymentAttributes.value!,
             paymentValues: paymentValues.value!,
             address: address.value!,
+            ownUser: ownUser.value!,
+            item: item.value!,
+            itemImages: imageResult.value!,
+            constructionFile: constructionFile,
           ),
         ),
       );
       return;
     }
     // if current user is helpreceiver: get own address
-    if (ownParticipant.role == ParticipantRole.helpReceiver
-    ) {
+    if (ownParticipant.role == ParticipantRole.helpReceiver) {
       var address = await addressService.getAddressByUserId(ownUser.value!.id!);
       if (!address.isSuccessful) {
         emit(PrintContractFailed(address.failure!));
@@ -278,26 +386,14 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
             paymentAttributes: paymentAttributes.value!,
             paymentValues: paymentValues.value!,
             address: address.value!,
+            ownUser: ownUser.value!,
+            item: item.value!,
+            itemImages: imageResult.value!,
+            constructionFile: constructionFile,
           ),
         ),
       );
       return;
     }
-    // emit not loaded anymore
-    emit(
-      PrintContractLoaded(
-        PrintContractViewModel(
-          isLoading: false,
-          printContract: printContract.value!,
-          ownRole: ownParticipant.role,
-          otherUser: otherUser.value!,
-          communityPrintRequest: communityPrintRequest.value!,
-          payment: payment.value!,
-          paymentMethod: paymentMethod.value!,
-          paymentAttributes: paymentAttributes.value!,
-          paymentValues: paymentValues.value!,
-        ),
-      ),
-    );
   }
 }

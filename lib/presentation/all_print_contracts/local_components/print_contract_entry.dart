@@ -50,16 +50,16 @@ class PrintContractEntry extends StatelessWidget {
                 left: 0,
                 bottom: 0,
                 child:
-                    printContractViewModel.itemImage != null
+                    printContractViewModel.ownUser != null
                         ? ClipOval(
                           child:
                               printContractViewModel
-                                          .otherUser!
+                                          .ownUser!
                                           .userProfilePictureUrl !=
                                       null
                                   ? Image.network(
                                     printContractViewModel
-                                        .otherUser!
+                                        .ownUser!
                                         .userProfilePictureUrl!,
                                     width: 35,
                                     height: 35,

@@ -7,16 +7,16 @@ import 'package:reconstructitapp/presentation/request_detail/request_detail_body
 import '../../utils/dependencies.dart';
 import 'bloc/request_detail_event.dart';
 
-class RequestDetailScreen extends StatefulWidget {
+class CommunityRequestDetailScreen extends StatefulWidget {
   final CommunityBodyViewModel communityBodyViewModel;
 
-  const RequestDetailScreen({super.key, required this.communityBodyViewModel});
+  const CommunityRequestDetailScreen({super.key, required this.communityBodyViewModel});
 
   @override
-  State<RequestDetailScreen> createState() => _RequestDetailScreenState();
+  State<CommunityRequestDetailScreen> createState() => _CommunityRequestDetailScreenState();
 }
 
-class _RequestDetailScreenState extends State<RequestDetailScreen> {
+class _CommunityRequestDetailScreenState extends State<CommunityRequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

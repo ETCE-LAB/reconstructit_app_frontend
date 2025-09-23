@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/presentation/all_print_contracts/bloc/print_contract_bloc.dart';
-import 'package:reconstructitapp/presentation/all_print_contracts/bloc/print_contract_state.dart';
+import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print_contracts_bloc.dart';
+import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print_contracts_state.dart';
 import 'package:reconstructitapp/presentation/all_print_contracts/local_components/print_contract_entry.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_screen.dart';
 

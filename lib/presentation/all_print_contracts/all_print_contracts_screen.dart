@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/presentation/all_print_contracts/all_print_contracts_body.dart';
-import 'package:reconstructitapp/presentation/all_print_contracts/bloc/print_contract_event.dart';
+import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print_contracts_event.dart';
 
 import '../../utils/dependencies.dart';
-import 'bloc/print_contract_bloc.dart';
+import 'bloc/all_print_contracts_bloc.dart';
 
 class AllPrintContractsScreen extends StatefulWidget {
   const AllPrintContractsScreen({super.key});

@@ -8,12 +8,12 @@ class CommunityBodyViewModel {
   final User? user;
   final CommunityPrintRequest communityPrintRequest;
   final Item item;
-  final ItemImage? image;
+  final List<ItemImage>? images;
 
   CommunityBodyViewModel(
     this.user,
     this.communityPrintRequest,
     this.item,
-    this.image,
+    this.images,
   );
 }

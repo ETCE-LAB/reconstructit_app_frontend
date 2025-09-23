@@ -67,9 +67,9 @@ class CommunityRequestEntry extends StatelessWidget {
           // item
           Stack(
             children: [
-              viewModel.image != null
+              viewModel.images != null
                   ? Image.network(
-                    viewModel.image!.imageUrl,
+                    viewModel.images![0].imageUrl,
                     width: width,
                     height: width,
                     fit: BoxFit.cover,
@@ -176,7 +176,7 @@ class CommunityRequestEntry extends StatelessWidget {
           MaterialPageRoute(
             builder:
                 (context) =>
-                    RequestDetailScreen(communityBodyViewModel: viewModel),
+                    CommunityRequestDetailScreen(communityBodyViewModel: viewModel),
           ),
         );
       },

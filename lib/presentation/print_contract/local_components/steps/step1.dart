@@ -46,7 +46,7 @@ class Step1 {
     } else {
       final isHelpProvider = role == ParticipantRole.helpProvider;
       final name = user?.firstName;
-      final priceText = price != null ? "$price€" : null;
+      final priceText = price != null ? "${price.toStringAsFixed(2)}€" : null;
 
       if (name == null || priceText == null) {
         content1 = const AppShimmerRectangular(width: 180, height: 15);

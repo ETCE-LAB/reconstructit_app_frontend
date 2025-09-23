@@ -79,7 +79,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         null,
         requestResult.value![i],
         itemsResult.value!,
-        imageResult.value![0],
+        imageResult.value!,
       );
       emit(CommunityLoaded(viewModels));
       // get the user
@@ -94,7 +94,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         requestUserResult.value!,
         requestResult.value![i],
         itemsResult.value!,
-        imageResult.value![0],
+        imageResult.value!,
       );
 
       emit(CommunityLoaded(viewModels));

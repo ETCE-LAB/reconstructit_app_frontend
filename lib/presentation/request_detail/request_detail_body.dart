@@ -23,9 +23,9 @@ class RequestDetailBody extends StatelessWidget {
         SingleChildScrollView(
           child: Column(
             children: [
-              communityBodyViewModel.image != null
+              communityBodyViewModel.images != null
                   ? Image.network(
-                    communityBodyViewModel.image!.imageUrl,
+                    communityBodyViewModel.images![0].imageUrl,
                     width: width,
                     height: width,
                     fit: BoxFit.cover,
@@ -86,6 +86,7 @@ class RequestDetailBody extends StatelessWidget {
                                                 Theme.of(
                                                   context,
                                                 ).textTheme.titleSmall,
+                                        textAlign: TextAlign.center,
                                           )
                                           : AppShimmerRectangular(
                                             width: 100,
@@ -146,7 +147,7 @@ class RequestDetailBody extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Text(
-                                    "CAD\nherunterladen",
+                                    "Modell\nherunterladen",
                                     textAlign: TextAlign.center,
                                     style:
                                         Theme.of(context).textTheme.bodySmall,

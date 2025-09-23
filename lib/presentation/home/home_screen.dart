@@ -17,12 +17,15 @@ class AuthenticationHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AuthenticationScreen(
+
       onAuthenticated: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => HomeScreen()),
         );
+
       },
+
     );
   }
 }
@@ -72,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.groups_outlined,
                       //  color: context.lightPrimary,
                     ),
-                    label: "Reparatur",
+                    label: "Community",
                   ),
                   NavigationDestination(
                     selectedIcon: Icon(

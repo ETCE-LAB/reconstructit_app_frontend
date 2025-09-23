@@ -1,4 +1,5 @@
 import 'package:reconstructitapp/domain/entity_models/address.dart';
+import 'package:reconstructitapp/domain/entity_models/construction_file.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/participant_role.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/payment_status.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/print_contract_status.dart';
@@ -17,6 +18,9 @@ import '../../domain/entity_models/user.dart';
 class PrintContractViewModel {
   // used to coordinate the names/pronouns
   final ParticipantRole? ownRole;
+  final User? ownUser;
+
+  final ConstructionFile? constructionFile;
 
   // used only for the name
   final User? otherUser;
@@ -38,10 +42,11 @@ class PrintContractViewModel {
 
   // used for the payment Status, step 4 and 5
   final Payment? payment;
-  final ItemImage? itemImage;
+  final List<ItemImage>? itemImages;
+
   final bool isLoading;
 
-  PrintContractViewModel( {
+  PrintContractViewModel(  {this.ownUser,this.constructionFile,
     this.ownRole,
     this.otherUser,
     this.printContract,
@@ -49,7 +54,7 @@ class PrintContractViewModel {
     this.paymentMethod,
     this.paymentAttributes,
     this.paymentValues,
-    this.itemImage,
+    this.itemImages,
     this.address,
     this.payment,
     this.item,

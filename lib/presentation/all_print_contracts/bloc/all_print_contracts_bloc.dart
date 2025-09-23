@@ -7,8 +7,8 @@ import 'package:reconstructitapp/domain/services/print_contract_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_view_model.dart';
 
-import 'print_contract_event.dart';
-import 'print_contract_state.dart';
+import 'all_print_contracts_event.dart';
+import 'all_print_contracts_state.dart';
 
 class AllPrintContractsBloc
     extends Bloc<AllPrintContractsEvent, AllPrintContractsState> {
@@ -112,6 +112,7 @@ class AllPrintContractsBloc
         communityPrintRequest: communityPrintRequest.value!,
         payment: paymentResult.value!,
         item: itemResult.value!,
+        ownUser: userResult.value!
       );
       vms.add(vm);
     }

@@ -25,7 +25,7 @@ class _AuthenticationState extends State<AuthenticationScreen> {
       child: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           if (state is AuthenticationSucceeded) {
-            Navigator.pop(context);
+            // Navigator.pop(context);
             if (widget.onAuthenticated != null) {
               widget.onAuthenticated!();
             }
@@ -67,7 +67,7 @@ class _AuthenticationState extends State<AuthenticationScreen> {
                     child: const Text("Erneut versuchen"),
                   ),
                 );
-              }
+              } else if (state is AuthenticationSucceeded) {}
 
               return Container();
             },
