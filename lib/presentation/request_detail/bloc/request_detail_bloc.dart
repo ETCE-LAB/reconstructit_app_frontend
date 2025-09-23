@@ -7,6 +7,7 @@ import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'request_detail_event.dart';
 import 'request_detail_state.dart';
 
+// this bloc is only used to check if "to process" or "offer print" should be displayed
 class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
   final CommunityPrintRequestService communityPrintRequestService;
   final PrintContractService printContractService;
@@ -34,9 +35,9 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
       emit(RequestDetailFailed(contractResult.failure!));
       return;
     }
-    // if there are no contracts, the user cannnot have a contract
+    // if there are no contracts, the user can not have a contract
     if (contractResult.value!.isEmpty) {
-      emit(RequestDetailLoaded(alreadyHasChat: false));
+      emit(RequestDetailLoaded(printContractId: null));
       return;
     }
     // get own user id
@@ -57,10 +58,10 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
         (participant) => participant.userId == userResult.value!,
       );
       if (!userIsParticipant) {
-        emit(RequestDetailLoaded(alreadyHasChat: true));
+        emit(RequestDetailLoaded(printContractId: contractResult.value![i].id));
         return;
       }
     }
-    emit(RequestDetailLoaded(alreadyHasChat: false));
+    emit(RequestDetailLoaded(printContractId: null));
   }
 }

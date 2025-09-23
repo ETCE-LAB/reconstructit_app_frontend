@@ -96,7 +96,7 @@ class PrintContractBody extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            //mainAxisSize: MainAxisSize.min,
             spacing: 10.0,
             children: [
               // download construction file
@@ -119,42 +119,44 @@ class PrintContractBody extends StatelessWidget {
                   ),
                 ),
               Divider(),
-              OpenAllStepper(
-                steps:
-                    [
-                          Step1(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
+              Expanded(
+                child: OpenAllStepper(
+                  steps:
+                      [
+                            Step1(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
 
-                          Step2(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
+                            Step2(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
 
-                          Step3(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
+                            Step3(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
 
-                          Step4(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
+                            Step4(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
 
-                          Step5(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
+                            Step5(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
 
-                          Step6(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
-                          Step7(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
-                          Step8(
-                            printContractViewModel: printContractViewModel,
-                          ).build(context),
-                        ]
-                        // remove nulls
-                        .whereType<OpenStep>()
-                        .toList(),
+                            Step6(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
+                            Step7(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
+                            Step8(
+                              printContractViewModel: printContractViewModel,
+                            ).build(context),
+                          ]
+                          // remove nulls
+                          .whereType<OpenStep>()
+                          .toList(),
+                ),
               ),
             ],
           ),

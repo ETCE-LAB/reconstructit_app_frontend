@@ -5,9 +5,9 @@ class RequestDetailInitial extends RequestDetailState {}
 class RequestDetailLoading extends RequestDetailState {}
 
 class RequestDetailLoaded extends RequestDetailState {
-  final bool alreadyHasChat;
+  final String? printContractId;
 
-  RequestDetailLoaded({required this.alreadyHasChat});
+  RequestDetailLoaded({required this.printContractId});
 }
 
 class RequestDetailFailed extends RequestDetailState {

@@ -9,6 +9,7 @@ import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail
 
 import '../../components/app_shimmer_rectangular.dart';
 import '../../components/app_shimmer_round.dart';
+import '../print_contract/print_contract_screen.dart';
 
 class RequestDetailBody extends StatelessWidget {
   final CommunityBodyViewModel communityBodyViewModel;
@@ -86,7 +87,7 @@ class RequestDetailBody extends StatelessWidget {
                                                 Theme.of(
                                                   context,
                                                 ).textTheme.titleSmall,
-                                        textAlign: TextAlign.center,
+                                            textAlign: TextAlign.center,
                                           )
                                           : AppShimmerRectangular(
                                             width: 100,
@@ -212,11 +213,24 @@ class RequestDetailBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    state.alreadyHasChat
+                    state.printContractId != null
                         ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AppButton(
+                              // navigate to process
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => PrintContractScreen(
+                                          printContractId:
+                                              state.printContractId!,
+                                        ),
+                                  ),
+                                );
+                              },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,

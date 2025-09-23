@@ -53,7 +53,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
       }
 
       // if not the item from the current user, break
-      if (itemsResult.value!.userId == userResult.value!.id) {
+      if (itemsResult.value!.userId == userResult.value!.id ) {
         breakOutCount++;
         continue;
       }
