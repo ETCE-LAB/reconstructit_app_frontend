@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:reconstructitapp/components/app_shimmer_rectangular.dart';
 import 'package:reconstructitapp/components/app_shimmer_round.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
-import 'package:reconstructitapp/presentation/request_detail/request_detail_screen.dart';
 
+import '../../others_request_detail/others_request_detail_screen.dart';
+
+/// Browsing entry to a community print request
+/// Clickable to get to the CommunityRequestDetailScreen
 class CommunityRequestEntry extends StatelessWidget {
   final CommunityBodyViewModel viewModel;
 
@@ -176,7 +179,7 @@ class CommunityRequestEntry extends StatelessWidget {
           MaterialPageRoute(
             builder:
                 (context) =>
-                    CommunityRequestDetailScreen(communityBodyViewModel: viewModel),
+                    OthersRequestDetailScreen(communityBodyViewModel: viewModel),
           ),
         );
       },

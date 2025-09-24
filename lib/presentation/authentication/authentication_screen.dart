@@ -7,6 +7,7 @@ import 'bloc/authentication_event.dart';
 import 'bloc/authentication_state.dart';
 import 'identity_server_web_view.dart';
 
+/// Handles Authentication; decides of a user needs to log in again and load the account
 class AuthenticationScreen extends StatefulWidget {
   final VoidCallback? onAuthenticated;
 

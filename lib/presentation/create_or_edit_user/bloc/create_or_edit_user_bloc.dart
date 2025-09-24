@@ -10,6 +10,7 @@ import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'create_or_edit_user_event.dart';
 import 'create_or_edit_user_state.dart';
 
+/// Create or edit user profile and address
 class CreateOrEditUserBloc
     extends Bloc<CreateOrEditUserEvent, CreateOrEditUserState> {
   final UserService userService;

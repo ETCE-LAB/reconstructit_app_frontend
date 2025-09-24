@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// The theme of the application - defined colors, text styles and some further ui settings
 const Color _primary = Color(0xFF675496);
 ThemeData lightTheme = ThemeData(
   filledButtonTheme: FilledButtonThemeData(

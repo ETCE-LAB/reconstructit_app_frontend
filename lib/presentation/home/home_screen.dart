@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/presentation/all_print_contracts/all_print_contracts_screen.dart';
 import 'package:reconstructitapp/presentation/community/community_screen.dart';
-import 'package:reconstructitapp/presentation/your_requests/your_requests_screen.dart';
+import 'package:reconstructitapp/presentation/your_items/your_items_screen.dart';
 
 import '../../utils/dependencies.dart';
 import '../authentication/authentication_screen.dart';
@@ -17,19 +17,18 @@ class AuthenticationHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AuthenticationScreen(
-
       onAuthenticated: () {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => HomeScreen()),
         );
-
       },
-
     );
   }
 }
 
+/// Screen to load the nav bar ad the screens, handles tab changes
+/// If user profile does not exists show create profile screen
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -106,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               body: SafeArea(
                 child:
                     const [
-                      YourRequestsScreen(),
+                      YourItemsScreen(),
                       CommunityScreen(),
                       AllPrintContractsScreen(),
                       AccountScreen(),

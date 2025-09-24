@@ -6,28 +6,25 @@ import 'package:reconstructitapp/utils/result.dart';
 import '../../domain/services/user_service.dart';
 import '../sources/account_local_datasource.dart';
 
-
 class UserRepository implements UserService {
   final IRemoteDatasource remoteDatasource;
   final IAccountLocalDatasource accountLocalDatasource;
 
-  UserRepository(this.remoteDatasource,
-      this.accountLocalDatasource,);
+  UserRepository(this.remoteDatasource, this.accountLocalDatasource);
 
   @override
   Future<Result<User?>> getCurrentUser() async {
     try {
       // Get User id from local credentials
-
       String userAccountId = await accountLocalDatasource.getUserAccountId();
-     // String userAccountId = "f075ac97-1234-43c0-8938-1d5334c5eb01";
-      // Get  from API
-      User user = await remoteDatasource
-          .getUserWithUserAccountId(userAccountId);
+      // Get User for account id from API
+      User user = await remoteDatasource.getUserWithUserAccountId(
+        userAccountId,
+      );
       return Result.success(user);
     } catch (e) {
-      if(e is DioException){
-        if(e.response?.statusCode ==404){
+      if (e is DioException) {
+        if (e.response?.statusCode == 404) {
           return Result.success(null);
         }
       }
@@ -48,9 +45,12 @@ class UserRepository implements UserService {
   }
 
   @override
-  Future<Result<User>> createUser(String firstName,
-      String lastName,
-      String? profilePictureFileUrl,String region) async {
+  Future<Result<User>> createUser(
+    String firstName,
+    String lastName,
+    String? profilePictureFileUrl,
+    String region,
+  ) async {
     try {
       // get user account id
       String userAccountId = await accountLocalDatasource.getUserAccountId();
@@ -60,11 +60,9 @@ class UserRepository implements UserService {
         lastName,
         region,
         profilePictureFileUrl,
-        userAccountId
+        userAccountId,
       );
-      return Result.success(
-        await remoteDatasource.createUserProfile(newUser),
-      );
+      return Result.success(await remoteDatasource.createUserProfile(newUser));
     } catch (e) {
       return Result.fail(e as Exception);
     }
@@ -73,11 +71,7 @@ class UserRepository implements UserService {
   @override
   Future<Result<void>> editUser(User user) async {
     try {
-
-      await remoteDatasource.editUserProfile(
-        user.id!,
-        user,
-      );
+      await remoteDatasource.editUserProfile(user.id!, user);
       return Result.success(() {});
     } catch (e) {
       return Result.fail(e as Exception);
@@ -94,6 +88,4 @@ class UserRepository implements UserService {
       return Result.fail(e as Exception);
     }
   }
-
-
 }

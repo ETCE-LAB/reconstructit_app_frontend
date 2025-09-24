@@ -6,6 +6,8 @@ import 'package:reconstructitapp/presentation/community/community_body.dart';
 import '../../utils/dependencies.dart';
 import 'bloc/community_event.dart';
 
+/// This Screen is a top level screen and is built with the navbar
+/// Browsing Screen of community print requests of the community
 class CommunityScreen extends StatefulWidget {
   const CommunityScreen({super.key});
 

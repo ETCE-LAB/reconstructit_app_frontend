@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/components/app_button.dart';
 import 'package:reconstructitapp/components/app_icon_button.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/choose_payment_bottom_sheet.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
-import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
-import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/app_shimmer_rectangular.dart';
 import '../../components/app_shimmer_round.dart';
+import '../choose_payment_method_and_create_print_contract/choose_payment_bottom_sheet.dart';
 import '../print_contract/print_contract_screen.dart';
+import 'bloc/others_request_detail_bloc.dart';
+import 'bloc/others_request_detail_state.dart';
 
-class RequestDetailBody extends StatelessWidget {
+/// Shows a community print request from an other user
+class OthersRequestDetailBody extends StatelessWidget {
   final CommunityBodyViewModel communityBodyViewModel;
 
-  const RequestDetailBody({super.key, required this.communityBodyViewModel});
+  const OthersRequestDetailBody({super.key, required this.communityBodyViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -218,10 +219,10 @@ class RequestDetailBody extends StatelessWidget {
           ),
         ),
         if (communityBodyViewModel.user != null)
-          BlocBuilder<RequestDetailBloc, RequestDetailState>(
-            buildWhen: (prev, curr) => curr is RequestDetailLoaded,
+          BlocBuilder<OthersRequestDetailBloc, OthersRequestDetailState>(
+            buildWhen: (prev, curr) => curr is OthersRequestDetailLoaded,
             builder: (context, state) {
-              if (state is RequestDetailLoaded) {
+              if (state is OthersRequestDetailLoaded) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -291,15 +292,6 @@ class RequestDetailBody extends StatelessWidget {
                                                 .id!,
                                       ),
                                 );
-                                /*
-                          context.read<CreatePrintContractBloc>().add(
-                            CreatePrintContract(
-                              communityBodyViewModel.communityPrintRequest.id!,
-                              communityBodyViewModel.user!.id!,
-                            ),
-                          );
-
-                           */
                               },
                             ),
                           ],

@@ -8,6 +8,7 @@ import 'bloc/data/print_contract_bloc.dart';
 import 'bloc/data/print_contract_event.dart';
 import 'bloc/data/print_contract_state.dart';
 
+/// Screen that loads a Print Contract Process
 class PrintContractScreen extends StatefulWidget {
   final String printContractId;
 

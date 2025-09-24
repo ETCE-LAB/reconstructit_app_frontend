@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/domain/services/payment_attribute_service.dart';
 import 'package:reconstructitapp/domain/services/payment_method_service.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/payment_method_view_model.dart';
+import 'package:reconstructitapp/presentation/choose_payment_method_and_create_print_contract/bloc/payment_methods/payment_methods_state.dart';
 
+import '../../payment_method_view_model.dart';
 import 'payment_methods_event.dart';
-import 'payment_methods_state.dart';
 
+/// Gets the different paymentMethods and their Attributes
 class PaymentMethodsBloc
     extends Bloc<PaymentMethodsEvent, PaymentMethodsState> {
   final PaymentMethodService paymentMethodService;

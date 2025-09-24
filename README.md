@@ -31,7 +31,7 @@ Generate important files.
 ## Dependencies
 
 In Flutter we differ between dev dependencies and dependencies. Both are managed in the ``
-pubspec.yaml`` in the project root. 
+pubspec.yaml`` in the project root.
 
 While it is possible to create custom plugins, most integrations are handled through publicly
 available packages.
@@ -295,7 +295,8 @@ class ExampleRepository implements ExampleService {
 }
 ```
 
-In addition to the ``IRemoteDatasource``, a repository may also integrate a local data source e.g. to integrate caching. After
+In addition to the ``IRemoteDatasource``, a repository may also integrate a local data source e.g.
+to integrate caching. After
 importing the ``ExampleService``, most IDEs will suggest implementing its abstract methods.
 
 For example, the getExample method can be implemented as follows:
@@ -326,7 +327,8 @@ Each feature folder typically contains:
 - one or two top-level widget files
 - optionally a local_components folder with smaller widgets used by the top-level files
 
-As already mentioned the chosen state management framework is Bloc. You can find the documentation at
+As already mentioned the chosen state management framework is Bloc. You can find the documentation
+at
 the [pub.dev link](https://pub.dev/packages/flutter_bloc).
 Below is a summary of how Bloc is structured and used in this application.
 
@@ -419,7 +421,8 @@ To use the Bloc, it must be registered in ``dependecies.dart``:
 
 ```dart
 ic.registerFactory<FeatureFolderNameBloc>
-(() => FeatureFolderNameBloc(ic()));
+(
+() => FeatureFolderNameBloc(ic()));
 ```
 
 Make sure the corresponding service is also registered.
@@ -512,7 +515,9 @@ To trigger the refresh, the button calls:
 
 ```dart
 context.read<FeatureFolderNameBloc>
-().add(FeatureFolderNameRefresh());
+().
+
+add(FeatureFolderNameRefresh());
 ```
 
 This line requires that the BlocProvider is already available in the widget tree, which is why we

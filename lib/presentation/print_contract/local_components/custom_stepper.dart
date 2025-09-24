@@ -9,6 +9,7 @@ class OpenStep {
   const OpenStep({required this.title, this.content, this.isCompleted = false});
 }
 
+/// All steps are build here
 class OpenAllStepper extends StatelessWidget {
   final List<OpenStep> steps;
   final Color? activeColor;

@@ -8,6 +8,7 @@ import '../../utils/dependencies.dart';
 import 'bloc/create_or_edit_user_bloc.dart';
 import 'create_or_edit_user_body.dart';
 
+/// Screen to edit user and address
 class EditUserScreen extends StatefulWidget {
   final Address? address;
   final User user;

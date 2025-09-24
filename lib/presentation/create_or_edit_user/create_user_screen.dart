@@ -6,6 +6,7 @@ import 'package:reconstructitapp/presentation/create_or_edit_user/create_or_edit
 import '../../utils/dependencies.dart';
 import 'bloc/create_or_edit_user_event.dart';
 
+/// Screen to create a user and address
 class CreateUserScreen extends StatefulWidget {
   const CreateUserScreen({super.key});
 

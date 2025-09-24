@@ -3,23 +3,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/bloc/create_or_edit_request_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/bloc/create_or_edit_request_event.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/bloc/create_or_edit_request_state.dart';
-import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
 
 import '../../domain/entity_models/enums/print_material.dart';
 import '../../utils/dependencies.dart';
 import '../../utils/presenter.dart';
+import '../your_items/your_items_body_view_model.dart';
 import 'create_or_edit_request_body.dart';
 
-class RequestDetailScreen extends StatefulWidget {
-  final YourRequestsBodyViewModel requestsBodyViewModel;
+/// Screen to show an own community print request
+/// Screen to edit the community print request
+class OwnRequestDetailScreen extends StatefulWidget {
+  final YourItemsBodyViewModel requestsBodyViewModel;
 
-  const RequestDetailScreen({super.key, required this.requestsBodyViewModel});
+  const OwnRequestDetailScreen({
+    super.key,
+    required this.requestsBodyViewModel,
+  });
 
   @override
-  State<RequestDetailScreen> createState() => _RequestDetailScreenState();
+  State<OwnRequestDetailScreen> createState() => _OwnRequestDetailScreenState();
 }
 
-class _RequestDetailScreenState extends State<RequestDetailScreen> {
+class _OwnRequestDetailScreenState extends State<OwnRequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -32,7 +37,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
 }
 
 class YourRequestDetailBody extends StatelessWidget {
-  final YourRequestsBodyViewModel requestsBodyViewModel;
+  final YourItemsBodyViewModel requestsBodyViewModel;
 
   const YourRequestDetailBody({super.key, required this.requestsBodyViewModel});
 
@@ -52,7 +57,7 @@ class YourRequestDetailBody extends StatelessWidget {
         body: CreateOrEditRequestBody(
           requestsBodyViewModel: requestsBodyViewModel,
           onSubmitEdit: (
-            YourRequestsBodyViewModel yourRequestsBodyViewModel,
+              YourItemsBodyViewModel yourRequestsBodyViewModel,
             String title,
             String description,
             bool repaired,

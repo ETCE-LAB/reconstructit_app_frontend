@@ -2,6 +2,8 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+/// A Navigate back button adjusted for the given platform (android/ios)
+/// Used when there is no normal AppBar widget
 class PlatformBackButton extends StatelessWidget {
   final Color? color;
 

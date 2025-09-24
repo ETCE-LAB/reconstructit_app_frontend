@@ -5,6 +5,7 @@ import 'package:reconstructitapp/presentation/community/local_components/communi
 
 import 'bloc/community_state.dart';
 
+/// Browsing community print requests
 class CommunityBody extends StatelessWidget {
   const CommunityBody({super.key});
 

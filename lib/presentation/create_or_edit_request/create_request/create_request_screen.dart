@@ -8,6 +8,7 @@ import '../bloc/create_or_edit_request_bloc.dart';
 import '../bloc/create_or_edit_request_event.dart';
 import '../bloc/create_or_edit_request_state.dart';
 
+/// Screen to create a request
 class CreateRequestScreen extends StatefulWidget {
   const CreateRequestScreen({super.key});
 

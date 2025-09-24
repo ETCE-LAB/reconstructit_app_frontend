@@ -6,6 +6,7 @@ import 'package:reconstructitapp/presentation/start/start_body.dart';
 import 'bloc/initial_bloc.dart';
 import 'bloc/initial_state.dart';
 
+/// Redirects to authentication if already started else show starting images
 class InitialStartBody extends StatelessWidget {
   const InitialStartBody({super.key});
 

@@ -1,4 +1,4 @@
 
 class UserEvent {}
 
-class Refresh extends UserEvent {}
+class RefreshUser extends UserEvent {}

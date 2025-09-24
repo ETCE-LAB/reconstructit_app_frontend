@@ -19,7 +19,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ic<UserBloc>()..add(Refresh()),
+      create: (_) => ic<UserBloc>()..add(RefreshUser()),
       child: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UserLoading || state is UserInitial) {

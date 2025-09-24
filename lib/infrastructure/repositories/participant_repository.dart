@@ -9,20 +9,26 @@ class ParticipantRepository implements ParticipantService {
   ParticipantRepository(this.remoteDatasource);
 
   @override
-  Future<Result<List<Participant>>> getParticipantsForUser(String userId) async {
+  Future<Result<List<Participant>>> getParticipantsForUser(
+    String userId,
+  ) async {
     try {
       return Result.success(
-          await remoteDatasource.getParticipantsByUser(userId));
+        await remoteDatasource.getParticipantsByUser(userId),
+      );
     } catch (e) {
       return Result.fail(e as Exception);
     }
   }
 
   @override
-  Future<Result<List<Participant>>> getParticipantsForContract(String contractId) async {
+  Future<Result<List<Participant>>> getParticipantsForContract(
+    String contractId,
+  ) async {
     try {
       return Result.success(
-          await remoteDatasource.getParticipantsByContract(contractId));
+        await remoteDatasource.getParticipantsByContract(contractId),
+      );
     } catch (e) {
       return Result.fail(e as Exception);
     }
@@ -41,7 +47,8 @@ class ParticipantRepository implements ParticipantService {
   Future<Result<Participant>> createParticipant(Participant participant) async {
     try {
       return Result.success(
-          await remoteDatasource.createParticipant(participant));
+        await remoteDatasource.createParticipant(participant),
+      );
     } catch (e) {
       return Result.fail(e as Exception);
     }

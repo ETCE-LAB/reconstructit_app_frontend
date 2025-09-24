@@ -4,6 +4,7 @@ import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 
+/// Handles Tab changes in navbar and checks if the profile exists
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserService userService;
 

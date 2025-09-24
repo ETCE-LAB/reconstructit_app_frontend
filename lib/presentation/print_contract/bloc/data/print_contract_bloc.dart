@@ -19,6 +19,7 @@ import 'package:reconstructitapp/presentation/print_contract/print_contract_view
 import '../../../../domain/services/payment_service.dart';
 import 'print_contract_event.dart';
 
+/// Bloc to load a complete print contract (for the stepper)
 class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
   final UserService userService;
   final ParticipantService participantService;
@@ -32,8 +33,6 @@ class PrintContractBloc extends Bloc<PrintContractEvent, PrintContractState> {
   final ItemService itemService;
   final ItemImageService itemImageService;
   final ConstructionFileService constructionFileService;
-
-  //final ChatService chatService;
 
   PrintContractBloc(
     this.userService,

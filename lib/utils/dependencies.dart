@@ -6,16 +6,12 @@ import 'package:reconstructitapp/infrastructure/repositories/media_repository.da
 import 'package:reconstructitapp/infrastructure/repositories/user_repository.dart';
 import 'package:reconstructitapp/infrastructure/sources/remote_datasource.dart';
 import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print_contracts_bloc.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/bloc/payment_methods_bloc.dart';
 import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_user/bloc/create_or_edit_user_bloc.dart';
 import 'package:reconstructitapp/presentation/logout/bloc/logout_bloc.dart';
 import 'package:reconstructitapp/presentation/print_contract/bloc/data/print_contract_bloc.dart';
 import 'package:reconstructitapp/presentation/print_contract/bloc/interaction/edit_print_contract_bloc.dart';
-import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
-import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_print_contract_bloc.dart';
 import 'package:reconstructitapp/presentation/start/bloc/initial_bloc.dart';
-import 'package:reconstructitapp/presentation/your_requests/bloc/your_items_bloc.dart';
 
 import '../domain/services/address_service.dart';
 import '../domain/services/community_print_request_service.dart';
@@ -41,11 +37,16 @@ import '../infrastructure/repositories/payment_value_repository.dart';
 import '../infrastructure/repositories/print_contract_repository.dart';
 import '../infrastructure/sources/account_local_datasource.dart';
 import '../presentation/authentication/bloc/authentication_bloc.dart';
+import '../presentation/choose_payment_method_and_create_print_contract/bloc/create_print_contract/create_print_contract_bloc.dart';
+import '../presentation/choose_payment_method_and_create_print_contract/bloc/payment_methods/payment_methods_bloc.dart';
 import '../presentation/create_or_edit_request/bloc/create_or_edit_request_bloc.dart';
 import '../presentation/home/bloc/home_bloc.dart';
+import '../presentation/others_request_detail/bloc/others_request_detail_bloc.dart';
 import '../presentation/user/bloc/user_bloc.dart';
+import '../presentation/your_items/bloc/your_items_bloc.dart';
 import 'clients/app_http_client.dart';
 
+/// Dependency injection file
 final ic = GetIt.instance;
 
 Future<void> initDependencies() async {
@@ -60,8 +61,8 @@ Future<void> initDependencies() async {
   ic.registerFactory<CreatePrintContractBloc>(
     () => CreatePrintContractBloc(ic(), ic(), ic(), ic(), ic()),
   );
-  ic.registerFactory<RequestDetailBloc>(
-    () => RequestDetailBloc(ic(), ic(), ic(), ic()),
+  ic.registerFactory<OthersRequestDetailBloc>(
+    () => OthersRequestDetailBloc(ic(), ic(), ic(), ic()),
   );
   ic.registerFactory<CommunityBloc>(
     () => CommunityBloc(ic(), ic(), ic(), ic(), ic(), ic()),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Snack bar to display failure and successes of interactions
 class CustomSnackBar extends StatelessWidget {
   final String message;
   final bool isError;

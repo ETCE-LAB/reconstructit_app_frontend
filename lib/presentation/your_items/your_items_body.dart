@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/components/app_shimmer_round.dart';
 
 import '../../domain/entity_models/enums/repair_status.dart';
-import '../create_or_edit_request/request_detail_screen.dart';
+import '../create_or_edit_request/own_request_detail_screen.dart';
 import 'bloc/your_items_bloc.dart';
 import 'bloc/yout_items_state.dart';
 
-class YourRequestsBody extends StatelessWidget {
-  const YourRequestsBody({super.key});
+/// Shows every own item
+/// Clickable to get to the detailed screen
+class YourItemsBody extends StatelessWidget {
+  const YourItemsBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class YourRequestsBody extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder:
-                              (context) => RequestDetailScreen(
+                              (context) => OwnRequestDetailScreen(
                                 requestsBodyViewModel:
                                     state.yourRequestsBodyViewModel[index],
                               ),

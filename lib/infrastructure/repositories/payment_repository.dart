@@ -28,13 +28,9 @@ class PaymentRepository implements PaymentService {
   }
 
   @override
-  Future<Result<Payment>> getPayment(
-    String id,
-  ) async {
+  Future<Result<Payment>> getPayment(String id) async {
     try {
-      return Result.success(
-        await remoteDatasource.getPayment(id),
-      );
+      return Result.success(await remoteDatasource.getPayment(id));
     } catch (e) {
       return Result.fail(e as Exception);
     }

@@ -6,6 +6,7 @@ import 'bloc/authentication_bloc.dart';
 import 'bloc/authentication_event.dart';
 import 'bloc/authentication_state.dart';
 
+/// Web view with the identity server ui
 class IdentityServerWebView extends StatelessWidget {
   const IdentityServerWebView({super.key});
 

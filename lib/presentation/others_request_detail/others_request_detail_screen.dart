@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
-import 'package:reconstructitapp/presentation/request_detail/bloc/request_detail_bloc.dart';
-import 'package:reconstructitapp/presentation/request_detail/request_detail_body.dart';
-
+import 'package:reconstructitapp/presentation/others_request_detail/bloc/others_request_detail_bloc.dart';
 import '../../utils/dependencies.dart';
-import 'bloc/request_detail_event.dart';
+import 'bloc/others_request_detail_event.dart';
+import 'others_request_detail_body.dart';
 
-class CommunityRequestDetailScreen extends StatefulWidget {
+/// Shows a communnity request from a other user
+class OthersRequestDetailScreen extends StatefulWidget {
   final CommunityBodyViewModel communityBodyViewModel;
 
-  const CommunityRequestDetailScreen({super.key, required this.communityBodyViewModel});
+  const OthersRequestDetailScreen({
+    super.key,
+    required this.communityBodyViewModel,
+  });
 
   @override
-  State<CommunityRequestDetailScreen> createState() => _CommunityRequestDetailScreenState();
+  State<OthersRequestDetailScreen> createState() =>
+      _OthersRequestDetailScreenState();
 }
 
-class _CommunityRequestDetailScreenState extends State<CommunityRequestDetailScreen> {
+class _OthersRequestDetailScreenState
+    extends State<OthersRequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -24,8 +29,8 @@ class _CommunityRequestDetailScreenState extends State<CommunityRequestDetailScr
         BlocProvider(
           create:
               (_) =>
-                  ic<RequestDetailBloc>()..add(
-                    RequestDetailRefresh(
+                  ic<OthersRequestDetailBloc>()..add(
+                    OthersRequestDetailRefresh(
                       widget.communityBodyViewModel.communityPrintRequest.id!,
                     ),
                   ),
@@ -33,7 +38,7 @@ class _CommunityRequestDetailScreenState extends State<CommunityRequestDetailScr
       ],
       child: Scaffold(
         appBar: AppBar(title: Text(widget.communityBodyViewModel.item.title)),
-        body: RequestDetailBody(
+        body: OthersRequestDetailBody(
           communityBodyViewModel: widget.communityBodyViewModel,
         ),
       ),

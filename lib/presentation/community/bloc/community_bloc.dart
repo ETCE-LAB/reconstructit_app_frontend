@@ -11,6 +11,8 @@ import 'package:reconstructitapp/presentation/community/community_body_view_mode
 import 'community_event.dart';
 import 'community_state.dart';
 
+/// Bloc to get CommunityPrintRequests that are not from the logged in user
+/// and not accepted requests
 class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
   final UserService userService;
   final ItemService itemService;
@@ -47,6 +49,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
     }
     // initialize list to emit
     List<CommunityBodyViewModel> viewModels = [];
+    // break out count to eliminate own or accepted requests
     int breakOutCount = 0;
     for (int i = 0; i < requestResult.value!.length; i++) {
       // get the item to every request

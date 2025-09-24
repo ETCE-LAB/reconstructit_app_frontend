@@ -6,6 +6,7 @@ import 'package:reconstructitapp/presentation/start/start_body_widget.dart';
 import 'bloc/initial_bloc.dart';
 import 'bloc/initial_event.dart';
 
+/// Shows the introduction images with description text
 class StartBody extends StatefulWidget {
   const StartBody({super.key});
 
@@ -65,7 +66,7 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
             index: 3,
             imagePath: "assets/start_4.png",
             description:
-                "Ein definierter Prozess hilft euch, Versand, Zahlung und Druckstatus im Überblick zu ehalten.",
+                "Ein definierter Prozess hilft euch, Versand, Zahlung und Druckstatus im Überblick zu behalten.",
             onPressed: _startApp,
             updateIndex: _updateCurrentPageIndex,
           ),
@@ -74,15 +75,11 @@ class _StartBodyState extends State<StartBody> with TickerProviderStateMixin {
     );
   }
 
-  void _startApp(){
-    context.read<InitialBloc>().add(
-      FinishedIntroduction(),
-    );
+  void _startApp() {
+    context.read<InitialBloc>().add(FinishedIntroduction());
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => AuthenticationHomeScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => AuthenticationHomeScreen()),
     );
   }
 

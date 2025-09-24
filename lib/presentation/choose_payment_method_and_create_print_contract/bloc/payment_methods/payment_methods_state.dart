@@ -1,4 +1,4 @@
-import 'package:reconstructitapp/presentation/choose_payment_method/payment_method_view_model.dart';
+import '../../payment_method_view_model.dart';
 
 abstract class PaymentMethodsState {}
 

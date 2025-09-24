@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/bloc/payment_methods_bloc.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/bloc/payment_methods_event.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/bloc/payment_methods_state.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/choose_payment_bottom_sheet_body.dart';
 
 import '../../domain/entity_models/user.dart';
 import '../../utils/dependencies.dart';
-import '../request_detail/create_chat_bloc/create_print_contract_bloc.dart';
+import 'bloc/create_print_contract/create_print_contract_bloc.dart';
+import 'bloc/payment_methods/payment_methods_bloc.dart';
+import 'bloc/payment_methods/payment_methods_event.dart';
+import 'bloc/payment_methods/payment_methods_state.dart';
+import 'choose_payment_bottom_sheet_body.dart';
 
+/// Te bottom sheet to choose a payment method
 class ChoosePaymentBottomSheet extends StatefulWidget {
   final User otherUser;
 

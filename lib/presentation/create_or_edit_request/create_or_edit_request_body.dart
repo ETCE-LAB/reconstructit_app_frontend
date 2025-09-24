@@ -8,7 +8,7 @@ import 'package:reconstructitapp/components/app_secondary_button.dart';
 import 'package:reconstructitapp/components/app_text_field.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/repair_status.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_request/local_components/image_container.dart';
-import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
+import 'package:reconstructitapp/presentation/your_items/your_items_body_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/entity_models/enums/print_material.dart';
@@ -17,8 +17,9 @@ import '../camera/image_view_screen.dart';
 import 'bloc/create_or_edit_request_bloc.dart';
 import 'bloc/create_or_edit_request_state.dart';
 
+/// Used to create and/or edit a request
 class CreateOrEditRequestBody extends StatefulWidget {
-  final YourRequestsBodyViewModel? requestsBodyViewModel;
+  final YourItemsBodyViewModel? requestsBodyViewModel;
   final void Function(
     List<String> images,
     String title,
@@ -28,7 +29,7 @@ class CreateOrEditRequestBody extends StatefulWidget {
   )?
   onSubmitCreate;
   final void Function(
-    YourRequestsBodyViewModel yourRequestsBodyViewModel,
+      YourItemsBodyViewModel yourRequestsBodyViewModel,
     String title,
     String description,
     bool repaired,

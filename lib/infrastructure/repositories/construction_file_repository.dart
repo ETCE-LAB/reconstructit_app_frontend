@@ -5,6 +5,7 @@ import '../sources/remote_datasource.dart';
 
 class ConstructionFileRepository implements ConstructionFileService {
   final IRemoteDatasource remoteDatasource;
+
   ConstructionFileRepository(this.remoteDatasource);
 
   @override
@@ -17,9 +18,13 @@ class ConstructionFileRepository implements ConstructionFileService {
   }
 
   @override
-  Future<Result<ConstructionFile>> createConstructionFile(ConstructionFile file) async {
+  Future<Result<ConstructionFile>> createConstructionFile(
+    ConstructionFile file,
+  ) async {
     try {
-      return Result.success(await remoteDatasource.createConstructionFile(file));
+      return Result.success(
+        await remoteDatasource.createConstructionFile(file),
+      );
     } catch (e) {
       return Result.fail(e as Exception);
     }

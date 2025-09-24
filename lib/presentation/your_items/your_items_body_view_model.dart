@@ -3,13 +3,13 @@ import 'package:reconstructitapp/domain/entity_models/construction_file.dart';
 import 'package:reconstructitapp/domain/entity_models/item.dart';
 import 'package:reconstructitapp/domain/entity_models/item_image.dart';
 
-class YourRequestsBodyViewModel {
+class YourItemsBodyViewModel {
   final CommunityPrintRequest? communityPrintRequest;
   final Item item;
   final List<ItemImage>? images;
   final ConstructionFile? constructionFile;
 
-  YourRequestsBodyViewModel(
+  YourItemsBodyViewModel(
     this.communityPrintRequest,
     this.item,
     this.images,

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/components/app_button.dart';
 import 'package:reconstructitapp/domain/entity_models/enums/participant_role.dart';
 import 'package:reconstructitapp/presentation/community/community_body_view_model.dart';
-import 'package:reconstructitapp/presentation/create_or_edit_request/request_detail_screen.dart';
+import 'package:reconstructitapp/presentation/create_or_edit_request/own_request_detail_screen.dart';
+import 'package:reconstructitapp/presentation/others_request_detail/others_request_detail_screen.dart';
 import 'package:reconstructitapp/presentation/print_contract/bloc/data/print_contract_bloc.dart';
 import 'package:reconstructitapp/presentation/print_contract/bloc/interaction/edit_print_contract_bloc.dart';
 import 'package:reconstructitapp/presentation/print_contract/bloc/interaction/edit_print_contract_state.dart';
@@ -11,10 +12,9 @@ import 'package:reconstructitapp/presentation/print_contract/local_components/cu
 import 'package:reconstructitapp/presentation/print_contract/local_components/steps/step1.dart';
 import 'package:reconstructitapp/presentation/print_contract/local_components/steps/step5.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_view_model.dart';
-import 'package:reconstructitapp/presentation/request_detail/request_detail_screen.dart';
-import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../your_items/your_items_body_view_model.dart';
 import 'bloc/data/print_contract_event.dart';
 import 'local_components/steps/step2.dart';
 import 'local_components/steps/step3.dart';
@@ -23,6 +23,8 @@ import 'local_components/steps/step6.dart';
 import 'local_components/steps/step7.dart';
 import 'local_components/steps/step8.dart';
 
+/// Displays the print contract process and let it be editable
+/// renders the steps in the custom stepper
 class PrintContractBody extends StatelessWidget {
   final PrintContractViewModel printContractViewModel;
 
@@ -64,7 +66,7 @@ class PrintContractBody extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) => CommunityRequestDetailScreen(
+                        (context) => OthersRequestDetailScreen(
                           communityBodyViewModel: CommunityBodyViewModel(
                             printContractViewModel.otherUser,
                             printContractViewModel.communityPrintRequest!,
@@ -80,8 +82,8 @@ class PrintContractBody extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) => RequestDetailScreen(
-                          requestsBodyViewModel: YourRequestsBodyViewModel(
+                        (context) => OwnRequestDetailScreen(
+                          requestsBodyViewModel: YourItemsBodyViewModel(
                             printContractViewModel.communityPrintRequest!,
                             printContractViewModel.item!,
                             printContractViewModel.itemImages,

@@ -6,6 +6,7 @@ import '../../utils/dependencies.dart';
 import 'bloc/initial_bloc.dart';
 import 'bloc/initial_event.dart';
 
+/// Screen that requests if the appp was already started
 class InitialStartScreen extends StatefulWidget {
   const InitialStartScreen({super.key});
 

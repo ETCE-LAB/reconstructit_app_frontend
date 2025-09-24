@@ -1,5 +1,4 @@
-
-
+/// Result class that helps working with repository answers in success and failure case
 class Result<Type> {
   final bool isSuccessful;
   final Exception? failure;

@@ -10,6 +10,7 @@ import 'package:reconstructitapp/presentation/print_contract/print_contract_view
 import 'all_print_contracts_event.dart';
 import 'all_print_contracts_state.dart';
 
+/// Bloc to get all print contracts for the logged in user in every participant role
 class AllPrintContractsBloc
     extends Bloc<AllPrintContractsEvent, AllPrintContractsState> {
   final UserService userService;
@@ -18,8 +19,6 @@ class AllPrintContractsBloc
   final CommunityPrintRequestService communityPrintRequestService;
   final ItemService itemService;
   final PaymentService paymentService;
-
-  //final ChatService chatService;
 
   AllPrintContractsBloc(
     this.userService,

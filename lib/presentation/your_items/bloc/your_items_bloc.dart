@@ -4,11 +4,12 @@ import 'package:reconstructitapp/domain/services/construction_file_service.dart'
 import 'package:reconstructitapp/domain/services/item_image_service.dart';
 import 'package:reconstructitapp/domain/services/item_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
-import 'package:reconstructitapp/presentation/your_requests/your_requests_body_view_model.dart';
 
+import '../your_items_body_view_model.dart';
 import 'your_items_event.dart';
 import 'yout_items_state.dart';
 
+/// Bloc to load own items
 class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
   final UserService userService;
   final ItemService itemService;
@@ -23,7 +24,7 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
     this.userService,
     this.constructionFileService,
   ) : super(YourItemsInitial()) {
-    on<Refresh>(_onRefresh);
+    on<RefreshItems>(_onRefresh);
   }
 
   void _onRefresh(event, emit) async {
@@ -44,7 +45,7 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
     // list of view models
     final viewModels =
         itemsResult.value!
-            .map((item) => YourRequestsBodyViewModel(null, item, null, null))
+            .map((item) => YourItemsBodyViewModel(null, item, null, null))
             .toList();
     emit(YourItemsLoaded(viewModels));
 
@@ -59,7 +60,7 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
         return;
       }
 
-      var updatedViewModel = YourRequestsBodyViewModel(
+      var updatedViewModel = YourItemsBodyViewModel(
         null,
         item,
         itemImagesResult.value!,
@@ -75,7 +76,7 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
           emit(YourItemsFailed(communityRequestResult.failure!));
           return;
         }
-        updatedViewModel = YourRequestsBodyViewModel(
+        updatedViewModel = YourItemsBodyViewModel(
           communityRequestResult.value!,
           item,
           itemImagesResult.value!,
@@ -92,7 +93,7 @@ class YourItemsBloc extends Bloc<YourItemsEvent, YourItemsState> {
           emit(YourItemsFailed(constructionFileResult.failure!));
           return;
         }
-        updatedViewModel = YourRequestsBodyViewModel(
+        updatedViewModel = YourItemsBodyViewModel(
           viewModels[i].communityPrintRequest,
           item,
           itemImagesResult.value!,

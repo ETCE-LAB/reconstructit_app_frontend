@@ -5,6 +5,7 @@ import 'package:reconstructitapp/presentation/start/initial_start_screen.dart';
 import 'package:reconstructitapp/utils/dependencies.dart';
 import 'package:reconstructitapp/utils/theme.dart';
 
+/// Starting point of the application
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();

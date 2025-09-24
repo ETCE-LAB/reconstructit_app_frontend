@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import '../../presentation/authentication/authentication_screen.dart';
 import '../app_settings.dart';
 
+/// This Interceptor adds to every request the access token
+/// If there is no valid token stored, it gets one
 class AuthenticationInterceptor extends Interceptor {
   @override
   void onRequest(
@@ -16,10 +18,7 @@ class AuthenticationInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     // Get access token from local credentials
-    log(options.path);
     var accessToken = await _getAndRefreshAccessToken();
-
-    log(accessToken.toString());
 
     // Start authentication process when access token is not available
     if (accessToken == null) {

@@ -10,6 +10,7 @@ import '../../../../domain/entity_models/print_contract.dart';
 import 'edit_print_contract_event.dart';
 import 'edit_print_contract_state.dart';
 
+/// Bloc to edit attributes of the print contract and payment from the stepper
 class EditPrintContractBloc
     extends Bloc<EditPrintContractEvent, EditPrintContractState> {
   final PrintContractService printContractService;

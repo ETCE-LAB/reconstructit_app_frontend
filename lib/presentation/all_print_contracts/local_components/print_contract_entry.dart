@@ -3,6 +3,8 @@ import 'package:reconstructitapp/components/app_shimmer_rectangular.dart';
 import 'package:reconstructitapp/components/app_shimmer_round.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_view_model.dart';
 
+/// Every PrintContractEntry shows a print contract with another user
+/// Clickable to open the process
 class PrintContractEntry extends StatelessWidget {
   final PrintContractViewModel printContractViewModel;
 
@@ -10,7 +12,7 @@ class PrintContractEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       children: [
         SizedBox(
           height: 50,

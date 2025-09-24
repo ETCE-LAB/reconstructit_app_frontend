@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reconstructitapp/components/app_button.dart';
 import 'package:reconstructitapp/components/app_text_field.dart';
-import 'package:reconstructitapp/presentation/choose_payment_method/payment_method_view_model.dart';
-import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_print_contract_bloc.dart';
-import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_print_contract_event.dart';
-import 'package:reconstructitapp/presentation/request_detail/create_chat_bloc/create_print_contract_state.dart';
+import 'package:reconstructitapp/presentation/choose_payment_method_and_create_print_contract/payment_method_view_model.dart';
 
 import '../../domain/entity_models/user.dart';
 import '../print_contract/print_contract_screen.dart';
+import 'bloc/create_print_contract/create_print_contract_bloc.dart';
+import 'bloc/create_print_contract/create_print_contract_event.dart';
+import 'bloc/create_print_contract/create_print_contract_state.dart';
 
+/// The bottom sheet to choose a payment method
+/// Takes values with text fields to the attributes of the chosen method
+/// Created the Print Contract on Button click
 class ChoosePaymentBottomSheetBody extends StatefulWidget {
   final String communityPrintRequestId;
   final User otherUser;
@@ -29,7 +32,7 @@ class ChoosePaymentBottomSheetBody extends StatefulWidget {
 
 class ChoosePaymentBottomSheetBodyState
     extends State<ChoosePaymentBottomSheetBody> {
-  // controller for every textfield
+  // controller for every text field
   Map<String, Map<String, TextEditingController>> controllers = {};
 
   late String methodValue;

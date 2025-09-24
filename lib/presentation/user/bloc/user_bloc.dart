@@ -5,12 +5,13 @@ import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'user_event.dart';
 import 'user_state.dart';
 
+/// Bloc that loads user and address
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserService userService;
   final AddressService addressService;
 
   UserBloc(this.userService, this.addressService) : super(UserInitial()) {
-    on<Refresh>(_onRefresh);
+    on<RefreshUser>(_onRefresh);
   }
 
   void _onRefresh(event, emit) async {

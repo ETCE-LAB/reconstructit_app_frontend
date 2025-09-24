@@ -11,11 +11,13 @@ import 'package:reconstructitapp/domain/services/payment_service.dart';
 import 'package:reconstructitapp/domain/services/payment_value_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
 
-import '../../../domain/entity_models/print_contract.dart';
-import '../../../domain/services/print_contract_service.dart';
+import '../../../../domain/entity_models/print_contract.dart';
+import '../../../../domain/services/print_contract_service.dart';
 import 'create_print_contract_event.dart';
 import 'create_print_contract_state.dart';
 
+/// Create a print contract with a chosen payment method and their paymentValues,
+/// the community print request id and the id of the other user
 class CreatePrintContractBloc
     extends Bloc<CreatePrintContractEvent, CreatePrintContractState> {
   final UserService userService;

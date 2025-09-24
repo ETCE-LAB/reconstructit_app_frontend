@@ -5,6 +5,7 @@ import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print
 import 'package:reconstructitapp/presentation/all_print_contracts/local_components/print_contract_entry.dart';
 import 'package:reconstructitapp/presentation/print_contract/print_contract_screen.dart';
 
+/// Shows every process to the logged in user
 class AllPrintContractsBody extends StatelessWidget {
   const AllPrintContractsBody({super.key});
 

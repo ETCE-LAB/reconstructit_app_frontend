@@ -6,6 +6,8 @@ import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print
 import '../../utils/dependencies.dart';
 import 'bloc/all_print_contracts_bloc.dart';
 
+/// This Screen is a top level screen and is built with the navbar
+/// Shows every process to the logged in user
 class AllPrintContractsScreen extends StatefulWidget {
   const AllPrintContractsScreen({super.key});
 

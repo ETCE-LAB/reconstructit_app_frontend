@@ -31,7 +31,6 @@ class AuthenticationBloc
     );
     final tokenEndpoint = Uri.parse('$identityServerTarget/connect/token');
 
-    // final secret = '499e17f9-5c3a-420b-b724-e0b79170e03c';
     // Create authorization grant to create the authorization code
     final grant = AuthorizationCodeGrant(
       appIdentifier,

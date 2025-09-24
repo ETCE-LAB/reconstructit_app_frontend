@@ -5,6 +5,7 @@ import '../../../utils/keys.dart';
 import 'initial_event.dart';
 import 'initial_state.dart';
 
+/// Bloc to check if the app was already started/ save that it is already started
 class InitialBloc extends Bloc<InitialEvent, InitialState> {
   InitialBloc() : super(InitialInitial()) {
     on<AlreadyInitialedRequested>(_onRequested);
