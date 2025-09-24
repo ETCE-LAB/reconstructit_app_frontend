@@ -44,9 +44,9 @@ class Step3 {
 
     if (!contractAccepted) return null;
     final addressLines = [
-      printContractViewModel.otherUser != null
+      printContractViewModel.ownUser != null
           ? Text(
-            "${printContractViewModel.otherUser?.firstName ?? 'Vorname'} ${printContractViewModel.otherUser?.lastName ?? 'Nachname'}",
+            "${printContractViewModel.ownUser?.firstName ?? 'Vorname'} ${printContractViewModel.ownUser?.lastName ?? 'Nachname'}",
             style: contentTextTheme,
           )
           : AppShimmerRectangular(width: 100, height: 15),
