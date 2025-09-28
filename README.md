@@ -7,6 +7,9 @@ be 3D-printed directly or requested from the community.
 
 This app is only a pre alpha version to demonstrate some use-cases of the platform.
 
+You can find the release apk containing the app until submission of the bachelor´s project
+in  ``flutter-apk\app-release.apk``.
+
 ## Run the App
 
 To execute the application, ensure that both Flutter and Dart are installed on your system.
@@ -27,6 +30,16 @@ dart run build_runner build
 ```
 
 Generate important files.
+
+To build an release apk of the app, run
+
+```bash
+flutter build apk --release
+```
+
+This can take some minutes.
+
+After this you can find the apk in ``build\app\outputs\flutter-apk\app-release.apk``
 
 ## Dependencies
 
