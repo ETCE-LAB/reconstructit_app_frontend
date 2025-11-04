@@ -7,15 +7,17 @@ import 'package:path_provider/path_provider.dart';
 import 'authentication_event.dart';
 import 'authentication_state.dart';
 
-
+//const identityServerTarget = "https://dev.backend.isse-identity.com";
 const identityServerTarget =
-    "https://dev.backend.isse-identity.com";
-const appIdentifier = "reconstructit.platform";
+    'https://dev.identity-backend.recircit.ceconsoft.de';
+//const appIdentifier = "reconstructit.platform";
+const appIdentifier ='interactive';
+
+const secret = '499e17f9-5c3a-420b-b724-e0b79170e03c';
 const baseRedirectUri = "com.example.reconstructitapp";
 
 /// Redirect uri after successful authentication
 const authRedirectUri = "$baseRedirectUri://auth-callback";
-
 
 /// Bloc to manage the user's authentication status
 class AuthenticationBloc
@@ -36,14 +38,15 @@ class AuthenticationBloc
       appIdentifier,
       authorizationEndpoint,
       tokenEndpoint,
-      // secret: secret,
+      secret: secret,
     );
 
     final redirectUrl = Uri.parse(authRedirectUri);
     // Get authorization url from grant
     var authorizationUrl = grant.getAuthorizationUrl(
       redirectUrl,
-      scopes: ["platform", "offline_access"],
+      //scopes: ["platform", "offline_access"],
+      scopes: ["platform", "offline_access", "IdentityServerApi", "openid"],
     );
 
     emit(RedirectedToIdentityServer(grant, authorizationUrl, redirectUrl));
@@ -65,7 +68,6 @@ class AuthenticationBloc
     emit(AuthenticationSucceeded());
   }
 }
-
 
 /*
  void _onSignOut(event, emit) async {
