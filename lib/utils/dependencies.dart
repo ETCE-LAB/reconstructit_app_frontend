@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reconstructitapp/domain/services/media_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
+import 'package:reconstructitapp/infrastructure/decorator/caching_payment_attribute_decorator.dart';
+import 'package:reconstructitapp/infrastructure/decorator/logging_payment_attribute_decorator.dart';
 import 'package:reconstructitapp/infrastructure/repositories/media_repository.dart';
 import 'package:reconstructitapp/infrastructure/repositories/user_repository.dart';
 import 'package:reconstructitapp/infrastructure/sources/remote_datasource.dart';
@@ -24,6 +26,7 @@ import '../domain/services/payment_method_service.dart';
 import '../domain/services/payment_service.dart';
 import '../domain/services/payment_value_service.dart';
 import '../domain/services/print_contract_service.dart';
+import '../infrastructure/builder/payment_attribute_service_builder.dart';
 import '../infrastructure/repositories/address_repository.dart';
 import '../infrastructure/repositories/community_print_request_repository.dart';
 import '../infrastructure/repositories/construction_file_repository.dart';
@@ -118,9 +121,46 @@ Future<void> initDependencies() async {
   ic.registerLazySingleton<PaymentMethodService>(
     () => PaymentMethodRepository(ic()),
   );
+  /*
   ic.registerLazySingleton<PaymentAttributeService>(
     () => PaymentAttributeRepository(ic()),
   );
+
+
+   */
+  // Variant 1
+  /*
+  ic.registerLazySingleton<PaymentAttributeService>(
+    () => PaymentAttributeRepositoryWithLogging(ic()),
+  );
+
+   */
+
+  // Variant 2
+  /*
+  ic.registerLazySingleton<PaymentAttributeRepository>(
+    () => PaymentAttributeRepository(ic()),
+  );
+  ic.registerLazySingleton<PaymentAttributeService>(
+    () => CachingPaymentAttributeDecorator(
+      LoggingPaymentAttributeDecorator(ic<PaymentAttributeRepository>()),
+    ),
+  );
+
+   */
+
+  // Variant 3
+  ic.registerLazySingleton<PaymentAttributeRepository>(
+    () => PaymentAttributeRepository(ic()),
+  );
+  ic.registerLazySingleton<PaymentAttributeService>(
+    () =>
+        PaymentAttributeServiceBuilder(ic<PaymentAttributeRepository>())
+            .add((s) => LoggingPaymentAttributeDecorator(s))
+            .add((s) => CachingPaymentAttributeDecorator(s))
+            .build(),
+  );
+
   ic.registerLazySingleton<PaymentService>(() => PaymentRepository(ic()));
   ic.registerLazySingleton<PaymentValueService>(
     () => PaymentValueRepository(ic()),
