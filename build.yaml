@@ -1,0 +1,7 @@
+builders:
+  measure_cpu:
+    import: "package:reconstructitapp/measuring/measure_cpu_active_time_generator.dart"
+    builder_factories: ["measureCpuActiveTimeBuilder"]
+    build_extensions: {".dart": [".measures.dart"]}
+    auto_apply: dependents
+    build_to: source

@@ -2,11 +2,13 @@
 
 part of 'remote_datasource.dart';
 
+// dart format off
+
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
 
 class _IRemoteDatasource implements IRemoteDatasource {
   _IRemoteDatasource(this._dio, {this.baseUrl, this.errorLogger}) {
@@ -262,13 +264,12 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<CommunityPrintRequest> _value;
     try {
-      _value =
-          _result.data!
-              .map(
-                (dynamic i) =>
-                    CommunityPrintRequest.fromJson(i as Map<String, dynamic>),
-              )
-              .toList();
+      _value = _result.data!
+          .map(
+            (dynamic i) =>
+                CommunityPrintRequest.fromJson(i as Map<String, dynamic>),
+          )
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -549,10 +550,9 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<Item> _value;
     try {
-      _value =
-          _result.data!
-              .map((dynamic i) => Item.fromJson(i as Map<String, dynamic>))
-              .toList();
+      _value = _result.data!
+          .map((dynamic i) => Item.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -579,10 +579,9 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<ItemImage> _value;
     try {
-      _value =
-          _result.data!
-              .map((dynamic i) => ItemImage.fromJson(i as Map<String, dynamic>))
-              .toList();
+      _value = _result.data!
+          .map((dynamic i) => ItemImage.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -656,12 +655,9 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<Participant> _value;
     try {
-      _value =
-          _result.data!
-              .map(
-                (dynamic i) => Participant.fromJson(i as Map<String, dynamic>),
-              )
-              .toList();
+      _value = _result.data!
+          .map((dynamic i) => Participant.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -688,12 +684,9 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<Participant> _value;
     try {
-      _value =
-          _result.data!
-              .map(
-                (dynamic i) => Participant.fromJson(i as Map<String, dynamic>),
-              )
-              .toList();
+      _value = _result.data!
+          .map((dynamic i) => Participant.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -777,13 +770,11 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<PaymentAttribute> _value;
     try {
-      _value =
-          _result.data!
-              .map(
-                (dynamic i) =>
-                    PaymentAttribute.fromJson(i as Map<String, dynamic>),
-              )
-              .toList();
+      _value = _result.data!
+          .map(
+            (dynamic i) => PaymentAttribute.fromJson(i as Map<String, dynamic>),
+          )
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -837,13 +828,9 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<PaymentMethod> _value;
     try {
-      _value =
-          _result.data!
-              .map(
-                (dynamic i) =>
-                    PaymentMethod.fromJson(i as Map<String, dynamic>),
-              )
-              .toList();
+      _value = _result.data!
+          .map((dynamic i) => PaymentMethod.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -1000,12 +987,9 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<PaymentValue> _value;
     try {
-      _value =
-          _result.data!
-              .map(
-                (dynamic i) => PaymentValue.fromJson(i as Map<String, dynamic>),
-              )
-              .toList();
+      _value = _result.data!
+          .map((dynamic i) => PaymentValue.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -1080,13 +1064,9 @@ class _IRemoteDatasource implements IRemoteDatasource {
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<PrintContract> _value;
     try {
-      _value =
-          _result.data!
-              .map(
-                (dynamic i) =>
-                    PrintContract.fromJson(i as Map<String, dynamic>),
-              )
-              .toList();
+      _value = _result.data!
+          .map((dynamic i) => PrintContract.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -1232,3 +1212,5 @@ class _IRemoteDatasource implements IRemoteDatasource {
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }
+
+// dart format on

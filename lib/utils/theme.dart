@@ -38,7 +38,7 @@ ThemeData lightTheme = ThemeData(
   ),
 
   // textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(foregroundColor: )),
-  cardTheme: CardTheme(
+  cardTheme: CardThemeData(
     surfaceTintColor: Colors.white,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     color: const Color(0xFFFFF6E4),

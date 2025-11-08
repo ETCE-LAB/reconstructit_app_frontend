@@ -1,0 +1,3 @@
+class MeasureCpuActiveTime {
+  const MeasureCpuActiveTime();
+}

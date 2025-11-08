@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:reconstructitapp/domain/services/address_service_measured_bablablablba.dart';
 import 'package:reconstructitapp/domain/services/media_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'package:reconstructitapp/infrastructure/repositories/media_repository.dart';
 import 'package:reconstructitapp/infrastructure/repositories/user_repository.dart';
 import 'package:reconstructitapp/infrastructure/sources/remote_datasource.dart';
+import 'package:reconstructitapp/measuring/platform_channel/cpu_active_time_platform_channel.dart';
 import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print_contracts_bloc.dart';
 import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_user/bloc/create_or_edit_user_bloc.dart';
@@ -103,7 +105,17 @@ Future<void> initDependencies() async {
   );
   // Services
   ic.registerLazySingleton<UserService>(() => UserRepository(ic(), ic()));
-  ic.registerLazySingleton<AddressService>(() => AddressRepository(ic()));
+
+  ic.registerLazySingleton<AddressRepository>(() => AddressRepository(ic()));
+  ic.registerLazySingleton<CPUActiveTImePlatformChannel>(
+        () => CPUActiveTImePlatformChannel(),
+  );
+  ic.registerLazySingleton<AddressService>(
+    () => AddressServiceMeasured(ic(), ic<AddressRepository>()),
+  );
+
+
+
   ic.registerLazySingleton<CommunityPrintRequestService>(
     () => CommunityPrintRequestRepository(ic()),
   );
