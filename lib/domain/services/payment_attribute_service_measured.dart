@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:reconstructitapp/domain/services/payment_attribute_service.dart';
 import 'package:reconstructitapp/measuring/platform_channel/cpu_active_time_platform_channel.dart';
 
@@ -7,31 +5,30 @@ import '../../utils/result.dart';
 import '../entity_models/payment_attribute.dart';
 
 class PaymentAttributeServiceMeasured extends PaymentAttributeService {
-  final CPUActiveTImePlatformChannel channel;
   final PaymentAttributeService _inner;
 
-  PaymentAttributeServiceMeasured(this.channel, this._inner);
+  PaymentAttributeServiceMeasured(this._inner);
 
   @override
   Future<Result<List<PaymentAttribute>>> getAttributesForDefinition(
     String id,
   ) async {
-    final start = await channel.getCPUTime();
+    final start = await CPUActiveTimePlatformChannel.getCPUTime();
     var result = await _inner.getAttributesForDefinition(id);
-    final end = await channel.getCPUTime();
-    if(end != -1 && start != -1){
-      log("CPU ACTIVE TIME (getAttributesForDefinition): ${end - start} ms");
+    final end = await CPUActiveTimePlatformChannel.getCPUTime();
+    if (end != -1 && start != -1) {
+      print("CPU ACTIVE TIME (getAttributesForDefinition): ${end - start} ms");
     }
     return result;
   }
 
   @override
   Future<Result<PaymentAttribute>> getPaymentAttribute(String id) async {
-    final start = await channel.getCPUTime();
+    final start = await CPUActiveTimePlatformChannel.getCPUTime();
     var result = await _inner.getPaymentAttribute(id);
-    final end = await channel.getCPUTime();
-    if(end != -1 && start != -1){
-      log("CPU ACTIVE TIME (getPaymentAttribute): ${end - start} ms");
+    final end = await CPUActiveTimePlatformChannel.getCPUTime();
+    if (end != -1 && start != -1) {
+      print("CPU ACTIVE TIME (getPaymentAttribute): ${end - start} ms");
     }
     return result;
   }

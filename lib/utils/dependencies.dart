@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:reconstructitapp/domain/services/address_service_measured_bablablablba.dart';
 import 'package:reconstructitapp/domain/services/media_service.dart';
 import 'package:reconstructitapp/domain/services/user_service.dart';
 import 'package:reconstructitapp/infrastructure/repositories/media_repository.dart';
 import 'package:reconstructitapp/infrastructure/repositories/user_repository.dart';
 import 'package:reconstructitapp/infrastructure/sources/remote_datasource.dart';
-import 'package:reconstructitapp/measuring/platform_channel/cpu_active_time_platform_channel.dart';
 import 'package:reconstructitapp/presentation/all_print_contracts/bloc/all_print_contracts_bloc.dart';
 import 'package:reconstructitapp/presentation/community/bloc/community_bloc.dart';
 import 'package:reconstructitapp/presentation/create_or_edit_user/bloc/create_or_edit_user_bloc.dart';
@@ -22,6 +20,7 @@ import '../domain/services/item_image_service.dart';
 import '../domain/services/item_service.dart';
 import '../domain/services/participant_service.dart';
 import '../domain/services/payment_attribute_service.dart';
+import '../domain/services/payment_attribute_service_measured.dart';
 import '../domain/services/payment_method_service.dart';
 import '../domain/services/payment_service.dart';
 import '../domain/services/payment_value_service.dart';
@@ -104,44 +103,83 @@ Future<void> initDependencies() async {
     () => CreateOrEditRequestBloc(ic(), ic(), ic(), ic(), ic(), ic()),
   );
   // Services
-  ic.registerLazySingleton<UserService>(() => UserRepository(ic(), ic()));
 
-  ic.registerLazySingleton<AddressRepository>(() => AddressRepository(ic()));
-  ic.registerLazySingleton<CPUActiveTImePlatformChannel>(
-        () => CPUActiveTImePlatformChannel(),
+  ic.registerLazySingleton<UserService>(
+    () => UserServiceBuilder(
+      UserRepository(ic(), ic()),
+    ).add((s) => UserServiceCpuActiveTimeDecorator(s)).build(),
   );
   ic.registerLazySingleton<AddressService>(
-    () => AddressServiceMeasured(ic(), ic<AddressRepository>()),
+    () => AddressServiceBuilder(
+      AddressRepository(ic()),
+    ).add((s) => AddressServiceCpuActiveTimeDecorator(s)).build(),
   );
-
-
 
   ic.registerLazySingleton<CommunityPrintRequestService>(
-    () => CommunityPrintRequestRepository(ic()),
+    () => CommunityPrintRequestServiceBuilder(
+      CommunityPrintRequestRepository(ic()),
+    ).add((s) => CommunityPrintRequestServiceCpuActiveTimeDecorator(s)).build(),
   );
   ic.registerLazySingleton<ConstructionFileService>(
-    () => ConstructionFileRepository(ic()),
-  );
-  ic.registerLazySingleton<ItemService>(() => ItemRepository(ic()));
-  ic.registerLazySingleton<ItemImageService>(() => ItemImageRepository(ic()));
-  ic.registerLazySingleton<ParticipantService>(
-    () => ParticipantRepository(ic()),
-  );
-  ic.registerLazySingleton<PaymentMethodService>(
-    () => PaymentMethodRepository(ic()),
-  );
-  ic.registerLazySingleton<PaymentAttributeService>(
-    () => PaymentAttributeRepository(ic()),
-  );
-  ic.registerLazySingleton<PaymentService>(() => PaymentRepository(ic()));
-  ic.registerLazySingleton<PaymentValueService>(
-    () => PaymentValueRepository(ic()),
-  );
-  ic.registerLazySingleton<PrintContractService>(
-    () => PrintContractRepository(ic()),
+    () => ConstructionFileServiceBuilder(
+      ConstructionFileRepository(ic()),
+    ).add((s) => ConstructionFileServiceCpuActiveTimeDecorator(s)).build(),
   );
 
-  ic.registerLazySingleton<MediaService>(() => MediaRepository(ic()));
+  ic.registerLazySingleton<ItemService>(
+    () => ItemServiceBuilder(
+      ItemRepository(ic()),
+    ).add((s) => ItemServiceCpuActiveTimeDecorator(s)).build(),
+  );
+
+  ic.registerLazySingleton<ItemImageService>(
+    () => ItemImageServiceBuilder(
+      ItemImageRepository(ic()),
+    ).add((s) => ItemImageServiceCpuActiveTimeDecorator(s)).build(),
+  );
+
+  ic.registerLazySingleton<ParticipantService>(
+    () => ParticipantServiceBuilder(
+      ParticipantRepository(ic()),
+    ).add((s) => ParticipantServiceCpuActiveTimeDecorator(s)).build(),
+  );
+
+  ic.registerLazySingleton<PaymentMethodService>(
+    () => PaymentMethodServiceBuilder(
+      PaymentMethodRepository(ic()),
+    ).add((s) => PaymentMethodServiceCpuActiveTimeDecorator(s)).build(),
+  );
+
+  ic.registerLazySingleton<PaymentAttributeService>(
+    () => PaymentAttributeServiceBuilder(PaymentAttributeRepository(ic()))
+        .add((s) => PaymentAttributeServiceMeasured(s))
+        // اگر der Decorator anders heißt → hier anpassen
+        .build(),
+  );
+
+  ic.registerLazySingleton<PaymentService>(
+    () => PaymentServiceBuilder(
+      PaymentRepository(ic()),
+    ).add((s) => PaymentServiceCpuActiveTimeDecorator(s)).build(),
+  );
+
+  ic.registerLazySingleton<PaymentValueService>(
+    () => PaymentValueServiceBuilder(
+      PaymentValueRepository(ic()),
+    ).add((s) => PaymentValueServiceCpuActiveTimeDecorator(s)).build(),
+  );
+
+  ic.registerLazySingleton<PrintContractService>(
+    () => PrintContractServiceBuilder(
+      PrintContractRepository(ic()),
+    ).add((s) => PrintContractServiceCpuActiveTimeDecorator(s)).build(),
+  );
+
+  ic.registerLazySingleton<MediaService>(
+    () => MediaServiceBuilder(
+      MediaRepository(ic()),
+    ).add((s) => MediaServiceCpuActiveTimeDecorator(s)).build(),
+  );
   // Sources
   ic.registerLazySingleton<IRemoteDatasource>(() => IRemoteDatasource(ic()));
   ic.registerLazySingleton<IAccountLocalDatasource>(

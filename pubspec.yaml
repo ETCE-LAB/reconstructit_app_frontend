@@ -56,6 +56,10 @@ dependencies:
   source_gen: ^4.0.2
   analyzer: ^8.1.1
 
+  clean_ressource_tracker:
+    git:
+      url: git@github.com-private:ETCE-LAB/clean_ressource_tracker.git
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,7 +72,6 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.4.15
   json_serializable: ^6.9.5
-
 
   retrofit_generator: ^10.1.3
 
