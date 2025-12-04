@@ -152,8 +152,7 @@ Future<void> initDependencies() async {
 
   ic.registerLazySingleton<PaymentAttributeService>(
     () => PaymentAttributeServiceBuilder(PaymentAttributeRepository(ic()))
-        .add((s) => PaymentAttributeServiceMeasured(s))
-        // اگر der Decorator anders heißt → hier anpassen
+        .add((s) => PaymentAttributeServiceCpuActiveTimeDecorator(s))
         .build(),
   );
 
