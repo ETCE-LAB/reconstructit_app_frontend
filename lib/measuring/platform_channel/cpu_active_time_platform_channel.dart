@@ -3,12 +3,13 @@ import 'dart:developer';
 
 import 'package:flutter/services.dart';
 
-class CPUActiveTImePlatformChannel {
+///
+class CPUActiveTimePlatformChannel {
   static const MethodChannel CPUChannel = MethodChannel(
     'alina.simon.tuclausthal.com/cputime',
   );
 
-  Future<int> getCPUTime() async {
+ static Future<int> getCPUTime() async {
     try {
       final int? result = await CPUChannel.invokeMethod('getCPUTime');
       if (result != null) {
@@ -21,3 +22,5 @@ class CPUActiveTImePlatformChannel {
     }
   }
 }
+
+
