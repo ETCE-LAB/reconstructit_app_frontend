@@ -59,6 +59,8 @@ dependencies:
   clean_ressource_tracker:
     git:
       url: git@github.com-private:ETCE-LAB/clean_ressource_tracker.git
+      ref: intergrate_ios
+
 
 dev_dependencies:
   flutter_test:
